@@ -20,6 +20,7 @@ description: Ce plugin permet d'obtenir le point de rosée pour savoir si l'herb
     - CAS 2 : Message =  *Risque de givre*, Alerte givre = *1*, Message numérique = *2*
     - CAS 3 : Message =  *Givre peu probable malgré la température*, Alerte givre = *1*, Message numérique = *3*
 - Changement du logo du plugin merci @mich0111
+- Correction type de générique
 
 >*Remarque : Il est obligatoire de supprimer les équipements pour avoir les nouveaux messages*
 
