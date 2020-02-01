@@ -9,8 +9,8 @@
   "category" : "weather",
   "hasDependency" : false,
   "hasOwnDeamon" : false,
-  "changelog" : "https://jealg.github.io/Rosee/#language#/changelog",
-  "documentation" : "https://jealg.github.io/Rosee/#language#/",	
+  "changelog" : "https://jealg.github.io/Plugin-rosee/#language#/changelog",
+  "documentation" : "https://jealg.github.io/Plugin-rosee/#language#/",	
   "language" : ["de_DE","en_US","es_ES","fr_FR","id_ID","it_IT","ru_RU","sp_SP"],
   "compatibility" : ["miniplus","smart","rpi","docker","diy","v4"]
 }
