@@ -429,7 +429,7 @@ class rosee extends eqLogic {
                 $cmd->setConfiguration('value', $humi_a_m3);
                 $cmd->save();
                 $cmd->event($humi_a_m3);
-                    log::add('rosee', 'debug', '│ Humidite Absolue : ' . $humi_a_m3.' g/m3');
+                    log::add('rosee', 'debug', '│ Humidité Absolue : ' . $humi_a_m3.' g/m3');
             }
         
         //Mise à jour de l'équipement Alerte rosée
