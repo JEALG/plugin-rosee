@@ -299,8 +299,6 @@ class rosee extends eqLogic {
                   };
         
             log::add('rosee', 'debug', '└─────────');
-        
-        
 
 		/* calcul du point de givrage
 		*/
@@ -347,6 +345,12 @@ class rosee extends eqLogic {
             // Explication des cas
                 log::add('rosee', 'debug', '┌───────── MESSAGE : '.$_eqName);
                 
+            // Cas 0
+                    $message_givre_0 = 'Aucun risque de Givre';
+                        log::add('rosee', 'debug', '│ ┌───────── CAS 0 : '.$message_givre_0);
+                        log::add('rosee', 'debug', '│ │ Aucun risque de Givre');
+                        log::add('rosee', 'debug', '│ └─────────');  
+        
                 // Cas 1
                     $message_givre_1 = 'Givre, Présence de givre';
                         log::add('rosee', 'debug', '│ ┌───────── CAS 1 : ' .$message_givre_1);
@@ -355,24 +359,18 @@ class rosee extends eqLogic {
                         log::add('rosee', 'debug', '│ └─────────');
                 
                 // Cas 2
-                    $message_givre_2 = 'Givre peu probable malgré la température';    
+                    $message_givre_2 = 'Risque de givre';
                         log::add('rosee', 'debug', '│ ┌───────── CAS 2 : '.$message_givre_2);
-                        log::add('rosee', 'debug', '│ │ Calcul    : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) < Seuil DPR)');
-                        log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 1 et ' .$frost_point .' <=0) et (' .$humi_a_m3 .' < ' . $dpr .')');
-                        log::add('rosee', 'debug', '│ └─────────');
-                
-                // Cas 3
-                    $message_givre_3 = 'Risque de givre';
-                        log::add('rosee', 'debug', '│ ┌───────── CAS 3 : '.$message_givre_3);
                         log::add('rosee', 'debug', '│ │ Calcul    : (Température <=4 et Point de Givrage <= 0.5)');
                         log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 4 et ' .$frost_point .' <=0.5)');
                         log::add('rosee', 'debug', '│ └─────────');
         
-                // Cas 4
-                    $message_givre_4 = 'Aucun risque de Givre';
-                        log::add('rosee', 'debug', '│ ┌───────── CAS 4 : '.$message_givre_4);
-                        log::add('rosee', 'debug', '│ │ Aucun risque de Givre');
-                        log::add('rosee', 'debug', '│ └─────────');                
+                // Cas 3
+                    $message_givre_3 = 'Givre peu probable malgré la température';    
+                        log::add('rosee', 'debug', '│ ┌───────── CAS 3 : '.$message_givre_3);
+                        log::add('rosee', 'debug', '│ │ Calcul    : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) < Seuil DPR)');
+                        log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 1 et ' .$frost_point .' <=0) et (' .$humi_a_m3 .' < ' . $dpr .')');
+                        log::add('rosee', 'debug', '│ └─────────');          
                 
             // Cas Actuel
                 if($temperature <= 1 && $frost_point <= 0) {
@@ -382,19 +380,19 @@ class rosee extends eqLogic {
                             $message_givre = $message_givre_1;
                     };
                     if ($humi_a_m3 < $dpr) {
-                        // Cas 2
-                            $message_givre_Cas = 'CAS 2';
-                            $message_givre = $message_givre_2;
-                    };
-
-                 } elseif ($temperature <= 4 && $frost_point <= 0.5) {
                         // Cas 3
                             $message_givre_Cas = 'CAS 3';
                             $message_givre = $message_givre_3;
+                    };
+
+                 } elseif ($temperature <= 4 && $frost_point <= 0.5) {
+                        // Cas 2
+                            $message_givre_Cas = 'CAS 2';
+                            $message_givre = $message_givre_2;
                 } else {
-                        // Cas 4
-                            $message_givre_Cas = 'CAS 4';
-                            $message_givre = $message_givre_4;
+                        // Cas 0
+                            $message_givre_Cas = 'CAS 0';
+                            $message_givre = $message_givre_0;
                  };
                     log::add('rosee', 'debug', '│ ┌───────── CAS ACTUEL : ' .$message_givre_Cas);
                     log::add('rosee', 'debug', '│ │ Message : ' .$message_givre );
