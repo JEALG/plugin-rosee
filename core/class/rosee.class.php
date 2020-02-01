@@ -369,7 +369,7 @@ class rosee extends eqLogic {
                 // Cas 2
                     $msg_givre_2 = 'Risque de givre';
                     $msg_givre_num_2 = 2;
-                    $alert_g_2 = 2;
+                    $alert_g_2 = 1;
                         log::add('rosee', 'debug', '│ ┌───────── CAS 2 : '.$msg_givre_2 .' / Valeur numérique : '.$msg_givre_num_2 .' / Alerte givre : ' .$alert_g_2 );
                         log::add('rosee', 'debug', '│ │ Calcul    : (Température <=4 et Point de Givrage <= 0.5)');
                         log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 4 et ' .$frost_point .' <=0.5)');
@@ -378,7 +378,7 @@ class rosee extends eqLogic {
                 // Cas 3
                     $msg_givre_3 = 'Givre peu probable malgré la température';   
                     $msg_givre_num_3 = 3;
-                    $alert_g_3 = 3;
+                    $alert_g_3 = 1;
                         log::add('rosee', 'debug', '│ ┌───────── CAS 3 : '.$msg_givre_3 .' / Valeur numérique : ' .$msg_givre_num_3 .' / Alerte givre : ' .$alert_g_3 );
                         log::add('rosee', 'debug', '│ │ Calcul    : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) < Seuil DPR)');
                         log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 1 et ' .$frost_point .' <=0) et (' .$humi_a_m3 .' < ' . $dpr .')');
