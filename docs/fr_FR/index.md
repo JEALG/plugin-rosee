@@ -23,26 +23,29 @@ Voici un exemple de configuration
 
 # Alerte Givre
 Le plugin calcule 4 niveaux d'alerte
-     - Cas 1
-        >- Calcul : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) > Seuil DPR)
-        >- Alerte Givre : 1
-        >- Message numérique Givre : 1
-        >- Message d'info : Givre, Présence de givre 
-    - Cas 2
-        >- Calcul : (Température <=4 et Point de Givrage <= 0.5)
-        >- Alerte Givre : 1
-        >- Message numérique Givre : 1
-        >- Message d'info : Risque de givre
-    - Cas 3
-        >- Calcul : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) < Seuil DPR)
-        >- Alerte Givre : 3
-        >- Message numérique Givre : 3
-        >- Message d'info : Givre peu probable malgré la température
     - Cas 0
         >- Calcul : Aucun cas ci-dessous couvert
         >- Alerte Givre : 0
+        >- Alerte Rosée : 0
         >- Message numérique Givre : 0
         >- Message d'info : Aucun risque de Givrage
+    - Cas 1
+        >- Calcul : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) < Seuil DPR)
+        >- Alerte Givre : 1
+        >- Alerte Rosée : 0
+        >- Message numérique Givre : 1
+        >- Message d'info : Givre peu probable malgré la température
+    - Cas 2
+        >- Calcul : (Température <=4 et Point de Givrage <= 0.5)
+        >- Alerte Givre : 1
+        >- Alerte Rosée : 0
+        >- Message numérique Givre : 2
+        >- Message d'info : Risque de givre
+     - Cas 3
+        >- Calcul : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) > Seuil DPR)
+        >- Alerte Givre : 1
+        >- Message numérique Givre : 3
+        >- Message d'info : Givre, Présence de givre 
 
 # FAQ
 
