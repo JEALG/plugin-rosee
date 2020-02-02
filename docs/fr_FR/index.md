@@ -1,6 +1,6 @@
 # Description
 
-Ce plugin permet d'obtenir le point de rosée pour savoir si l'herbe sera mouillée le matin, ou bien en hiver savoir si il va falloir gratter le pare-brise.
+Ce plugin permet d'obtenir le point de rosée pour savoir si l'herbe sera mouillée le matin, ou bien en hiver savoir s'il va falloir gratter le pare-brise.
 Pour fonctionner, on doit indiquer un équipement température et un équipement humidité (extérieures, bien-sûr…)
 
 # Configuration
