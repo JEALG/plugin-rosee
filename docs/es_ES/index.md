@@ -1,6 +1,6 @@
 # Description
 
-Ce plugin permet d'obtenir le point de rosée pour savoir si l'herbe sera mouillée le matin, ou bien en hiver savoir si il va falloir gratter le pare-brise.
+Ce plugin permet d'obtenir le point de rosée pour savoir si l'herbe sera mouillée le matin, ou bien en hiver savoir s'il va falloir gratter le pare-brise.
 Pour fonctionner, on doit indiquer un équipement température et un équipement humidité (extérieures, bien-sûr…)
 
 # Configuration
@@ -23,26 +23,30 @@ Voici un exemple de configuration
 
 # Alerte Givre
 Le plugin calcule 4 niveaux d'alerte
-     - Cas 1
-        >- Calcul : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) > Seuil DPR)
-        >- Alerte Givre : 1
-        >- Message numérique Givre : 1
-        >- Message d'info : Givre, Présence de givre 
-    - Cas 2
-        >- Calcul : (Température <=4 et Point de Givrage <= 0.5)
-        >- Alerte Givre : 1
-        >- Message numérique Givre : 1
-        >- Message d'info : Risque de givre
-    - Cas 3
-        >- Calcul : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) < Seuil DPR)
-        >- Alerte Givre : 3
-        >- Message numérique Givre : 3
-        >- Message d'info : Givre peu probable malgré la température
     - Cas 0
         >- Calcul : Aucun cas ci-dessous couvert
         >- Alerte Givre : 0
+        >- Alerte Rosée : Automatique
         >- Message numérique Givre : 0
         >- Message d'info : Aucun risque de Givrage
+    - Cas 1
+        >- Calcul : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) < Seuil DPR)
+        >- Alerte Givre : 1
+        >- Alerte Rosée : forcé à 0
+        >- Message numérique Givre : 1
+        >- Message d'info : Givre peu probable malgré la température
+    - Cas 2
+        >- Calcul : (Température <=4 et Point de Givrage <= 0.5)
+        >- Alerte Givre : 1
+        >- Alerte Rosée : forcé à 0
+        >- Message numérique Givre : 2
+        >- Message d'info : Risque de givre
+     - Cas 3
+        >- Calcul : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) > Seuil DPR)
+        >- Alerte Givre : 1
+        >- Alerte Rosée : forcé à 0
+        >- Message numérique Givre : 3
+        >- Message d'info : Givre, Présence de givre 
 
 # FAQ
 
