@@ -169,6 +169,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<th>{{Unité}}</th>
 							<th>{{Paramètres}}</th>
 							<th width="120px;">{{Options}}</th>
+                            <th style="width: 40px;"></th>
 						</tr>
 					</thead>
 					<tbody>

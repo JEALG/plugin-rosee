@@ -185,7 +185,6 @@ class rosee extends eqLogic {
         $refresh->save();
         
         // Vérification de la présence de la commande pour le message
-            log::add('rosee', 'debug', '┌───────── AJOUT COMMANDE MESSAGE GIVRE SI ABSENTE: '.$_eqName );
             $givre_infosCmd = $this->getCmd(null, 'message_givre');
             if (!is_object($givre_infosCmd)) {
                 $givre_infosCmd = new roseeCmd();
@@ -201,10 +200,8 @@ class rosee extends eqLogic {
                 $givre_infosCmd->setDisplay('generic_type','WEATHER_CONDITION');
                 $givre_infosCmd->save();   
             }
-            log::add('rosee', 'debug', '└─────────');
         
         // Vérification de la présence de la commande pour la valeur numérique pour l'alerte givre
-            log::add('rosee', 'debug', '┌───────── AJOUT COMMANDE VALEUR NUMERIQUE POUR l\'ALERTE GIVRE SI ABSENTE: '.$_eqName );
             $givre_infos_num_Cmd = $this->getCmd(null, 'message_givre');
             if (!is_object($givre_infos_num_Cmd)) {
                 $givre_infos_num_Cmd = new roseeCmd();
@@ -220,7 +217,6 @@ class rosee extends eqLogic {
                 $givre_infos_num_Cmd->setDisplay('generic_type','GENERIC_INFO');
                 $givre_infos_num_Cmd->save();
             }
-            log::add('rosee', 'debug', '└─────────');
         
     }
 
