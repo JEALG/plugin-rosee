@@ -183,6 +183,45 @@ class rosee extends eqLogic {
         $refresh->setSubType('other');
         $refresh->setEqLogic_id($this->getId());
         $refresh->save();
+        
+        // Vérification de la présence de la commande pour le message
+            log::add('rosee', 'debug', '┌───────── AJOUT COMMANDE MESSAGE GIVRE SI ABSENTE: '.$_eqName );
+            $givre_infosCmd = $this->getCmd(null, 'message_givre');
+            if (!is_object($givre_infosCmd)) {
+                $givre_infosCmd = new roseeCmd();
+                $givre_infosCmd->setName(__('Message Alerte givre', __FILE__));
+                $givre_infosCmd->setEqLogic_id($this->id);
+                $givre_infosCmd->setLogicalId('message_givre');
+                $givre_infosCmd->setConfiguration('data', 'message_givre');
+                $givre_infosCmd->setUnite('');
+                $givre_infosCmd->setType('info');
+                $givre_infosCmd->setSubType('string');
+                $givre_infosCmd->setIsHistorized(0);
+                $givre_infosCmd->setIsVisible(0);
+                $givre_infosCmd->setDisplay('generic_type','WEATHER_CONDITION');
+                $givre_infosCmd->save();   
+            }
+            log::add('rosee', 'debug', '└─────────');
+        
+        // Vérification de la présence de la commande pour la valeur numérique pour l'alerte givre
+            log::add('rosee', 'debug', '┌───────── AJOUT COMMANDE VALEUR NUMERIQUE POUR l\'ALERTE GIVRE SI ABSENTE: '.$_eqName );
+            $givre_infos_num_Cmd = $this->getCmd(null, 'message_givre');
+            if (!is_object($givre_infos_num_Cmd)) {
+                $givre_infos_num_Cmd = new roseeCmd();
+                $givre_infos_num_Cmd->setName(__('Message Alerte givre numérique', __FILE__));
+                $givre_infos_num_Cmd->setEqLogic_id($this->id);
+                $givre_infos_num_Cmd->setLogicalId('message_givre_num');
+                $givre_infos_num_Cmd->setConfiguration('data', 'message_givre_num');
+                $givre_infos_num_Cmd->setType('info');
+                $givre_infos_num_Cmd->setSubType('numeric');
+                $givre_infos_num_Cmd->setUnite('');
+                $givre_infos_num_Cmd->setIsHistorized(0);
+                $givre_infos_num_Cmd->setIsVisible(0);
+                $givre_infos_num_Cmd->setDisplay('generic_type','GENERIC_INFO');
+                $givre_infos_num_Cmd->save();
+            }
+            log::add('rosee', 'debug', '└─────────');
+        
     }
 
 	/*  **********************Getteur Setteur*************************** */
