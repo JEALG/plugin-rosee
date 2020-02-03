@@ -164,7 +164,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 					<thead>
 						<tr>
 							<th width="50px"> ID</th>
-							<th width="250px">{{Nom}}</th>
+							<th width="450px">{{Nom}}</th>
 							<th>{{Valeur}}</th>
 							<th>{{Unité}}</th>
 							<th>{{Paramètres}}</th>
