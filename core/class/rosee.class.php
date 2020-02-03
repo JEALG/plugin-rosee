@@ -79,7 +79,7 @@ class rosee extends eqLogic {
             $roseeCmd->setIsHistorized(0);
             $roseeCmd->setIsVisible(1);
             $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
-            $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
+            //$roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
             $roseeCmd->save();
 
 		// Ajout d'une commande pour le point de givrage
@@ -94,7 +94,7 @@ class rosee extends eqLogic {
             $frostCmd->setIsHistorized(0);
             $frostCmd->setIsVisible(1);
             $frostCmd->setDisplay('generic_type','GENERIC_INFO');
-            $frostCmd->setDisplay('icon','<i class="icon nature-snowflake"></i>');
+            //$frostCmd->setDisplay('icon','<i class="icon nature-snowflake"></i>');
             $frostCmd->save();
 
 		// Ajout d'une commande pour l'alerte rosée
@@ -109,7 +109,7 @@ class rosee extends eqLogic {
             $AlertRoseeCmd->setIsHistorized(0);
             $AlertRoseeCmd->setIsVisible(1);
             $AlertRoseeCmd->setDisplay('generic_type','SIREN_STATE');
-            $AlertRoseeCmd->setDisplay('icon','<i class="icon jeedom-alerte"></i>');
+            //$AlertRoseeCmd->setDisplay('icon','<i class="icon jeedom-alerte"></i>');
             $AlertRoseeCmd->save();
 
 		// Ajout d'une commande pour l'alerte givrage
@@ -124,7 +124,7 @@ class rosee extends eqLogic {
             $AlertGivreCmd->setIsHistorized(0);
             $AlertGivreCmd->setIsVisible(1);
             $AlertGivreCmd->setDisplay('generic_type','SIREN_STATE');
-            $AlertGivreCmd->setDisplay('icon','<i class="icon jeedom-alerte2"></i>');
+            //$AlertGivreCmd->setDisplay('icon','<i class="icon jeedom-alerte2"></i>');
             $AlertGivreCmd->save();
         
 		// Ajout d'une commande pour l'humidité absolue
@@ -139,7 +139,7 @@ class rosee extends eqLogic {
             $AbsHumiCmd->setIsHistorized(0);
             $AbsHumiCmd->setIsVisible(1);
             $AbsHumiCmd->setDisplay('generic_type','WEATHER_HUMIDITY');
-            $AbsHumiCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
+            //$AbsHumiCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
             $AbsHumiCmd->save();
 
         // Ajout d'une commande pour le message
