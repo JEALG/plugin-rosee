@@ -40,6 +40,10 @@ function addCmdToTable(_cmd) {
 	if (!isset(_cmd.configuration)) {
 		_cmd.configuration = {};
 	}
+    
+    if (init(_cmd.logicalId) == 'refresh') {
+        return;
+    }
 
 	if (init(_cmd.type) == 'info') {
 		var disabled = (init(_cmd.configuration.virtualAction) == '1') ? 'readonly' : '';
@@ -56,7 +60,12 @@ function addCmdToTable(_cmd) {
 		tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="unite" style="width : 90px;" placeholder="{{Unité}}"></td>';
 		tr += '<td>';
 		tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span> ';
-		tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label></span> ';
+        if (_cmd.subType == "numeric") {
+            tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label></span> ';
+        }
+        if (_cmd.subType == "binary") {
+            tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr" data-l1key="display" data-l2key="invertBinary"/>{{Inverser}}</label></span> ';
+        }
 		tr += '</td>';
 		tr += '<td>';
 		if (is_numeric(_cmd.id)) {
