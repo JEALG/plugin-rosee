@@ -5,7 +5,7 @@ description: Ce plugin permet d'obtenir le point de rosée pour savoir si l'herb
 ---
 
 # Info
->*Remarque : en cas de mise à jour non listée ici, c'est que celle-ci ne comporte que des changements mineurs du type documentation ou corrections de bugs mineurs.*
+>*Important : en cas de mise à jour disponible pour laquelle il n’y a pas d’information dans cette section, c’est qu’elle n’intègre aucune nouveauté majeure. Cela peut être un ajout de documentation, une correction de documentation, des traductions ou bien de la correction de bugs mineurs.*
 
 # Version 201902xx
 
@@ -21,8 +21,11 @@ description: Ce plugin permet d'obtenir le point de rosée pour savoir si l'herb
     - CAS 3 : Message =  *Givre, Présence de givre*, Alerte givre = *1*, Message numérique = *1*
 - Changement du logo du plugin merci @mich0111
 - Correction type de générique
-
->*Remarque : Il est obligatoire de supprimer les équipements pour avoir les nouveaux messages*
+- Modification affichage des commandes
+    - Ajout la posibilité d'inverser les commandes binaires
+    - Suppression de l'historique sur les commandes messages
+- Ajout des nouvelles commandes en automatique sans recréer les commandes (Merci à Kiboost et à Mips)
+    >*Remarque : Il est obligatoire de sauvegarder chaque équipements pour avoir les nouvelles commandes*
 
 # Version 3.3.2
 
