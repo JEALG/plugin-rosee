@@ -26,7 +26,7 @@ function rosee_install() {
     if (is_object($cron)) {
         $cron->remove();
     }
-    message::add('rosee', 'Merci pour la mise à jour de ce plugin');
+    //message::add('rosee', 'Merci pour la mise à jour de ce plugin, le plugin a été repris par JAG, merci à Claude Metzger pour son boulot');
 }
 
 function rosee_update() {
@@ -39,7 +39,7 @@ function rosee_update() {
         $cron->remove();
     }
     
-    message::add('rosee', 'Merci pour la mise à jour de ce plugin');
+    message::add('rosee', 'Merci pour la mise à jour de ce plugin, le plugin a été repris par JAG, merci à Claude Metzger pour son boulot');
 }
 
 function rosee_remove() {
