@@ -185,37 +185,37 @@ class rosee extends eqLogic {
         $refresh->save();
         
         // Vérification de la présence de la commande pour le message
-            $givre_infosCmd = $this->getCmd(null, 'message_givre');
-            if (!is_object($givre_infosCmd)) {
-                $givre_infosCmd = new roseeCmd();
-                $givre_infosCmd->setName(__('Message Alerte givre', __FILE__));
-                $givre_infosCmd->setEqLogic_id($this->id);
-                $givre_infosCmd->setLogicalId('message_givre');
-                $givre_infosCmd->setConfiguration('data', 'message_givre');
-                $givre_infosCmd->setUnite('');
-                $givre_infosCmd->setType('info');
-                $givre_infosCmd->setSubType('string');
-                $givre_infosCmd->setIsHistorized(0);
-                $givre_infosCmd->setIsVisible(0);
-                $givre_infosCmd->setDisplay('generic_type','WEATHER_CONDITION');
-                $givre_infosCmd->save();   
+            $roseeCmd = $this->getCmd(null, 'message_givre');
+            if (!is_object($roseeCmd)) {
+                $roseeCmd = new roseeCmd();
+                $roseeCmd->setName(__('Message Alerte givre', __FILE__));
+                $roseeCmd->setEqLogic_id($this->id);
+                $roseeCmd->setLogicalId('message_givre');
+                $roseeCmd->setConfiguration('data', 'message_givre');
+                $roseeCmd->setUnite('');
+                $roseeCmd->setType('info');
+                $roseeCmd->setSubType('string');
+                $roseeCmd->setIsHistorized(0);
+                $roseeCmd->setIsVisible(0);
+                $roseeCmd->setDisplay('generic_type','WEATHER_CONDITION');
+                $roseeCmd->save();   
             }
         
         // Vérification de la présence de la commande pour la valeur numérique pour l'alerte givre
-            $givre_infos_num_Cmd = $this->getCmd(null, 'message_givre');
-            if (!is_object($givre_infos_num_Cmd)) {
-                $givre_infos_num_Cmd = new roseeCmd();
-                $givre_infos_num_Cmd->setName(__('Message Alerte givre numérique', __FILE__));
-                $givre_infos_num_Cmd->setEqLogic_id($this->id);
-                $givre_infos_num_Cmd->setLogicalId('message_givre_num');
-                $givre_infos_num_Cmd->setConfiguration('data', 'message_givre_num');
-                $givre_infos_num_Cmd->setType('info');
-                $givre_infos_num_Cmd->setSubType('numeric');
-                $givre_infos_num_Cmd->setUnite('');
-                $givre_infos_num_Cmd->setIsHistorized(0);
-                $givre_infos_num_Cmd->setIsVisible(0);
-                $givre_infos_num_Cmd->setDisplay('generic_type','GENERIC_INFO');
-                $givre_infos_num_Cmd->save();
+            $roseeCmd = $this->getCmd(null, 'message_givre');
+            if (!is_object($roseeCmd)) {
+                $roseeCmd = new roseeCmd();
+                $roseeCmd->setName(__('Message Alerte givre numérique', __FILE__));
+                $roseeCmd->setEqLogic_id($this->id);
+                $roseeCmd->setLogicalId('message_givre_num');
+                $roseeCmd->setConfiguration('data', 'message_givre_num');
+                $roseeCmd->setType('info');
+                $roseeCmd->setSubType('numeric');
+                $roseeCmd->setUnite('');
+                $roseeCmd->setIsHistorized(0);
+                $roseeCmd->setIsVisible(0);
+                $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
+                $roseeCmd->save();
             }
         
     }
