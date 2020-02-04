@@ -47,6 +47,21 @@ function rosee_update() {
 	{
         updateLogicalId($eqLogic, 'Humidité absolue', 'humidite_absolue');
     }
+    //resave eqs for new cmd:
+	try
+	{
+		$eqs = eqLogic::byType('rosee');
+		foreach ($eqs as $eq)
+		{
+			$eq->save();
+		}
+	}
+	catch (Exception $e)
+	{
+		$e = print_r($e, 1);
+		log::add('rosee', 'error', 'rosee_update ERROR: '.$e);
+	}
+
     message::add('rosee', 'Merci pour la mise à jour de ce plugin, le plugin a été repris par JAG, merci à Claude Metzger pour son boulot');
 }
 
