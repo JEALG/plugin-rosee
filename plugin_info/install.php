@@ -65,6 +65,15 @@ function rosee_update() {
     message::add('rosee', 'Merci pour la mise à jour de ce plugin, le plugin a été repris par JAG, merci à Claude Metzger pour son boulot');
 }
 
+function updateLogicalId($eqLogic, $from, $to) {
+	$roseeCmd = $eqLogic->getCmd(null, $from);
+	if (is_object($roseeCmd)) {
+		$roseeCmd->setLogicalId($to);
+		$roseeCmd->save();
+	}
+}
+
+
 function rosee_remove() {
     $cron = cron::byClassAndFunction('rosee', 'pull');
     if (is_object($cron)) {
