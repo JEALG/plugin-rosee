@@ -101,7 +101,7 @@ class rosee extends eqLogic {
             $roseeCmd = new roseeCmd();
             $roseeCmd->setName(__('Alerte rosée', __FILE__));
             $roseeCmd->setEqLogic_id($this->id);
-            $$roseeCmd->setLogicalId('alerte_rosee');
+            $roseeCmd->setLogicalId('alerte_rosee');
             $roseeCmd->setConfiguration('data', 'alert_r');
             $roseeCmd->setType('info');
             $roseeCmd->setSubType('binary');
