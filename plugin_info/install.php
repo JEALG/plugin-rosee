@@ -32,13 +32,21 @@ function rosee_install() {
 function rosee_update() {
     if (config::byKey('functionality::cron5::enable', 'rosee', -1) == -1)
         config::save('functionality::cron5::enable', 1, 'rosee');
+    
     if (config::byKey('functionality::cron30::enable', 'rosee', -1) == -1)
         config::save('functionality::cron30::enable', 0, 'rosee');
     $cron = cron::byClassAndFunction('rosee', 'pull');
+    
     if (is_object($cron)) {
         $cron->remove();
     }
     
+    $plugin = plugin::byId('rosee');
+	$eqLogics = eqLogic::byType($plugin->getId());
+    foreach ($eqLogics as $eqLogic)
+	{
+        updateLogicalId($eqLogic, 'Humidité absolue', 'humidite_absolue');
+    }
     message::add('rosee', 'Merci pour la mise à jour de ce plugin, le plugin a été repris par JAG, merci à Claude Metzger pour son boulot');
 }
 

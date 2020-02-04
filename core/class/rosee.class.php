@@ -139,7 +139,7 @@ class rosee extends eqLogic {
             $AbsHumiCmd->setIsHistorized(0);
             $AbsHumiCmd->setIsVisible(1);
             $AbsHumiCmd->setDisplay('generic_type','WEATHER_HUMIDITY');
-            //$AbsHumiCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
+            $AbsHumiCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
             $AbsHumiCmd->save();
 
         // Ajout d'une commande pour le message
