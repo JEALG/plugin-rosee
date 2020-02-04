@@ -79,7 +79,7 @@ class rosee extends eqLogic {
             $roseeCmd->setIsHistorized(0);
             $roseeCmd->setIsVisible(1);
             $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
-            //$roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
+            $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
             $roseeCmd->save();
 
 		// Ajout d'une commande pour le point de givrage

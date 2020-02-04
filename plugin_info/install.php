@@ -45,7 +45,7 @@ function rosee_update() {
 	$eqLogics = eqLogic::byType($plugin->getId());
     foreach ($eqLogics as $eqLogic)
 	{
-        updateLogicalId($eqLogic, 'Humidité absolue', 'humidite_absolue');
+        updateLogicalId($eqLogic, 'Point de rosée', 'rosee_point');
     }
     //resave eqs for new cmd:
 	try
