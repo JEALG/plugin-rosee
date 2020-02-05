@@ -186,7 +186,7 @@ class rosee extends eqLogic {
         $refresh->save();
         
         // Vérification de la présence de la commande pour le message
-          /*  $roseeCmd = $this->getCmd(null, 'message_givre');
+            $roseeCmd = $this->getCmd(null, 'message_givre');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
                 $roseeCmd->setName(__('Message Alerte givre', __FILE__));
@@ -240,7 +240,7 @@ class rosee extends eqLogic {
                 $roseeCmd->setEqLogic_id($this->getId());
                 //$roseeCmd->setUnite('°T');
                 $roseeCmd->save();
-        /*
+        
     }
 
 	/*  **********************Getteur Setteur*************************** */
