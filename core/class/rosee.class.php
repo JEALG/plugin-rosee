@@ -100,6 +100,8 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsVisible(1);
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
                 $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
+                $roseeCmd->setOrder($order);
+                $order ++;
                 $roseeCmd->save();
             }
 
@@ -118,6 +120,8 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsVisible(1);
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
                 //$roseeCmd->setDisplay('icon','<i class="icon nature-snowflake"></i>');
+                $roseeCmd->setOrder($order);
+                $order ++;
                 $roseeCmd->save();
             }
         
@@ -136,6 +140,8 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsVisible(1);
                 $roseeCmd->setDisplay('generic_type','SIREN_STATE');
                 //$roseeCmd->setDisplay('icon','<i class="icon jeedom-alerte"></i>');
+                $roseeCmd->setOrder($order);
+                $order ++;
                 $roseeCmd->save();
             }
 
@@ -154,6 +160,8 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsVisible(1);
                 $roseeCmd->setDisplay('generic_type','SIREN_STATE');
                 //$roseeCmd->setDisplay('icon','<i class="icon jeedom-alerte2"></i>');
+                $roseeCmd->setOrder($order);
+                $order ++;
                 $roseeCmd->save();
             }
         
@@ -172,6 +180,8 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsVisible(1);
                 $roseeCmd->setDisplay('generic_type','WEATHER_HUMIDITY');
                 $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
+                $roseeCmd->setOrder($order);
+                $order ++;
                 $roseeCmd->save();
             }
 
@@ -189,6 +199,8 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible(0);
                 $roseeCmd->setDisplay('generic_type','WEATHER_CONDITION');
+                $roseeCmd->setOrder($order);
+                $order ++;
                 $roseeCmd->save();
             }
         
@@ -206,6 +218,8 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible(0);
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
+                $roseeCmd->setOrder($order);
+                $order ++;
                 $roseeCmd->save();
             }
     }
