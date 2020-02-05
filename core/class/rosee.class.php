@@ -74,7 +74,12 @@ class rosee extends eqLogic {
 		
 	}
 
-	public function postSave(){
+	public function postSave()
+    {
+        log::add('rosee', 'debug', 'postSave()');
+        
+        $order = 1;
+        
         $refresh = $this->getCmd(null, 'refresh');
         if (!is_object($refresh)) {
             $refresh = new roseeCmd();
