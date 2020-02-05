@@ -92,17 +92,18 @@ class rosee extends eqLogic {
                 $roseeHCmd->setEqLogic_id($this->id);
                 $roseeHCmd->setLogicalId('humidite_absolue');
                 $roseeHCmd->setConfiguration('data', 'humidite_a');
-                $roseeHCmd->setType('info');
-                $roseeHCmd->setSubType('numeric');
                 $roseeHCmd->setUnite('g/m3');
                 $roseeHCmd->setIsHistorized(0);
                 $roseeHCmd->setIsVisible(1);
                 $roseeHCmd->setDisplay('generic_type','WEATHER_HUMIDITY');
-                //$roseeHCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
                 $roseeHCmd->setOrder($order);
-                $order ++;
-                $roseeHCmd->save();
+                $order ++;   
             }
+                $roseeHCmd->setEqLogic_id($this->getId());
+                $roseeHCmd->setLogicalId('humidite_absolue');
+                $roseeHCmd->setType('info');
+                $roseeHCmd->setSubType('numeric');
+                $roseeHCmd->save();
         
         // Ajout d'une commande pour l'alerte rosée
             $roseeARCmd = $this->getCmd(null, 'alerte_rosee');
