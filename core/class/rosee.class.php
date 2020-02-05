@@ -200,8 +200,8 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsVisible(0);
                 $roseeCmd->setDisplay('generic_type','WEATHER_CONDITION');   
             }
-                $roseeCmd->setEqLogic_id($this->getId());
-                $roseeCmd->save();
+               // $roseeCmd->setEqLogic_id($this->getId());
+            //    $roseeCmd->save();
         
         // Vérification de la présence de la commande pour la valeur numérique pour l'alerte givre
             $roseeCmd = $this->getCmd(null, 'message_givre');
@@ -218,8 +218,8 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsVisible(0);
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
             }
-                $roseeCmd->setEqLogic_id($this->getId());
-                $roseeCmd->save();
+              //  $roseeCmd->setEqLogic_id($this->getId());
+            //    $roseeCmd->save();
         
         // Ajout d'une commande pour le point de rosée
             $roseeCmd = $this->getCmd(null, 'rosee_point');
@@ -237,9 +237,9 @@ class rosee extends eqLogic {
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
                 $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
             }
-                $roseeCmd->setEqLogic_id($this->getId());
+              //  $roseeCmd->setEqLogic_id($this->getId());
                 //$roseeCmd->setUnite('°T');
-                $roseeCmd->save();
+            //    $roseeCmd->save();
         
     }
 
