@@ -86,7 +86,7 @@ class rosee extends eqLogic {
         $refresh->save();
 
             $Cmd = $this->getCmd(null, 'humidite_absolue');
-            if (!is_object($roseeCmd)) {
+            if (!is_object($cmd)) {
                 $roseeCmd = new roseeCmd();
                 $roseeCmd->setName(__('Humidité absolue', __FILE__));
                 $roseeCmd->setEqLogic_id($this->id);
@@ -106,7 +106,7 @@ class rosee extends eqLogic {
         
         // Ajout d'une commande pour l'alerte rosée
             $Cmd = $this->getCmd(null, 'alerte_rosee');
-            if (!is_object($roseeCmd)) {
+            if (!is_object($cmd)) {
                 $roseeCmd = new roseeCmd();
                 $roseeCmd->setName(__('Alerte rosée', __FILE__));
                 $roseeCmd->setEqLogic_id($this->id);
