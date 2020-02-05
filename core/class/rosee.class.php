@@ -86,7 +86,7 @@ class rosee extends eqLogic {
         $refresh->save();
         
         // Ajout d'une commande pour l'humidité absolue
-            $roseeCmd = $this->getCmd(null, 'Humidité absolue');
+            $roseeCmd = $this->getCmd(null, 'humidite_absolue');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
                 $roseeCmd->setName(__('Humidité absolue', __FILE__));
@@ -106,7 +106,7 @@ class rosee extends eqLogic {
             }
         
         // Ajout d'une commande pour l'alerte rosée
-            $roseeCmd = $this->getCmd(null, 'Alerte rosée');
+            $roseeCmd = $this->getCmd(null, 'alerte_rosee');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
                 $roseeCmd->setName(__('Alerte rosée', __FILE__));
@@ -126,7 +126,7 @@ class rosee extends eqLogic {
             }
         
         // Ajout d'une commande pour le point de rosée
-            $roseeCmd = $this->getCmd(null, 'Point de rosée');
+            $roseeCmd = $this->getCmd(null, 'rosee');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
                 $roseeCmd->setName(__('Point de rosée', __FILE__));
@@ -146,7 +146,7 @@ class rosee extends eqLogic {
             }
 
 		// Ajout d'une commande pour l'alerte givrage
-            $roseeCmd = $this->getCmd(null, 'Alerte givre');
+            $roseeCmd = $this->getCmd(null, 'alerte_givre');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
                 $roseeCmd->setName(__('Alerte givre', __FILE__));
@@ -166,7 +166,7 @@ class rosee extends eqLogic {
             }
         
 		// Ajout d'une commande pour le point de givrage
-            $roseeCmd = $this->getCmd(null, 'Point de givrage');
+            $roseeCmd = $this->getCmd(null, 'givrage');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
                 $roseeCmd->setName(__('Point de givrage', __FILE__));
@@ -186,7 +186,7 @@ class rosee extends eqLogic {
             }
 
         // Ajout d'une commande pour le message
-            $roseeCmd = $this->getCmd(null, 'Message Alerte givre');
+            $roseeCmd = $this->getCmd(null, 'message_givre');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
                 $roseeCmd->setName(__('Message Alerte givre', __FILE__));
@@ -205,7 +205,7 @@ class rosee extends eqLogic {
             }
         
         // Ajout d'une commande pour la valeur numérique de l'alerte givre
-            $roseeCmd = $this->getCmd(null, 'Message Alerte givre numérique');
+            $roseeCmd = $this->getCmd(null, 'message_givre_num');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
                 $roseeCmd->setName(__('Message Alerte givre numérique', __FILE__));
