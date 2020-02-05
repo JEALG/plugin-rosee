@@ -98,7 +98,7 @@ class rosee extends eqLogic {
                 $roseeHCmd->setIsHistorized(0);
                 $roseeHCmdCmd->setIsVisible(1);
                 $roseeHCmd->setDisplay('generic_type','WEATHER_HUMIDITY');
-                $roseeHCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
+                //$roseeHCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
                 $roseeHCmd->setOrder($order);
                 $order ++;
                 $roseeHCmd->save();
