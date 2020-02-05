@@ -41,13 +41,14 @@ function rosee_update() {
         $cron->remove();
     }
     
-  /*  $plugin = plugin::byId('rosee');
+    $plugin = plugin::byId('rosee');
 	$eqLogics = eqLogic::byType($plugin->getId());
     foreach ($eqLogics as $eqLogic)
         {
             updateLogicalId($eqLogic, 'Point de rosée', 'rosee_point');
             updateLogicalId($eqLogic, 'Humidité absolue', 'humidite_absolue');
         }
+    /*
     //resave eqs for new cmd:
         try
         {
