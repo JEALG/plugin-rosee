@@ -67,7 +67,11 @@ function addCmdToTable(_cmd) {
 		tr += '<td>';
 		tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="value" ' + disabled + ' readonly=true>';
 		tr += '</td>';
+        if (_cmd.subType == "numeric") {
 		tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="unite" style="width : 90px;" placeholder="{{Unité}}"></td>';
+        } else {
+        tr += '<td></td>'; 
+        }
 		tr += '<td>';
 		tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span> ';
         if (_cmd.subType == "numeric") {
