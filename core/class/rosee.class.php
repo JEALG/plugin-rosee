@@ -67,13 +67,6 @@ class rosee extends eqLogic {
 		}
 	}
 
-	public function postInsert() {
-		
-            
-
-		
-	}
-
 	public function postSave()
     {
         log::add('rosee', 'debug', 'postSave()');
@@ -200,21 +193,21 @@ class rosee extends eqLogic {
             }
         
         // Ajout d'une commande pour la valeur numérique de l'alerte givre
-          //  $roseeCmd = $this->getCmd(null, 'Message Alerte givre numérique');
-            //if (!is_object($roseeCmd)) {
-              //  $roseeCmd = new roseeCmd();
-            //    $roseeCmd->setName(__('Message Alerte givre numérique', __FILE__));
-              //  $roseeCmd->setEqLogic_id($this->id);
-            //    $roseeCmd->setLogicalId('message_givre_num');
-            //    $roseeCmd->setConfiguration('data', 'message_givre_num');
-            //    $roseeCmd->setType('info');
-            //    $roseeCmd->setSubType('numeric');
-            //    $roseeCmd->setUnite('');
-            //    $roseeCmd->setIsHistorized(0);
-            //    $roseeCmd->setIsVisible(0);
-            //    $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
-            //    $roseeCmd->save();
-            //}
+            $roseeCmd = $this->getCmd(null, 'Message Alerte givre numérique');
+            if (!is_object($roseeCmd)) {
+                $roseeCmd = new roseeCmd();
+                $roseeCmd->setName(__('Message Alerte givre numérique', __FILE__));
+                $roseeCmd->setEqLogic_id($this->id);
+                $roseeCmd->setLogicalId('message_givre_num');
+                $roseeCmd->setConfiguration('data', 'message_givre_num');
+                $roseeCmd->setType('info');
+                $roseeCmd->setSubType('numeric');
+                $roseeCmd->setUnite('');
+                $roseeCmd->setIsHistorized(0);
+                $roseeCmd->setIsVisible(0);
+                $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
+                $roseeCmd->save();
+            }
     }
 
 	/*  **********************Getteur Setteur*************************** */
