@@ -198,7 +198,8 @@ class rosee extends eqLogic {
                 $roseeCmd->setSubType('string');
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible(0);
-                $roseeCmd->setDisplay('generic_type','WEATHER_CONDITION');   
+                $roseeCmd->setDisplay('generic_type','WEATHER_CONDITION');
+                $roseeCmd->save();
             }
                // $roseeCmd->setEqLogic_id($this->getId());
             //    $roseeCmd->save();
