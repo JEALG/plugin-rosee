@@ -57,6 +57,7 @@ class rosee extends eqLogic {
     }
 
 	public function preUpdate() {
+        if (!$this->getIsEnable()) return;
 		if ($this->getConfiguration('temperature') == '') {
 			throw new Exception(__('Le champ "Température" ne peut être vide',__FILE__));
 		}
@@ -197,9 +198,10 @@ class rosee extends eqLogic {
                 $roseeCmd->setSubType('string');
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible(0);
-                $roseeCmd->setDisplay('generic_type','WEATHER_CONDITION');
-                $roseeCmd->save();   
+                $roseeCmd->setDisplay('generic_type','WEATHER_CONDITION');   
             }
+                $roseeCmd->setEqLogic_id($this->getId());
+                $roseeCmd->save();
         
         // Vérification de la présence de la commande pour la valeur numérique pour l'alerte givre
             $roseeCmd = $this->getCmd(null, 'message_givre');
@@ -215,8 +217,29 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible(0);
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
-                $roseeCmd->save();
             }
+                $roseeCmd->setEqLogic_id($this->getId());
+                $roseeCmd->save();
+        
+        // Ajout d'une commande pour le point de rosée
+            $roseeCmd = $this->getCmd(null, 'rosee_point');
+            if (!is_object($roseeCmd)) {
+                $roseeCmd = new roseeCmd();
+                $roseeCmd->setName(__('Point de rosée', __FILE__));
+                $roseeCmd->setEqLogic_id($this->id);
+                $roseeCmd->setLogicalId('rosee');
+                $roseeCmd->setConfiguration('data', 'rosee_point');
+                $roseeCmd->setType('info');
+                $roseeCmd->setSubType('numeric');
+                $roseeCmd->setUnite('°C');
+                $roseeCmd->setIsHistorized(0);
+                $roseeCmd->setIsVisible(1);
+                $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
+                $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
+            }
+                $roseeCmd->setEqLogic_id($this->getId());
+                $roseeCmd->setUnite('°C');
+                $roseeCmd->save();
         
     }
 
