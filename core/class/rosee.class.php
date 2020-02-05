@@ -85,141 +85,141 @@ class rosee extends eqLogic {
         $refresh->setEqLogic_id($this->getId());
         $refresh->save();
 
-            $Cmd = $this->getCmd(null, 'humidite_absolue');
-            if (!is_object($cmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Humidité absolue', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('humidite_absolue');
-                $roseeCmd->setConfiguration('data', 'humidite_a');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('numeric');
-                $roseeCmd->setUnite('g/m3');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(1);
-                $roseeCmd->setDisplay('generic_type','WEATHER_HUMIDITY');
-                $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
-                $roseeCmd->setOrder($order);
+            $roseeHCmd = $this->getCmd(null, 'humidite_absolue');
+            if (!is_object($roseeHCmd)) {
+                $roseeHCmd = new roseeCmd();
+                $roseeHCmd->setName(__('Humidité absolue', __FILE__));
+                $roseeHCmd->setEqLogic_id($this->id);
+                $roseeHCmd->setLogicalId('humidite_absolue');
+                $roseeHCmd->setConfiguration('data', 'humidite_a');
+                $roseeHCmd->setType('info');
+                $roseeHCmd->setSubType('numeric');
+                $roseeHCmd->setUnite('g/m3');
+                $roseeHCmd->setIsHistorized(0);
+                $roseeHCmdCmd->setIsVisible(1);
+                $roseeHCmd->setDisplay('generic_type','WEATHER_HUMIDITY');
+                $roseeHCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
+                $roseeHCmd->setOrder($order);
                 $order ++;
-                $roseeCmd->save();
+                $roseeHCmd->save();
             }
         
         // Ajout d'une commande pour l'alerte rosée
-            $Cmd = $this->getCmd(null, 'alerte_rosee');
-            if (!is_object($cmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Alerte rosée', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('alerte_rosee');
-                $roseeCmd->setConfiguration('data', 'alert_r');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('binary');
-                $roseeCmd->setUnite('');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(1);
-                $roseeCmd->setDisplay('generic_type','SIREN_STATE');
-                //$roseeCmd->setDisplay('icon','<i class="icon jeedom-alerte"></i>');
-                $roseeCmd->setOrder($order);
+            $roseeARCmd = $this->getCmd(null, 'alerte_rosee');
+            if (!is_object($roseeARCmd)) {
+                $roseeARCmd = new roseeCmd();
+                $roseeARCmd->setName(__('Alerte rosée', __FILE__));
+                $roseeARCmd->setEqLogic_id($this->id);
+                $roseeARCmd->setLogicalId('alerte_rosee');
+                $roseeARCmd->setConfiguration('data', 'alert_r');
+                $roseeARCmd->setType('info');
+                $roseeARCmd->setSubType('binary');
+                $roseeARCmd->setUnite('');
+                $roseeARCmd->setIsHistorized(0);
+                $roseeARCmd->setIsVisible(1);
+                $roseeARCmd->setDisplay('generic_type','SIREN_STATE');
+                //$roseeARCmd->setDisplay('icon','<i class="icon jeedom-alerte"></i>');
+                $roseeARCmd->setOrder($order);
                 $order ++;
-                $roseeCmd->save();
+                $roseeARCmd->save();
             }
         
         // Ajout d'une commande pour le point de rosée
-            $Cmd = $this->getCmd(null, 'rosee');
-            if (!is_object($roseeCmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Point de rosée', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('rosee');
-                $roseeCmd->setConfiguration('data', 'rosee_point');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('numeric');
-                $roseeCmd->setUnite('°C');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(1);
-                $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
-                $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
-                $roseeCmd->setOrder($order);
+            $roseePRCmd = $this->getCmd(null, 'rosee');
+            if (!is_object($roseePRCmd)) {
+                $roseePRCmd = new roseeCmd();
+                $roseePRCmd->setName(__('Point de rosée', __FILE__));
+                $roseePRCmd->setEqLogic_id($this->id);
+                $roseePRCmd->setLogicalId('rosee');
+                $roseePRCmd->setConfiguration('data', 'rosee_point');
+                $roseePRCmd->setType('info');
+                $roseePRCmd->setSubType('numeric');
+                $roseePRCmd->setUnite('°C');
+                $roseePRCmd->setIsHistorized(0);
+                $roseePRCmd->setIsVisible(1);
+                $roseePRCmd->setDisplay('generic_type','GENERIC_INFO');
+                //$roseePRCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
+                $roseePRCmd->setOrder($order);
                 $order ++;
-                $roseeCmd->save();
+                $roseePRCmd->save();
             }
 
 		// Ajout d'une commande pour l'alerte givrage
-            $Cmd = $this->getCmd(null, 'alerte_givre');
-            if (!is_object($roseeCmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Alerte givre', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('alerte_givre');
-                $roseeCmd->setConfiguration('data', 'alert_g');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('binary');
-                $roseeCmd->setUnite('');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(1);
-                $roseeCmd->setDisplay('generic_type','SIREN_STATE');
-                //$roseeCmd->setDisplay('icon','<i class="icon jeedom-alerte2"></i>');
-                $roseeCmd->setOrder($order);
+            $roseeAGCmd = $this->getCmd(null, 'alerte_givre');
+            if (!is_object($roseeAGCmd)) {
+                $roseeAGCmd = new roseeCmd();
+                $roseeAGCmd->setName(__('Alerte givre', __FILE__));
+                $roseeAGCmd->setEqLogic_id($this->id);
+                $roseeAGCmd->setLogicalId('alerte_givre');
+                $roseeAGCmd->setConfiguration('data', 'alert_g');
+                $roseeAGCmd->setType('info');
+                $roseeAGCmd->setSubType('binary');
+                $roseeAGCmd->setUnite('');
+                $roseeAGCmd->setIsHistorized(0);
+                $roseeAGCmd->setIsVisible(1);
+                $roseeAGCmd->setDisplay('generic_type','SIREN_STATE');
+                //$roseeAGCmd->setDisplay('icon','<i class="icon jeedom-alerte2"></i>');
+                $roseeAGCmd->setOrder($order);
                 $order ++;
-                $roseeCmd->save();
+                $roseeAGCmd->save();
             }
         
 		// Ajout d'une commande pour le point de givrage
-            $Cmd = $this->getCmd(null, 'givrage');
-            if (!is_object($roseeCmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Point de givrage', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('givrage');
-                $roseeCmd->setConfiguration('data', 'frost_point');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('numeric');
-                $roseeCmd->setUnite('°C');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(1);
-                $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
-                //$roseeCmd->setDisplay('icon','<i class="icon nature-snowflake"></i>');
-                $roseeCmd->setOrder($order);
+            $roseePGCmd  = $this->getCmd(null, 'givrage');
+            if (!is_object($roseePGCmd)) {
+                $roseePGCmd = new roseeCmd();
+                $roseePGCmd->setName(__('Point de givrage', __FILE__));
+                $roseePGCmd->setEqLogic_id($this->id);
+                $roseePGCmd->setLogicalId('givrage');
+                $roseePGCmd->setConfiguration('data', 'frost_point');
+                $roseePGCmd->setType('info');
+                $roseePGCmd->setSubType('numeric');
+                $roseePGCmd->setUnite('°C');
+                $roseePGCmd->setIsHistorized(0);
+                $roseePGCmd->setIsVisible(1);
+                $roseePGCmd->setDisplay('generic_type','GENERIC_INFO');
+                //$roseePGCmd->setDisplay('icon','<i class="icon nature-snowflake"></i>');
+                $roseePGCmd->setOrder($order);
                 $order ++;
-                $roseeCmd->save();
+                $roseePGCmd->save();
             }
 
         // Ajout d'une commande pour le message
-            $Cmd = $this->getCmd(null, 'message_givre');
-            if (!is_object($roseeCmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Message Alerte givre', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('message_givre');
-                $roseeCmd->setConfiguration('data', 'message_givre');
-                $roseeCmd->setUnite('');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('string');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(0);
-                $roseeCmd->setDisplay('generic_type','WEATHER_CONDITION');
-                $roseeCmd->setOrder($order);
+            $roseeMGCmd = $this->getCmd(null, 'message_givre');
+            if (!is_object($roseeMGCmd)) {
+                $roseeMGCmd = new roseeCmd();
+                $roseeMGCmd->setName(__('Message Alerte givre', __FILE__));
+                $roseeMGCmd->setEqLogic_id($this->id);
+                $roseeMGCmd->setLogicalId('message_givre');
+                $roseeMGCmd->setConfiguration('data', 'message_givre');
+                $roseeMGCmd->setUnite('');
+                $roseeMGCmd->setType('info');
+                $roseeMGCmd->setSubType('string');
+                $roseeMGCmd->setIsHistorized(0);
+                $roseeMGCmd->setIsVisible(0);
+                $roseeMGCmd->setDisplay('generic_type','WEATHER_CONDITION');
+                $roseeMGCmd->setOrder($order);
                 $order ++;
-                $roseeCmd->save();
+                $roseeMGCmd->save();
             }
         
         // Ajout d'une commande pour la valeur numérique de l'alerte givre
-            $Cmd = $this->getCmd(null, 'message_givre_num');
-            if (!is_object($roseeCmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Message Alerte givre numérique', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('message_givre_num');
-                $roseeCmd->setConfiguration('data', 'message_givre_num');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('numeric');
-                $roseeCmd->setUnite('');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(0);
-                $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
-                $roseeCmd->setOrder($order);
+            $roseeMNGCmd = $this->getCmd(null, 'message_givre_num');
+            if (!is_object($roseeMNGCmd)) {
+                $roseeMNGCmd = new roseeCmd();
+                $roseeMNGCmd->setName(__('Message Alerte givre numérique', __FILE__));
+                $roseeMNGCmd->setEqLogic_id($this->id);
+                $roseeMNGCmd->setLogicalId('message_givre_num');
+                $roseeMNGCmd->setConfiguration('data', 'message_givre_num');
+                $roseeMNGCmd->setType('info');
+                $roseeMNGCmd->setSubType('numeric');
+                $roseeMNGCmd->setUnite('');
+                $roseeMNGCmd->setIsHistorized(0);
+                $roseeMNGCmd->setIsVisible(0);
+                $roseeMNGCmd->setDisplay('generic_type','GENERIC_INFO');
+                $roseeMNGCmd->setOrder($order);
                 $order ++;
-                $roseeCmd->save();
+                $roseeMNGCmd->save();
             }
     }
 
