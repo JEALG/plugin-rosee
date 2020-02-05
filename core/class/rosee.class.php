@@ -71,78 +71,7 @@ class rosee extends eqLogic {
 		
             
 
-		// Ajout d'une commande pour l'alerte rosée
-            $roseeCmd = new roseeCmd();
-            $roseeCmd->setName(__('Alerte rosée', __FILE__));
-            $roseeCmd->setEqLogic_id($this->id);
-            $roseeCmd->setLogicalId('alerte_rosee');
-            $roseeCmd->setConfiguration('data', 'alert_r');
-            $roseeCmd->setType('info');
-            $roseeCmd->setSubType('binary');
-            $roseeCmd->setUnite('');
-            $roseeCmd->setIsHistorized(0);
-            $roseeCmd->setIsVisible(1);
-            $roseeCmd->setDisplay('generic_type','SIREN_STATE');
-            //$roseeCmd->setDisplay('icon','<i class="icon jeedom-alerte"></i>');
-            $roseeCmd->save();
-
-		// Ajout d'une commande pour l'alerte givrage
-            $roseeCmd = new roseeCmd();
-            $roseeCmd->setName(__('Alerte givre', __FILE__));
-            $roseeCmd->setEqLogic_id($this->id);
-            $roseeCmd->setLogicalId('alerte_givre');
-            $roseeCmd->setConfiguration('data', 'alert_g');
-            $roseeCmd->setType('info');
-            $roseeCmd->setSubType('binary');
-            $roseeCmd->setUnite('');
-            $roseeCmd->setIsHistorized(0);
-            $roseeCmd->setIsVisible(1);
-            $roseeCmd->setDisplay('generic_type','SIREN_STATE');
-            //$roseeCmd->setDisplay('icon','<i class="icon jeedom-alerte2"></i>');
-            $roseeCmd->save();
-        
-		// Ajout d'une commande pour l'humidité absolue
-            $roseeCmd = new roseeCmd();
-            $roseeCmd->setName(__('Humidité absolue', __FILE__));
-            $roseeCmd->setEqLogic_id($this->id);
-            $roseeCmd->setLogicalId('humidite_absolue');
-            $roseeCmd->setConfiguration('data', 'humidite_a');
-            $roseeCmd->setType('info');
-            $roseeCmd->setSubType('numeric');
-            $roseeCmd->setUnite('g/m3');
-            $roseeCmd->setIsHistorized(0);
-            $roseeCmd->setIsVisible(1);
-            $roseeCmd->setDisplay('generic_type','WEATHER_HUMIDITY');
-            $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
-            $roseeCmd->save();
-
-        // Ajout d'une commande pour le message
-            $roseeCmd = new roseeCmd();
-            $roseeCmd->setName(__('Message Alerte givre', __FILE__));
-            $roseeCmd->setEqLogic_id($this->id);
-            $roseeCmd->setLogicalId('message_givre');
-            $roseeCmd->setConfiguration('data', 'message_givre');
-            $roseeCmd->setUnite('');
-            $roseeCmd->setType('info');
-            $roseeCmd->setSubType('string');
-            $roseeCmd->setIsHistorized(0);
-            $roseeCmd->setIsVisible(0);
-            $roseeCmd->setDisplay('generic_type','WEATHER_CONDITION');
-            $roseeCmd->save();
-        
-        // Ajout d'une commande pour la valeur numérique de l'alerte givre
-            $roseeCmd = new roseeCmd();
-            $roseeCmd->setName(__('Message Alerte givre numérique', __FILE__));
-            $roseeCmd->setEqLogic_id($this->id);
-            $roseeCmd->setLogicalId('message_givre_num');
-            $roseeCmd->setConfiguration('data', 'message_givre_num');
-            $roseeCmd->setType('info');
-            $roseeCmd->setSubType('numeric');
-            $roseeCmd->setUnite('');
-            $roseeCmd->setIsHistorized(0);
-            $roseeCmd->setIsVisible(0);
-            $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
-            $roseeCmd->save();
+		
 	}
 
 	public function postSave(){
@@ -194,6 +123,93 @@ class rosee extends eqLogic {
                 $roseeCmd->save();
             }
         
+        // Ajout d'une commande pour l'alerte rosée
+            $roseeCmd = $this->getCmd(null, 'Alerte rosée');
+            if (!is_object($roseeCmd)) {
+                $roseeCmd = new roseeCmd();
+                $roseeCmd->setName(__('Alerte rosée', __FILE__));
+                $roseeCmd->setEqLogic_id($this->id);
+                $roseeCmd->setLogicalId('alerte_rosee');
+                $roseeCmd->setConfiguration('data', 'alert_r');
+                $roseeCmd->setType('info');
+                $roseeCmd->setSubType('binary');
+                $roseeCmd->setUnite('');
+                $roseeCmd->setIsHistorized(0);
+                $roseeCmd->setIsVisible(1);
+                $roseeCmd->setDisplay('generic_type','SIREN_STATE');
+                //$roseeCmd->setDisplay('icon','<i class="icon jeedom-alerte"></i>');
+                $roseeCmd->save();
+            }
+
+		// Ajout d'une commande pour l'alerte givrage
+            $roseeCmd = $this->getCmd(null, 'Alerte givre');
+            if (!is_object($roseeCmd)) {
+                $roseeCmd = new roseeCmd();
+                $roseeCmd->setName(__('Alerte givre', __FILE__));
+                $roseeCmd->setEqLogic_id($this->id);
+                $roseeCmd->setLogicalId('alerte_givre');
+                $roseeCmd->setConfiguration('data', 'alert_g');
+                $roseeCmd->setType('info');
+                $roseeCmd->setSubType('binary');
+                $roseeCmd->setUnite('');
+                $roseeCmd->setIsHistorized(0);
+                $roseeCmd->setIsVisible(1);
+                $roseeCmd->setDisplay('generic_type','SIREN_STATE');
+                //$roseeCmd->setDisplay('icon','<i class="icon jeedom-alerte2"></i>');
+                $roseeCmd->save();
+            }
+        
+		// Ajout d'une commande pour l'humidité absolue
+            $roseeCmd = $this->getCmd(null, 'Humidité absolue');
+            if (!is_object($roseeCmd)) {
+                $roseeCmd = new roseeCmd();
+                $roseeCmd->setName(__('Humidité absolue', __FILE__));
+                $roseeCmd->setEqLogic_id($this->id);
+                $roseeCmd->setLogicalId('humidite_absolue');
+                $roseeCmd->setConfiguration('data', 'humidite_a');
+                $roseeCmd->setType('info');
+                $roseeCmd->setSubType('numeric');
+                $roseeCmd->setUnite('g/m3');
+                $roseeCmd->setIsHistorized(0);
+                $roseeCmd->setIsVisible(1);
+                $roseeCmd->setDisplay('generic_type','WEATHER_HUMIDITY');
+                $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
+                $roseeCmd->save();
+            }
+
+        // Ajout d'une commande pour le message
+            $roseeCmd = $this->getCmd(null, 'Message Alerte givre');
+            if (!is_object($roseeCmd)) {
+                $roseeCmd = new roseeCmd();
+                $roseeCmd->setName(__('Message Alerte givre', __FILE__));
+                $roseeCmd->setEqLogic_id($this->id);
+                $roseeCmd->setLogicalId('message_givre');
+                $roseeCmd->setConfiguration('data', 'message_givre');
+                $roseeCmd->setUnite('');
+                $roseeCmd->setType('info');
+                $roseeCmd->setSubType('string');
+                $roseeCmd->setIsHistorized(0);
+                $roseeCmd->setIsVisible(0);
+                $roseeCmd->setDisplay('generic_type','WEATHER_CONDITION');
+                $roseeCmd->save();
+            }
+        
+        // Ajout d'une commande pour la valeur numérique de l'alerte givre
+            $roseeCmd = $this->getCmd(null, 'Message Alerte givre numérique');
+            if (!is_object($roseeCmd)) {
+                $roseeCmd = new roseeCmd();
+                $roseeCmd->setName(__('Message Alerte givre numérique', __FILE__));
+                $roseeCmd->setEqLogic_id($this->id);
+                $roseeCmd->setLogicalId('message_givre_num');
+                $roseeCmd->setConfiguration('data', 'message_givre_num');
+                $roseeCmd->setType('info');
+                $roseeCmd->setSubType('numeric');
+                $roseeCmd->setUnite('');
+                $roseeCmd->setIsHistorized(0);
+                $roseeCmd->setIsVisible(0);
+                $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
+                $roseeCmd->save();
+            }
     }
 
 	/*  **********************Getteur Setteur*************************** */
