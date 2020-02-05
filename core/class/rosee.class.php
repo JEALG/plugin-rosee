@@ -69,19 +69,22 @@ class rosee extends eqLogic {
 
 	public function postInsert() {
 		// Ajout d'une commande pour le point de rosée
-            $roseeCmd = new roseeCmd();
-            $roseeCmd->setName(__('Point de rosée', __FILE__));
-            $roseeCmd->setEqLogic_id($this->id);
-            $roseeCmd->setLogicalId('rosee');
-            $roseeCmd->setConfiguration('data', 'rosee_point');
-            $roseeCmd->setType('info');
-            $roseeCmd->setSubType('numeric');
-            $roseeCmd->setUnite('°C');
-            $roseeCmd->setIsHistorized(0);
-            $roseeCmd->setIsVisible(1);
-            $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
-            $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
-            $roseeCmd->save();
+            $roseeCmd = $this->getCmd(null, 'Point de rosée');
+            if (!is_object($qivivoCmd)) {
+                $roseeCmd = new roseeCmd();
+                $roseeCmd->setName(__('Point de rosée', __FILE__));
+                $roseeCmd->setEqLogic_id($this->id);
+                $roseeCmd->setLogicalId('rosee');
+                $roseeCmd->setConfiguration('data', 'rosee_point');
+                $roseeCmd->setType('info');
+                $roseeCmd->setSubType('numeric');
+                $roseeCmd->setUnite('°C');
+                $roseeCmd->setIsHistorized(0);
+                $roseeCmd->setIsVisible(1);
+                $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
+                $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
+                $roseeCmd->save();
+            }
 
 		// Ajout d'une commande pour le point de givrage
             $roseeCmd = new roseeCmd();
