@@ -204,7 +204,7 @@ class rosee extends eqLogic {
             //    $roseeCmd->save();
         
         // Vérification de la présence de la commande pour la valeur numérique pour l'alerte givre
-            $roseeCmd = $this->getCmd(null, 'message_givre');
+            /*$roseeCmd = $this->getCmd(null, 'message_givre');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
                 $roseeCmd->setName(__('Message Alerte givre numérique', __FILE__));
@@ -217,7 +217,7 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible(0);
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
-            }
+            } */
               //  $roseeCmd->setEqLogic_id($this->getId());
             //    $roseeCmd->save();
         
@@ -236,6 +236,7 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsVisible(1);
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
                 $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
+                $roseeCmd->save();
             }
               //  $roseeCmd->setEqLogic_id($this->getId());
                 //$roseeCmd->setUnite('°T');
