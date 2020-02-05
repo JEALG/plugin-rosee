@@ -62,17 +62,17 @@ function rosee_update() {
             $e = print_r($e, 1);
             log::add('rosee', 'error', 'rosee_update ERROR: '.$e);
         }
-
-    message::add('rosee', 'Merci pour la mise à jour de ce plugin, le plugin a été repris par JAG, merci à Claude Metzger pour son boulot'); */
+*/
+    message::add('rosee', 'Merci pour la mise à jour de ce plugin, le plugin a été repris par JAG, merci à Claude Metzger pour son boulot');
 }
 
-/*function updateLogicalId($eqLogic, $from, $to) {
+function updateLogicalId($eqLogic, $from, $to) {
 	$roseeCmd = $eqLogic->getCmd(null, $from);
 	if (is_object($roseeCmd)) {
 		$roseeCmd->setLogicalId($to);
 		$roseeCmd->save();
 	}
-} */
+}
 
 
 function rosee_remove() {
