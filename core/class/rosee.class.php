@@ -237,8 +237,8 @@ class rosee extends eqLogic {
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
                 $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
             }
-                $roseeCmd->setEqLogic_id($this->getId());
-                $roseeCmd->setUnite('°T');
+                //$roseeCmd->setEqLogic_id($this->getId());
+                //$roseeCmd->setUnite('°T');
                 $roseeCmd->save();
         
     }
