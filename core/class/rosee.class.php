@@ -68,40 +68,8 @@ class rosee extends eqLogic {
 	}
 
 	public function postInsert() {
-		// Ajout d'une commande pour le point de rosée
-            $roseeCmd = $this->getCmd(null, 'Point de rosée');
-            if (!is_object($roseeCmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Point de rosée', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('rosee');
-                $roseeCmd->setConfiguration('data', 'rosee_point');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('numeric');
-                $roseeCmd->setUnite('°C');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(1);
-                $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
-                $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
-                $roseeCmd->save();
-            }
-
-		// Ajout d'une commande pour le point de givrage
-            $roseeCmd = $this->getCmd(null, 'Point de givrage');
-            if (!is_object($roseeCmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Point de givrage', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('givrage');
-                $roseeCmd->setConfiguration('data', 'frost_point');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('numeric');
-                $roseeCmd->setUnite('°C');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(1);
-                $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
-                //$roseeCmd->setDisplay('icon','<i class="icon nature-snowflake"></i>');
-                $roseeCmd->save();
+		
+            
 
 		// Ajout d'une commande pour l'alerte rosée
             $roseeCmd = new roseeCmd();
@@ -189,6 +157,42 @@ class rosee extends eqLogic {
         $refresh->setSubType('other');
         $refresh->setEqLogic_id($this->getId());
         $refresh->save();
+        
+        // Ajout d'une commande pour le point de rosée
+            $roseeCmd = $this->getCmd(null, 'Point de rosée');
+            if (!is_object($roseeCmd)) {
+                $roseeCmd = new roseeCmd();
+                $roseeCmd->setName(__('Point de rosée', __FILE__));
+                $roseeCmd->setEqLogic_id($this->id);
+                $roseeCmd->setLogicalId('rosee');
+                $roseeCmd->setConfiguration('data', 'rosee_point');
+                $roseeCmd->setType('info');
+                $roseeCmd->setSubType('numeric');
+                $roseeCmd->setUnite('°C');
+                $roseeCmd->setIsHistorized(0);
+                $roseeCmd->setIsVisible(1);
+                $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
+                $roseeCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
+                $roseeCmd->save();
+            }
+
+		// Ajout d'une commande pour le point de givrage
+            $roseeCmd = $this->getCmd(null, 'Point de givrage');
+            if (!is_object($roseeCmd)) {
+                $roseeCmd = new roseeCmd();
+                $roseeCmd->setName(__('Point de givrage', __FILE__));
+                $roseeCmd->setEqLogic_id($this->id);
+                $roseeCmd->setLogicalId('givrage');
+                $roseeCmd->setConfiguration('data', 'frost_point');
+                $roseeCmd->setType('info');
+                $roseeCmd->setSubType('numeric');
+                $roseeCmd->setUnite('°C');
+                $roseeCmd->setIsHistorized(0);
+                $roseeCmd->setIsVisible(1);
+                $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
+                //$roseeCmd->setDisplay('icon','<i class="icon nature-snowflake"></i>');
+                $roseeCmd->save();
+            }
         
     }
 
