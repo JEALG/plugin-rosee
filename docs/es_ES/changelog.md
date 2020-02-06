@@ -21,7 +21,7 @@ description: Ce plugin permet d'obtenir le point de rosée pour savoir si l'herb
     - CAS 3 : Message =  *Givre, Présence de givre*, Alerte givre = *1*, Message numérique = *1*
 - Changement du logo du plugin merci @mich0111
 - Correction type de générique
-- Posibilité d'enregistré l'équipement sans les champs obligatoires si c'est l'équipement n'est pas actif
+- Posibilité d'enregistré l'équipement sans les champs obligatoires si l'équipement n'est pas actif
 - Modification affichage des commandes
     - Ajout la posibilité d'inverser les commandes binaires
     - Suppression de l'historique sur les commandes messages
