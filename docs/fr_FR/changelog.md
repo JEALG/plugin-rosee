@@ -28,6 +28,7 @@ description: Ce plugin permet d'obtenir le point de rosée pour savoir si l'herb
 - Ajout des nouvelles commandes en automatique sans recréer les commandes (Merci à Kiboost et à Mips)
 - Modification du type de données pour les seuils => Uniquement numérique
 - Ajout d'un seuil d'humidité absolue pour le calcul de l'alerte de givre
+- Pas de calcul des infos de givres si la température est supérieur de 10°C
     >*Remarque : Il est obligatoire de sauvegarder chaque équipements pour avoir les nouvelles commandes*
 
 # Version 3.3.2

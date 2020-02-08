@@ -369,118 +369,135 @@ class rosee extends eqLogic {
         
             log::add('rosee', 'debug', '└─────────');
 
-        /*  ********************** Calcul du point de givrage *************************** */
-            $temp_kelvin = $temperature + 273.15;
-            $rosee_kelvin = $rosee + 273.15;
-            $frost_kelvin = 2954.61 / $temp_kelvin;
-            $frost_kelvin = $frost_kelvin + 2.193665 * log($temp_kelvin);
-            $frost_kelvin = $frost_kelvin - 13.3448;
-            $frost_kelvin = 2671.02 / $frost_kelvin;
-            $frost_kelvin = $frost_kelvin + $rosee_kelvin - $temp_kelvin;
-            $frost = $frost_kelvin -273.15;
-            $frost_point = round(($frost), 1);
+        // Pas de calcul si température
+                if($temperature <= 10) {
         
-            log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE GIVRAGE : '.$_eqName);
-            log::add('rosee', 'debug', '│ Point de Givrage : ' . $frost_point.' °C');
+                    /*  ********************** Calcul du point de givrage *************************** */
+                        $temp_kelvin = $temperature + 273.15;
+                        $rosee_kelvin = $rosee + 273.15;
+                        $frost_kelvin = 2954.61 / $temp_kelvin;
+                        $frost_kelvin = $frost_kelvin + 2.193665 * log($temp_kelvin);
+                        $frost_kelvin = $frost_kelvin - 13.3448;
+                        $frost_kelvin = 2671.02 / $frost_kelvin;
+                        $frost_kelvin = $frost_kelvin + $rosee_kelvin - $temp_kelvin;
+                        $frost = $frost_kelvin -273.15;
+                        $frost_point = round(($frost), 1);
 
-        /*  ********************** Ancien Calcul de l'alerte givrage en fonction du seuil d'alerte *************************** 
-            $frost_alert_givrage = $temperature - $frost_point;
-                log::add('rosee', 'debug', '│ Calcul point de givrage : (Température - point de givrage) : (' .$temperature .' - '.$frost_point .' )= '. $frost_alert_givrage);
-            if ($frost_alert_givrage <= $dpr) {
-                $alert_g = 1;
-                    log::add('rosee', 'debug', '│ Résultat : Calcul point de givrage (Calcul point de givrage  <= Seuil DPR)');
-                    log::add('rosee', 'debug', '│ ┌───────── Désactivation Alerte Point de rosée : ');
-                $alert_r = 0;
-                    log::add('rosee', 'debug', '│ │Etat alerte rosée : ' . $alert_r);
-                    log::add('rosee', 'debug', '│ └─────────');
-            } else {
-                $alert_g = 0;
-                    log::add('rosee', 'debug', '│ Résultat : Calcul point de givrage (Calcul point de givrage  > Seuil DPR)');
-            };
-        
-                    log::add('rosee', 'debug', '│ Etat alerte gel : ' . $alert_g);
-            $cmd = $this->getCmd('info', 'alerte_givre');
-            if (is_object($cmd)) {
-                $cmd->setConfiguration('value', $alert_g);
-                $cmd->save();
-                $cmd->setCollectDate('');
-                $cmd->event($alert_g);
-                    log::add('rosee', 'debug', '│ Mise à jour Valeur de l\'équipement avec la valeur : ' . $alert_g);
-            };*/
-                    log::add('rosee', 'debug', '└─────────'); 
-        
-        /*  ********************** Message Givrage *************************** */
-            // Explication des cas
-                log::add('rosee', 'debug', '┌───────── MESSAGE & VALEUR NUMERIQUE : '.$_eqName);
-                
-                // Cas 0
-                    $msg_givre_0 = 'Aucun risque de Givre';
-                    $msg_givre_num_0 = 0;
-                    $alert_g_0 = 0;
-                        log::add('rosee', 'debug', '│ ┌───────── CAS N°' .$msg_givre_num_0 .' : '.$msg_givre_0  .' / Alerte givre : ' .$alert_g_0 );
-                        log::add('rosee', 'debug', '│ │ Aucun risque de Givre');
-                        log::add('rosee', 'debug', '│ └─────────');
-        
-                // Cas 1
-                    $msg_givre_1 = 'Givre peu probable malgré la température';   
-                    $msg_givre_num_1 = 1;
-                    $alert_g_1 = 1;
-                        log::add('rosee', 'debug', '│ ┌───────── CAS N°'.$msg_givre_num_1 .' : '  .$msg_givre_1  .' / Alerte givre : ' .$alert_g_1 );
-                        log::add('rosee', 'debug', '│ │ Calcul    : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) < Seuil d\'hunidité absolue )');
-                        log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 1 et ' .$frost_point .' <=0) et (' .$humi_a_m3 .' < ' . $SHA .')');
-                        log::add('rosee', 'debug', '│ └─────────');
-        
-                // Cas 2
-                    $msg_givre_2 = 'Risque de givre';
-                    $msg_givre_num_2 = 2;
-                    $alert_g_2 = 1;
-                        log::add('rosee', 'debug', '│ ┌───────── CAS N°'.$msg_givre_num_2 .' : ' .$msg_givre_2 .' / Alerte givre : ' .$alert_g_2 );
-                        log::add('rosee', 'debug', '│ │ Calcul    : (Température <=4 et Point de Givrage <= 0.5)');
-                        log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 4 et ' .$frost_point .' <=0.5)');
-                        log::add('rosee', 'debug', '│ └─────────');
-        
-                // Cas 3
-                    $msg_givre_3 = 'Givre, Présence de givre';
-                    $msg_givre_num_3 = 3;
-                    $alert_g_3 = 1;
-                        log::add('rosee', 'debug', '│ ┌───────── CAS N°' .$msg_givre_num_3 .' : '.$msg_givre_3.' / Alerte givre : ' .$alert_g_3 );
-                        log::add('rosee', 'debug', '│ │ Calcul     : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) > Seuil d\'hunidité absolue)');
-                        log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 1 et ' .$frost_point .' <=0) et (' .$humi_a_m3 .' > ' . $SHA .')');
-                        log::add('rosee', 'debug', '│ └─────────');
-                
-            // Cas Actuel
-                if($temperature <= 1 && $frost_point <= 0) {
-                    if ($humi_a_m3 > $SHA) {
-                        // Cas 3
-                            $msg_givre = $msg_givre_3;
-                            $msg_givre_num = $msg_givre_num_3;
-                            $alert_g  = $alert_g_3;
-                            $alert_r = 0;
-                    };
-                    if ($humi_a_m3 < $SHA) {
-                        // Cas 1
-                            $msg_givre = $msg_givre_1;
-                            $msg_givre_num = $msg_givre_num_1;
-                            $alert_g  = $alert_g_1;
-                            $alert_r = 0;
-                    };
+                        log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE GIVRAGE : '.$_eqName);
+                        log::add('rosee', 'debug', '│ Point de Givrage : ' . $frost_point.' °C');
 
-                 } elseif ($temperature <= 4 && $frost_point <= 0.5) {
-                        // Cas 2
-                            $msg_givre = $msg_givre_2;
-                            $msg_givre_num = $msg_givre_num_2;
-                            $alert_g  = $alert_g_2;
+                    /*  ********************** Ancien Calcul de l'alerte givrage en fonction du seuil d'alerte *************************** 
+                        $frost_alert_givrage = $temperature - $frost_point;
+                            log::add('rosee', 'debug', '│ Calcul point de givrage : (Température - point de givrage) : (' .$temperature .' - '.$frost_point .' )= '. $frost_alert_givrage);
+                        if ($frost_alert_givrage <= $dpr) {
+                            $alert_g = 1;
+                                log::add('rosee', 'debug', '│ Résultat : Calcul point de givrage (Calcul point de givrage  <= Seuil DPR)');
+                                log::add('rosee', 'debug', '│ ┌───────── Désactivation Alerte Point de rosée : ');
                             $alert_r = 0;
-                } else {
-                        // Cas 0
-                            $msg_givre = $msg_givre_0;
-                            $msg_givre_num = $msg_givre_num_0;
-                            $alert_g  = $alert_g_0;
-                 };
-                    log::add('rosee', 'debug', '│ ┌───────── CAS ACTUEL N°'.$msg_givre_num .' : ' .$msg_givre .' / Alerte givre : ' .$alert_g );
-                    log::add('rosee', 'debug', '│ │ Message : ' .$msg_givre );
-                    log::add('rosee', 'debug', '│ └─────────');
-                    log::add('rosee', 'debug', '└─────────');
+                                log::add('rosee', 'debug', '│ │Etat alerte rosée : ' . $alert_r);
+                                log::add('rosee', 'debug', '│ └─────────');
+                        } else {
+                            $alert_g = 0;
+                                log::add('rosee', 'debug', '│ Résultat : Calcul point de givrage (Calcul point de givrage  > Seuil DPR)');
+                        };
+
+                                log::add('rosee', 'debug', '│ Etat alerte gel : ' . $alert_g);
+                        $cmd = $this->getCmd('info', 'alerte_givre');
+                        if (is_object($cmd)) {
+                            $cmd->setConfiguration('value', $alert_g);
+                            $cmd->save();
+                            $cmd->setCollectDate('');
+                            $cmd->event($alert_g);
+                                log::add('rosee', 'debug', '│ Mise à jour Valeur de l\'équipement avec la valeur : ' . $alert_g);
+                        };*/
+                                log::add('rosee', 'debug', '└─────────'); 
+
+                    /*  ********************** Message Givrage *************************** */
+                        // Explication des cas
+                            log::add('rosee', 'debug', '┌───────── MESSAGE & VALEUR NUMERIQUE : '.$_eqName);
+
+                            // Cas 0
+                                $msg_givre_0 = 'Aucun risque de Givre';
+                                $msg_givre_num_0 = 0;
+                                $alert_g_0 = 0;
+                                    log::add('rosee', 'debug', '│ ┌───────── CAS N°' .$msg_givre_num_0 .' : '.$msg_givre_0  .' / Alerte givre : ' .$alert_g_0 );
+                                    log::add('rosee', 'debug', '│ │ Aucun risque de Givre');
+                                    log::add('rosee', 'debug', '│ └─────────');
+
+                            // Cas 1
+                                $msg_givre_1 = 'Givre peu probable malgré la température';   
+                                $msg_givre_num_1 = 1;
+                                $alert_g_1 = 1;
+                                    log::add('rosee', 'debug', '│ ┌───────── CAS N°'.$msg_givre_num_1 .' : '  .$msg_givre_1  .' / Alerte givre : ' .$alert_g_1 );
+                                    log::add('rosee', 'debug', '│ │ Calcul    : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) < Seuil d\'hunidité absolue )');
+                                    log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 1 et ' .$frost_point .' <=0) et (' .$humi_a_m3 .' < ' . $SHA .')');
+                                    log::add('rosee', 'debug', '│ └─────────');
+
+                            // Cas 2
+                                $msg_givre_2 = 'Risque de givre';
+                                $msg_givre_num_2 = 2;
+                                $alert_g_2 = 1;
+                                    log::add('rosee', 'debug', '│ ┌───────── CAS N°'.$msg_givre_num_2 .' : ' .$msg_givre_2 .' / Alerte givre : ' .$alert_g_2 );
+                                    log::add('rosee', 'debug', '│ │ Calcul    : (Température <=4 et Point de Givrage <= 0.5)');
+                                    log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 4 et ' .$frost_point .' <=0.5)');
+                                    log::add('rosee', 'debug', '│ └─────────');
+
+                            // Cas 3
+                                $msg_givre_3 = 'Givre, Présence de givre';
+                                $msg_givre_num_3 = 3;
+                                $alert_g_3 = 1;
+                                    log::add('rosee', 'debug', '│ ┌───────── CAS N°' .$msg_givre_num_3 .' : '.$msg_givre_3.' / Alerte givre : ' .$alert_g_3 );
+                                    log::add('rosee', 'debug', '│ │ Calcul     : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) > Seuil d\'hunidité absolue)');
+                                    log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 1 et ' .$frost_point .' <=0) et (' .$humi_a_m3 .' > ' . $SHA .')');
+                                    log::add('rosee', 'debug', '│ └─────────');
+
+                        // Cas Actuel
+                            if($temperature <= 1 && $frost_point <= 0) {
+                                if ($humi_a_m3 > $SHA) {
+                                    // Cas 3
+                                        $msg_givre = $msg_givre_3;
+                                        $msg_givre_num = $msg_givre_num_3;
+                                        $alert_g  = $alert_g_3;
+                                        $alert_r = 0;
+                                };
+                                if ($humi_a_m3 < $SHA) {
+                                    // Cas 1
+                                        $msg_givre = $msg_givre_1;
+                                        $msg_givre_num = $msg_givre_num_1;
+                                        $alert_g  = $alert_g_1;
+                                        $alert_r = 0;
+                                };
+
+                             } elseif ($temperature <= 4 && $frost_point <= 0.5) {
+                                    // Cas 2
+                                        $msg_givre = $msg_givre_2;
+                                        $msg_givre_num = $msg_givre_num_2;
+                                        $alert_g  = $alert_g_2;
+                                        $alert_r = 0;
+                            } else {
+                                    // Cas 0
+                                        $msg_givre = $msg_givre_0;
+                                        $msg_givre_num = $msg_givre_num_0;
+                                        $alert_g  = $alert_g_0;
+                             };
+                    } else {
+                        // Température trop chaude
+                            // Cas 0
+                                $msg_givre = $msg_givre_0;
+                                $msg_givre_num = $msg_givre_num_0;
+                                $alert_g  = $alert_g_0;
+                                $frost_point = 999;
+                                $msg_givre2 ='│ │ Info supplémetaire : Il fait trop chaud pas de calcul de l\'alerte givre';
+                                $msg_givre3 ='│ │ Info supplémetaire : Point de givre fixé à 999';
+                                
+                    };
+                                log::add('rosee', 'debug', '│ ┌───────── CAS ACTUEL N°'.$msg_givre_num .' : ' .$msg_givre .' / Alerte givre : ' .$alert_g );
+                                log::add('rosee', 'debug', '│ │ Message : ' .$msg_givre );
+                                log::add('rosee', 'debug', $msg_givre2 );
+                                log::add('rosee', 'debug', $msg_givre3 );
+                                log::add('rosee', 'debug', '│ └─────────');
+                                log::add('rosee', 'debug', '└─────────');
+                    
         
         /*  ********************** Mise à Jour des équipements *************************** */
         
