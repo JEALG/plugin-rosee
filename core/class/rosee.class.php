@@ -274,6 +274,18 @@ class rosee extends eqLogic {
                 }
             }
 		 
+        /*  ********************** SEUIL D'humidité absolue *************************** */          
+            $SHA=$this->getConfiguration('SHA');
+            if ($SHA == '') {
+                //valeur par défaut du seuil humidité absolue = 2.8
+                $SHA=2.8;
+                log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue : Aucune valeur de saisie');
+                log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue par défaut : ' . $SHA.);       
+		      } else {
+                log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue : ' . $SHA.); 
+            }
+                log::add('rosee', 'debug', '└─────────');
+        
         /*  ********************** SEUIL D'ALERTE ROSEE *************************** */          
             $dpr=$this->getConfiguration('DPR');
             if ($dpr == '') {

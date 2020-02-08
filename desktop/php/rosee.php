@@ -154,6 +154,14 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="DPR" placeholder="{{2}}">
 							</div>
 						</div>
+                        <div class="form-group">
+							<label class="col-sm-2 control-label">{{seuil humidité absolue}}
+								<sup><i class="fas fa-question-circle" title="{{seuil humidité absolue en dessous duquel il est peu probable qu'il givre}}"></i></sup>
+							</label>
+							<div class="col-md-2">
+                                <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="SHA" placeholder="{{2}}">
+							</div>
+						</div>
 					</fieldset>
 				</form>
 			</div>
