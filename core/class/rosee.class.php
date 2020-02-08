@@ -277,28 +277,6 @@ class rosee extends eqLogic {
                     log::add('rosee', 'error', '│ Configuration : Pression Atmosphérique non existante : ' . $this->getConfiguration('pression'));
                 }
             }
-		 
-        /*  ********************** SEUIL D'humidité absolue *************************** */
-          //  $SHA = str_replace("#","",$this->getConfiguration('SHA'));
-            //$cmdvirt = cmd::byId($SHA);
-            //if (is_object($cmdvirt)) {
-              //  $SHA = $cmdvirt->execCmd();
-        //        log::add('rosee', 'debug', '│ Température : ' . $SHA.' °C');
-        //    } else {
-          //      $SHA=2.189;
-            //    log::add('rosee', 'error', '│ Configuration : Température non existante : ' . $this->getConfiguration('SHA'));
-            }
-    
-          // $SHA = $this->getConfiguration('SHA');
-            //if ($SHA == '') {
-                //valeur par défaut du seuil humidité absolue = 2.8
-              //  $SHA=2.8;
-            //    log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue : Aucune valeur de saisie');
-              //  log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue par défaut : ' . $SHA.);       
-		      //} else {
-                //log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue : ' . $SHA.); 
-            //}
-              //  log::add('rosee', 'debug', '└─────────');
         
         /*  ********************** SEUIL D'ALERTE ROSEE *************************** */          
             $dpr=$this->getConfiguration('DPR');
@@ -323,7 +301,7 @@ class rosee extends eqLogic {
             $p = 1.0 / $v;                                                          // Poids spécifique en kg / m3
             $humi_a_m3 = 1000.0 * $humi_a * $p;                                     // Humidité absolue en gr / m3
             $humi_a_m3 = round(($humi_a_m3), 1);                                    // Humidité absolue en gr / m3 (1 chiffre après la virgule)
-            $SHA_VA = 2.8;                                                             // Seuil humidité absolue en dessous duquel il est peu probable qu'il givre
+            $SHA_VA = 2.8;                                                          // Seuil humidité absolue en dessous duquel il est peu probable qu'il givre
                 
                 log::add('rosee', 'debug', '┌───────── CALCUL DE L HUMIDITE ABSOLUE : '.$_eqName);
                 log::add('rosee', 'debug', '│ terme_pvs1 : ' . $terme_pvs1);
