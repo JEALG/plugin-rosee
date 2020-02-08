@@ -349,10 +349,10 @@ class rosee extends eqLogic {
         
                 if ($frost_alert_rosee <= $dpr) {
                     $alert_r = 1;
-                    log::add('rosee', 'debug', '│ RESULTAT : Calcul point de rosée (Calcul point de Rosée  <= Seuil DPR) = (' .$frost_alert_rosee .' <= ' .$dpr .')');
+                    log::add('rosee', 'debug', '│ Résultat : Calcul point de rosée (Calcul point de Rosée  <= Seuil DPR) = (' .$frost_alert_rosee .' <= ' .$dpr .')');
                 } else {
                     $alert_r = 0;
-                    log::add('rosee', 'debug', '│ RESULTAT : Calcul point de rosée (Calcul point de Rosée  > Seuil DPR)= (' .$frost_alert_rosee .' > ' .$dpr .')');
+                    log::add('rosee', 'debug', '│ Résultat : Calcul point de rosée (Calcul point de Rosée  > Seuil DPR)= (' .$frost_alert_rosee .' > ' .$dpr .')');
                 }
         
                     log::add('rosee', 'debug', '│ Etat alerte rosée : ' . $alert_r);
@@ -378,14 +378,14 @@ class rosee extends eqLogic {
                 log::add('rosee', 'debug', '│ Calcul point de givrage : (Température - point de givrage) : (' .$temperature .' - '.$frost_point .' )= '. $frost_alert_givrage);
             if ($frost_alert_givrage <= $dpr) {
                 $alert_g = 1;
-                    log::add('rosee', 'debug', '│ RESULTAT : Calcul point de givrage (Calcul point de givrage  <= Seuil DPR)');
+                    log::add('rosee', 'debug', '│ Résultat : Calcul point de givrage (Calcul point de givrage  <= Seuil DPR)');
                     log::add('rosee', 'debug', '│ ┌───────── Désactivation Alerte Point de rosée : ');
                 $alert_r = 0;
                     log::add('rosee', 'debug', '│ │Etat alerte rosée : ' . $alert_r);
                     log::add('rosee', 'debug', '│ └─────────');
             } else {
                 $alert_g = 0;
-                    log::add('rosee', 'debug', '│ RESULTAT : Calcul point de givrage (Calcul point de givrage  > Seuil DPR)');
+                    log::add('rosee', 'debug', '│ Résultat : Calcul point de givrage (Calcul point de givrage  > Seuil DPR)');
             };
         
                     log::add('rosee', 'debug', '│ Etat alerte gel : ' . $alert_g);
