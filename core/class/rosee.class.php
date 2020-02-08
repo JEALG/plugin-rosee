@@ -274,17 +274,17 @@ class rosee extends eqLogic {
                 }
             }
 		 
-        /*  ********************** SEUIL D'humidité absolue *************************** */          
-            $SHA=$this->getConfiguration('SHA');
-            if ($SHA == '') {
+        /*  ********************** SEUIL D'humidité absolue *************************** */       
+          // $SHA = $this->getConfiguration('SHA');
+            //if ($SHA == '') {
                 //valeur par défaut du seuil humidité absolue = 2.8
-                $SHA=2.8;
-                log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue : Aucune valeur de saisie');
-                log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue par défaut : ' . $SHA.);       
-		      } else {
-                log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue : ' . $SHA.); 
-            }
-                log::add('rosee', 'debug', '└─────────');
+              //  $SHA=2.8;
+            //    log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue : Aucune valeur de saisie');
+              //  log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue par défaut : ' . $SHA.);       
+		      //} else {
+                //log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue : ' . $SHA.); 
+            //}
+              //  log::add('rosee', 'debug', '└─────────');
         
         /*  ********************** SEUIL D'ALERTE ROSEE *************************** */          
             $dpr=$this->getConfiguration('DPR');
@@ -309,6 +309,7 @@ class rosee extends eqLogic {
             $p = 1.0 / $v;                                                          // Poids spécifique en kg / m3
             $humi_a_m3 = 1000.0 * $humi_a * $p;                                     // Humidité absolue en gr / m3
             $humi_a_m3 = round(($humi_a_m3), 1);                                    // Humidité absolue en gr / m3 (1 chiffre après la virgule)
+            $SHA = 2.8;                                                             // Seuil humidité absolue en dessous duquel il est peu probable qu'il givre
                 
                 log::add('rosee', 'debug', '┌───────── CALCUL DE L HUMIDITE ABSOLUE : '.$_eqName);
                 log::add('rosee', 'debug', '│ terme_pvs1 : ' . $terme_pvs1);
@@ -319,6 +320,7 @@ class rosee extends eqLogic {
                 log::add('rosee', 'debug', '│ v : ' . $v);
                 log::add('rosee', 'debug', '│ p : ' . $p);
                 log::add('rosee', 'debug', '│ Humidité Absolue : ' . $humi_a_m3.' g/m3');
+                log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue : ' . $SHA.'');
                 log::add('rosee', 'debug', '└─────────');
         
 		/* calcul du point de rosee
@@ -418,8 +420,8 @@ class rosee extends eqLogic {
                     $msg_givre_num_1 = 1;
                     $alert_g_1 = 1;
                         log::add('rosee', 'debug', '│ ┌───────── CAS N°'.$msg_givre_num_1 .' : '  .$msg_givre_1  .' / Alerte givre : ' .$alert_g_1 );
-                        log::add('rosee', 'debug', '│ │ Calcul    : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) < Seuil DPR)');
-                        log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 1 et ' .$frost_point .' <=0) et (' .$humi_a_m3 .' < ' . $dpr .')');
+                        log::add('rosee', 'debug', '│ │ Calcul    : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) < Seuil d\'hunidité absolue )');
+                        log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 1 et ' .$frost_point .' <=0) et (' .$humi_a_m3 .' < ' . $SHA .')');
                         log::add('rosee', 'debug', '│ └─────────');
         
                 // Cas 2
@@ -436,20 +438,20 @@ class rosee extends eqLogic {
                     $msg_givre_num_3 = 3;
                     $alert_g_3 = 1;
                         log::add('rosee', 'debug', '│ ┌───────── CAS N°' .$msg_givre_num_3 .' : '.$msg_givre_3.' / Alerte givre : ' .$alert_g_3 );
-                        log::add('rosee', 'debug', '│ │ Calcul     : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) > Seuil DPR)');
-                        log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 1 et ' .$frost_point .' <=0) et (' .$humi_a_m3 .' > ' . $dpr .')');
+                        log::add('rosee', 'debug', '│ │ Calcul     : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) > Seuil d\'hunidité absolue)');
+                        log::add('rosee', 'debug', '│ │ Résultat : (' .$temperature .' <= 1 et ' .$frost_point .' <=0) et (' .$humi_a_m3 .' > ' . $SHA .')');
                         log::add('rosee', 'debug', '│ └─────────');
                 
             // Cas Actuel
                 if($temperature <= 1 && $frost_point <= 0) {
-                    if ($humi_a_m3 > $dpr) {
+                    if ($humi_a_m3 > $SHA) {
                         // Cas 3
                             $msg_givre = $msg_givre_3;
                             $msg_givre_num = $msg_givre_num_3;
                             $alert_g  = $alert_g_3;
                             $alert_r = 0;
                     };
-                    if ($humi_a_m3 < $dpr) {
+                    if ($humi_a_m3 < $SHA) {
                         // Cas 1
                             $msg_givre = $msg_givre_1;
                             $msg_givre_num = $msg_givre_num_1;
