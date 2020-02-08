@@ -107,6 +107,18 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<legend><i class="fas fa-cog"></i> {{Paramètres}}</legend>
 				<form class="form-horizontal col-sm-10">
 					<fieldset>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" >{{Type de Calcul}}
+                                <sup><i class="fas fa-question-circle" title="{{En cours de développement}}"></i></sup>
+                            </label>
+                            <div class="col-sm-3">
+                                <select disabled class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="typecalcul">
+                                    <option value="">{{Rosée et Givre}}</option>
+                                    <option value="rosee">{{Rosée}}</option>
+                                    <option value="givre">{{Givre}}</option>
+                                </select>
+                            </div>
+                        </div>
 						<div class="form-group">
 							<label class="col-md-2 control-label">{{Température}}
 								<sup><i class="fas fa-question-circle" title="{{Commande température en °C.}}"></i></sup>

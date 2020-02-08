@@ -233,7 +233,9 @@ class rosee extends eqLogic {
 	}
 
 	public function getInformations() {
+        
         if (!$this->getIsEnable()) return;
+        
         $_eqName = $this->getName();
         log::add('rosee', 'debug', '┌───────── CONFIGURATION EQUIPEMENT : '.$_eqName );
         
@@ -285,7 +287,18 @@ class rosee extends eqLogic {
                 log::add('rosee', 'debug', '│ Seuil DPR : ' . $dpr.' °C'); 
             }
         
-        /*  ********************** SEUIL D'HUMIDITE ABSOLUE *************************** */          
+        /*  ********************** Type de calcul ***************************
+            $typecalcul=$this->getConfiguration('typecalcul');
+            if ($typecalcul == '') {
+                //valeur par type de calcul
+                $typecalcul = 'rosee_givre'; 
+               // log::add('rosee', 'debug', '┌───────── CONFIGURATION CALCUL : '.$_eqName ); 
+                log::add('rosee', 'debug', '│ Type de calcul : Aucune valeur de saisie => Valeur par défaut : '. $typecalcul.'');  
+		    /  } else {
+                log::add('rosee', 'debug', '│ Type de calcul : ' . $typecalcul.''); 
+            } */
+        
+        /*  ********************** SEUIL D'HUMIDITE ABSOLUE ***************************  */        
             $SHA=$this->getConfiguration('SHA');
             if ($SHA == '') {
                 //valeur par défaut du Seuil d'humidité absolue  = 2.8
