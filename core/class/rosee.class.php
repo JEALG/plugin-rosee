@@ -487,8 +487,8 @@ class rosee extends eqLogic {
                                 $msg_givre_num = $msg_givre_num_0;
                                 $alert_g  = $alert_g_0;
                                 $frost_point = 999;
-                                $msg_givre2 ='│ │ Info supplémetaire : Il fait trop chaud pas de calcul de l\'alerte givre';
-                                $msg_givre3 ='│ │ Info supplémetaire : Point de givre fixé à 999';
+                                $msg_givre2 ='│ │ Info supplémentaire : Il fait trop chaud pas de calcul de l\'alerte givre';
+                                $msg_givre3 ='│ │ Info supplémentaire : Point de givre fixé à '.$frost_point ;
                                 
                     };
                                 log::add('rosee', 'debug', '│ ┌───────── CAS ACTUEL N°'.$msg_givre_num .' : ' .$msg_givre .' / Alerte givre : ' .$alert_g );
