@@ -287,14 +287,11 @@ class rosee extends eqLogic {
                 log::add('rosee', 'debug', '│ Seuil DPR : ' . $dpr.' °C'); 
             }
         
-        /*  ********************** Type de calcul ***************************
-            $typecalcul=$this->getConfiguration('typecalcul');
+        /*  ********************** Type de calcul *************************** 
+            $typecalcul=$this->getConfiguration('type_calcul');
             if ($typecalcul == '') {
-                //valeur par type de calcul
-                $typecalcul = 'rosee_givre'; 
-               // log::add('rosee', 'debug', '┌───────── CONFIGURATION CALCUL : '.$_eqName ); 
                 log::add('rosee', 'debug', '│ Type de calcul : Aucune valeur de saisie => Valeur par défaut : '. $typecalcul.'');  
-		    /  } else {
+            } else {
                 log::add('rosee', 'debug', '│ Type de calcul : ' . $typecalcul.''); 
             } */
         
