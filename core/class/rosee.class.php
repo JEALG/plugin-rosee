@@ -499,6 +499,7 @@ class rosee extends eqLogic {
         
         //Mise à jour de l'équipement point de rosée
             $cmd = $this->getCmd('info', 'rosee');
+            $cmd->save();
             if(is_object($cmd)) {
                 $cmd->setConfiguration('value', $rosee_point);
                 $cmd->save();
