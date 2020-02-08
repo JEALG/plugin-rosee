@@ -280,8 +280,7 @@ class rosee extends eqLogic {
             if ($dpr == '') {
                 //valeur par défaut du seuil d'alerte rosée = 2°C
                 $dpr=2.0;
-                log::add('rosee', 'debug', '│ Seuil DPR : Aucune valeur de saisie');
-                log::add('rosee', 'debug', '│ Seuil DPR par défaut : ' . $dpr.' °C');       
+                log::add('rosee', 'debug', '│ Seuil DPR : Aucune valeur de saisie => Valeur par défaut : '. $dpr.' °C');   
 		      } else {
                 log::add('rosee', 'debug', '│ Seuil DPR : ' . $dpr.' °C'); 
             }
@@ -289,12 +288,11 @@ class rosee extends eqLogic {
         /*  ********************** SEUIL D'HUMIDITE ABSOLUE *************************** */          
             $SHA=$this->getConfiguration('SHA');
             if ($SHA == '') {
-                //valeur par défaut du Seuil d'hunidité absolue  = 2.8
+                //valeur par défaut du Seuil d'humidité absolue  = 2.8
                 $SHA=2.8;
-                log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue : Aucune valeur de saisie');
-                log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue : ' . $SHA.'');       
+                log::add('rosee', 'debug', '│ Seuil d\'humidité absolue : Aucune valeur de saisie => Valeur par défaut : '. $SHA.'');  
 		      } else {
-                log::add('rosee', 'debug', '│ Seuil d\'hunidité absolue : ' . $SHA.''); 
+                log::add('rosee', 'debug', '│ Seuil d\'humidité absolue : ' . $SHA.''); 
             }
                 log::add('rosee', 'debug', '└─────────');
         
