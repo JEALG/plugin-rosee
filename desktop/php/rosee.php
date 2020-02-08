@@ -108,10 +108,10 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<form class="form-horizontal col-sm-10">
 					<fieldset>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" >{{Type de Calcul}}
+                            <label class="col-sm-2 control-label" hidden>{{Type de Calcul}}
                                 <sup><i class="fas fa-question-circle" title="{{En cours de développement}}"></i></sup>
                             </label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-3" hidden>
                                 <select disabled class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="type_calcul">
                                     <option value=''>{{Rosée et Givre}}</option>
                                     <option value='rosee'>{{Rosée}}</option>
