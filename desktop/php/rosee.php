@@ -150,7 +150,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<label class="col-sm-2 control-label">{{Seuil (°C)}}
 								<sup><i class="fas fa-question-circle" title="{{Seuil de déclenchement de l'alerte rosée, 2°C par défaut (dépression du point de rosée T°-Tr°) A ajuster en fonction des observations locales.}}"></i></sup>
 							</label>
-							<div class="col-md-2">
+							<div class="col-md-1">
                                 <input type="number" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="DPR" placeholder="{{2.0}}">
 							</div>
 						</div>
@@ -158,7 +158,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<label class="col-sm-2 control-label">{{Seuil d'humidité absolue}}
 								<sup><i class="fas fa-question-circle" title="{{Seuil d'humidité absolue en dessous duquel il est peu probable qu'il givre, 2.8 par défaut.}}"></i></sup>
 							</label>
-							<div class="col-md-2">
+							<div class="col-md-1">
                                 <input type="number" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="SHA" placeholder="{{2.8}}">
 							</div>
 						</div>
