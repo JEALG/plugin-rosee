@@ -13,6 +13,7 @@ Le plugin ne comporte pas de configuration générale, il faut ajouter :
 En option
 > - Equipement "Pression Atmosphérique" : Pression atmosphérique réelle sur le site. 1013.25 hPa par défaut si non renseignée
 > - Seuil (°C) : Seuil de déclenchement de l'alerte rosée, 2°C par défaut (dépression du point de rosée T°-Tr°) A ajuster en fonction des observations locales.
+> - Seuil d'hunidité absolue : Seuil humidité absolue en dessous duquel il est peu probable qu'il givre, 2.8 par défaut
 
 # Exemple de configuration
 
@@ -30,7 +31,7 @@ Le plugin calcule 4 niveaux d'alerte
         >- Message numérique Givre : 0
         >- Message d'info : Aucun risque de Givrage
     - Cas 1
-        >- Calcul : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) < Seuil DPR)
+        >- Calcul : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) < Seuil d'hunidité absolue)
         >- Alerte Givre : 1
         >- Alerte Rosée : forcé à 0
         >- Message numérique Givre : 1
@@ -42,7 +43,7 @@ Le plugin calcule 4 niveaux d'alerte
         >- Message numérique Givre : 2
         >- Message d'info : Risque de givre
      - Cas 3
-        >- Calcul : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) > Seuil DPR)
+        >- Calcul : (Température <=1 et Point de Givrage <= 0) et (Humidité absolue en (gr/m3) > Seuil d'hunidité absolue)
         >- Alerte Givre : 1
         >- Alerte Rosée : forcé à 0
         >- Message numérique Givre : 3
