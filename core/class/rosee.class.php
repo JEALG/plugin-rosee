@@ -371,7 +371,7 @@ class rosee extends eqLogic {
 
         // Pas de calcul si température
                 if($temperature <= 10) {
-                    /*  ********************** Annulation Message spécifique Eté *************************** */
+                    /*  ********************** Annulation Message spécifique Température >10° *************************** */
                         $msg_givre2 ='│ │';
                         $msg_givre3 ='│ │';
         
