@@ -1,7 +1,7 @@
 # Description
 
 Ce plugin permet d'obtenir le point de rosée pour savoir si l'herbe sera mouillée le matin, ou bien en hiver savoir s'il va falloir gratter le pare-brise.
-Pour fonctionner, on doit indiquer un équipement température et un équipement humidité (extérieures, bien-sûr…)
+Pour fonctionner, on doit indiquer un équipement température et un équipement humidité (extérieures, bien-sûr…).
 
 # Configuration
 
@@ -11,9 +11,9 @@ Le plugin ne comporte pas de configuration générale, il faut ajouter :
 > - Equipement "Humidité Relative"
 
 En option
-> - Equipement "Pression Atmosphérique" : Pression atmosphérique réelle sur le site. 1013.25 hPa par défaut si non renseignée
+> - Equipement "Pression Atmosphérique" : Pression atmosphérique réelle sur le site. 1013.25 hPa par défaut si non renseignée.
 > - Seuil (°C) : Seuil de déclenchement de l'alerte rosée, 2°C par défaut (dépression du point de rosée T°-Tr°) A ajuster en fonction des observations locales.
-> - Seuil d'hunidité absolue : Seuil humidité absolue en dessous duquel il est peu probable qu'il givre, 2.8 par défaut
+> - Seuil d'hunidité absolue : Seuil humidité absolue en dessous duquel il est peu probable qu'il givre, 2.8 par défaut.
 
 # Exemple de configuration
 
@@ -66,7 +66,7 @@ Le plugin calcule 4 niveaux d'alerte
 
 >Le point de givrage, connu également comme la température du point givrage ou le point de gelée, est une donnée météorologique calculée à partir de l'humidité, la pression et la température. Le point de givrage de l'air est la température à laquelle, tout en gardant inchangées les conditions barométriques courantes, l'air devient saturé de vapeur d'eau par rapport à la glace. Le point de givrage est donc l'équivalent du point de rosée pour la condensation de la vapeur d'eau directement en cristaux de glace et non en micro-gouttelettes. C'est le phénomène de déposition, qui survient lorsque le point de givre est atteint, qui créé la gelée blanche.
 >
->Le point de givrage n'est donc défini que sous le point de congélation. Il coexiste avec le point de rosée à ces températures mais comme la pression de vapeur saturante par rapport à la glace est plus faible, le point de givrage est atteint plus rapidement. La capacité hygrométrique détermine les phénomènes de saturation, plus il fait froid, moins l'air peut contenir d'humidité (humidité absolue) et les deux se rejoignent à zéro degré Celsius
+>Le point de givrage n'est donc défini que sous le point de congélation. Il coexiste avec le point de rosée à ces températures mais comme la pression de vapeur saturante par rapport à la glace est plus faible, le point de givrage est atteint plus rapidement. La capacité hygrométrique détermine les phénomènes de saturation, plus il fait froid, moins l'air peut contenir d'humidité (humidité absolue) et les deux se rejoignent à zéro degré Celsius.
 (Source Wikipédia)
 
 # Troubleshotting
@@ -75,7 +75,7 @@ Le plugin calcule 4 niveaux d'alerte
 
 >Il faut bien indiquer un équipement température et un équipement humidité pour que le calcul du point de rosée puisse se faire.
 >
->On peut rechercher les équipements grace au bouton de recherche de l’équipement
+>On peut rechercher les équipements grace au bouton de recherche de l’équipement.
 
 - Le point de givrage indique la valeur 999
 
