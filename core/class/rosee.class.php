@@ -23,68 +23,66 @@ class rosee extends eqLogic {
 	/*     * *************************Attributs****************************** */
 
 	/*     * ***********************Methode static*************************** */
-	public static function cron5() {
-		foreach (eqLogic::byType('rosee') as $rosee) {
-			if ($rosee->getIsEnable()) {
-				log::add('rosee', 'debug', '================= CRON 5 ==================');
-				$rosee->getInformations();
-			}
-		}
-	}
-
-	public static function cron30($_eqlogic_id = null) {
-		//no both cron5 and cron30 enabled:
-		if (config::byKey('functionality::cron5::enable', 'rosee', 0) == 1) {
-			config::save('functionality::cron30::enable', 0, 'rosee');
-			return;
-		}
-		foreach (eqLogic::byType('rosee') as $rosee) {
-			if ($rosee->getIsEnable()) {
-				log::add('rosee', 'debug', '================= CRON 30 =================');
-				$rosee->getInformations();
-			}
-		}
-	}
-
-	/*     * *********************Methode d'instance************************* */
-	public function refresh() {
-        foreach ($this->getCmd() as $cmd)
-        {
-            $s = print_r($cmd, 1);
-            log::add('rosee', 'debug', 'refresh  cmd: '.$s);
-            $cmd->execute();
+        public static function cron5() {
+            foreach (eqLogic::byType('rosee') as $rosee) {
+                if ($rosee->getIsEnable()) {
+                    log::add('rosee', 'debug', '================= CRON 5 ==================');
+                    $rosee->getInformations();
+                }
+            }
         }
-    }
-
-	public function preUpdate() {
-        if (!$this->getIsEnable()) return;
-		if ($this->getConfiguration('temperature') == '') {
-			throw new Exception(__('Le champ "Température" ne peut être vide',__FILE__));
-		}
-
-		if ($this->getConfiguration('humidite') == '') {
-			throw new Exception(__('Le champ "Humidité Relative" ne peut être vide',__FILE__));
-		}
-        
-	}
-
-	public function postSave()
-    {
-        log::add('rosee', 'debug', 'postSave()');
-        
-        $order = 1;
-        
-        $refresh = $this->getCmd(null, 'refresh');
-        if (!is_object($refresh)) {
-            $refresh = new roseeCmd();
-            $refresh->setLogicalId('refresh');
-            $refresh->setIsVisible(1);
-            $refresh->setName(__('Rafraichir', __FILE__));
+    
+        public static function cron30($_eqlogic_id = null) {
+            //no both cron5 and cron30 enabled:
+            if (config::byKey('functionality::cron5::enable', 'rosee', 0) == 1) {
+                config::save('functionality::cron30::enable', 0, 'rosee');
+                return;
+            }
+            foreach (eqLogic::byType('rosee') as $rosee) {
+                if ($rosee->getIsEnable()) {
+                    log::add('rosee', 'debug', '================= CRON 30 =================');
+                    $rosee->getInformations();
+                }
+            }
         }
-        $refresh->setType('action');
-        $refresh->setSubType('other');
-        $refresh->setEqLogic_id($this->getId());
-        $refresh->save();
+    
+    /*     * *********************Methode d'instance************************* */
+        public function refresh() {
+            foreach ($this->getCmd() as $cmd)
+            {
+                $s = print_r($cmd, 1);
+                log::add('rosee', 'debug', 'refresh  cmd: '.$s);
+                $cmd->execute();
+            }
+        }
+    
+        public function preUpdate() {
+            if (!$this->getIsEnable()) return;
+            if ($this->getConfiguration('temperature') == '') {
+                throw new Exception(__('Le champ "Température" ne peut être vide',__FILE__));
+            }
+            
+            if ($this->getConfiguration('humidite') == '') {
+                throw new Exception(__('Le champ "Humidité Relative" ne peut être vide',__FILE__));
+            }
+        }
+    
+        public function postSave(){
+            log::add('rosee', 'debug', 'postSave()');
+            
+            $order = 1;
+            
+            $refresh = $this->getCmd(null, 'refresh');
+            if (!is_object($refresh)) {
+                $refresh = new roseeCmd();
+                $refresh->setLogicalId('refresh');
+                $refresh->setIsVisible(1);
+                $refresh->setName(__('Rafraichir', __FILE__));
+            }
+            $refresh->setType('action');
+            $refresh->setSubType('other');
+            $refresh->setEqLogic_id($this->getId());
+            $refresh->save();
 
             $roseeHCmd = $this->getCmd(null, 'humidite_absolue');
             if (!is_object($roseeHCmd)) {
@@ -223,21 +221,20 @@ class rosee extends eqLogic {
                 $order ++;
                 $roseeMNGCmd->save();
             }
-    }
+        }
 
 	/*  **********************Getteur Setteur*************************** */
-	public function postUpdate() {
-		foreach (eqLogic::byType('rosee') as $rosee) {
-				$rosee->getInformations();
-		}
-	}
-
-	public function getInformations() {
-        
-        if (!$this->getIsEnable()) return;
-        
-        $_eqName = $this->getName();
-        log::add('rosee', 'debug', '┌───────── CONFIGURATION EQUIPEMENT : '.$_eqName );
+        public function postUpdate() {
+            foreach (eqLogic::byType('rosee') as $rosee) {
+                $rosee->getInformations();
+            }
+        }
+    
+        public function getInformations() {
+            if (!$this->getIsEnable()) return;
+            
+            $_eqName = $this->getName();
+                log::add('rosee', 'debug', '┌───────── CONFIGURATION EQUIPEMENT : '.$_eqName );
         
         /*  ********************** TEMPERATURE *************************** */
             $idvirt = str_replace("#","",$this->getConfiguration('temperature'));
@@ -286,14 +283,6 @@ class rosee extends eqLogic {
 		      } else {
                 log::add('rosee', 'debug', '│ Seuil DPR : ' . $dpr.' °C'); 
             }
-        
-        /*  ********************** Type de calcul *************************** 
-            $typecalcul=$this->getConfiguration('type_calcul');
-            if ($typecalcul == '') {
-                log::add('rosee', 'debug', '│ Type de calcul : Aucune valeur de saisie => Valeur par défaut : '. $typecalcul.'');  
-            } else {
-                log::add('rosee', 'debug', '│ Type de calcul : ' . $typecalcul.''); 
-            } */
         
         /*  ********************** SEUIL D'HUMIDITE ABSOLUE ***************************  */        
             $SHA=$this->getConfiguration('SHA');
@@ -356,7 +345,7 @@ class rosee extends eqLogic {
         /*  ********************** Calcul de l'alerte rosée en fonction du seuil d'alerte *************************** */
             $frost_alert_rosee = $temperature - $rosee_point;
                 log::add('rosee', 'debug', '│ Calcul point de rosée : (Température - point de Rosée) : (' .$temperature .' - '.$rosee_point .' )= ' . $frost_alert_rosee );
-        
+            
                 if ($frost_alert_rosee <= $dpr) {
                     $alert_r = 1;
                     log::add('rosee', 'debug', '│ Résultat : Calcul point de rosée (Calcul point de Rosée  <= Seuil DPR) = (' .$frost_alert_rosee .' <= ' .$dpr .')');
@@ -492,105 +481,101 @@ class rosee extends eqLogic {
                     
         
         /*  ********************** Mise à Jour des équipements *************************** */
+            
+            log::add('rosee', 'debug', '┌───────── MISE A JOUR : '.$_eqName);        
         
-        log::add('rosee', 'debug', '┌───────── MISE A JOUR : '.$_eqName);        
+            //Mise à jour de l'équipement Humidité absolue
+                $cmd = $this->getCmd('info', 'humidite_absolue');
+                if(is_object($cmd)) {
+                    $cmd->setConfiguration('value', $humi_a_m3);
+                    $cmd->save();
+                    $cmd->event($humi_a_m3);
+                        log::add('rosee', 'debug', '│ Humidité Absolue : ' . $humi_a_m3.' g/m3');
+                }
         
-        //Mise à jour de l'équipement Humidité absolue
-            $cmd = $this->getCmd('info', 'humidite_absolue');
-            if(is_object($cmd)) {
-                $cmd->setConfiguration('value', $humi_a_m3);
+            //Mise à jour de l'équipement Alerte rosée
+                $cmd = $this->getCmd('info', 'alerte_rosee');
+                if(is_object($cmd)) {
+                    $cmd->setConfiguration('value', $alert_r);
+                    $cmd->save();
+                    $cmd->setCollectDate('');
+                    $cmd->event($alert_r);
+                    log::add('rosee', 'debug', '│ ┌───────── ROSEE ');
+                    log::add('rosee', 'debug', '│ │ Alerte Rosée : ' . $alert_r);
+                }
+        
+        
+            //Mise à jour de l'équipement point de rosée
+                $cmd = $this->getCmd('info', 'rosee');
                 $cmd->save();
-                $cmd->event($humi_a_m3);
-                    log::add('rosee', 'debug', '│ Humidité Absolue : ' . $humi_a_m3.' g/m3');
-            }
-        
-        //Mise à jour de l'équipement Alerte rosée
-            $cmd = $this->getCmd('info', 'alerte_rosee');
-            if(is_object($cmd)) {
-                $cmd->setConfiguration('value', $alert_r);
-                $cmd->save();
-                $cmd->setCollectDate('');
-                $cmd->event($alert_r);
-                log::add('rosee', 'debug', '│ ┌───────── ROSEE ');
-                log::add('rosee', 'debug', '│ │ Alerte Rosée : ' . $alert_r);
-            }
-        
-        
-        //Mise à jour de l'équipement point de rosée
-            $cmd = $this->getCmd('info', 'rosee');
-            $cmd->save();
-            if(is_object($cmd)) {
-                $cmd->setConfiguration('value', $rosee_point);
-                $cmd->save();
-                $cmd->event($rosee_point);
-                    log::add('rosee', 'debug', '│ │ Point de Rosée : ' . $rosee_point.' °C');
-                    log::add('rosee', 'debug', '│ └─────────');
-             }
-        
-        //Mise à jour de l'équipement Givrage
-            $cmd = $this->getCmd('info', 'givrage');
-            if(is_object($cmd)) {
-                $cmd->setConfiguration('value', $frost_point);
-                $cmd->save();
-                $cmd->event($frost_point);
-                    log::add('rosee', 'debug', '│ ┌───────── GIVRE ');
-                    log::add('rosee', 'debug', '│ │ Point de givrage : ' . $frost_point.' °C');
-            }
-        
-        //Mise à jour de l'équipement Alerte givre
-            $cmd = $this->getCmd('info', 'alerte_givre');
-            if (is_object($cmd)) {
-                $cmd->setConfiguration('value', $alert_g);
-                $cmd->save();
-                $cmd->setCollectDate('');
-                $cmd->event($alert_g);
-                    log::add('rosee', 'debug', '│ │ Alerte Givre : ' . $alert_g);
-            }
-        
-        //Mise à jour de l'équipement message
-            $cmd = $this->getCmd('info', 'message_givre');
-                  if(is_object($cmd)) {
-                      $cmd->setConfiguration('value', $msg_givre);
-                      $cmd->save();
-                      $cmd->setCollectDate('');
-                      $cmd->event($msg_givre);
+                if(is_object($cmd)) {
+                    $cmd->setConfiguration('value', $rosee_point);
+                    $cmd->save();
+                    $cmd->event($rosee_point);
+                        log::add('rosee', 'debug', '│ │ Point de Rosée : ' . $rosee_point.' °C');
+                        log::add('rosee', 'debug', '│ └─────────');
+                 }
+
+            //Mise à jour de l'équipement Givrage
+                $cmd = $this->getCmd('info', 'givrage');
+                if(is_object($cmd)) {
+                    $cmd->setConfiguration('value', $frost_point);
+                    $cmd->save();
+                    $cmd->event($frost_point);
+                        log::add('rosee', 'debug', '│ ┌───────── GIVRE ');
+                        log::add('rosee', 'debug', '│ │ Point de givrage : ' . $frost_point.' °C');
+                }
+
+            //Mise à jour de l'équipement Alerte givre
+                $cmd = $this->getCmd('info', 'alerte_givre');
+                if (is_object($cmd)) {
+                    $cmd->setConfiguration('value', $alert_g);
+                    $cmd->save();
+                    $cmd->setCollectDate('');
+                    $cmd->event($alert_g);
+                        log::add('rosee', 'debug', '│ │ Alerte Givre : ' . $alert_g);
+                }
+
+            //Mise à jour de l'équipement message
+                $cmd = $this->getCmd('info', 'message_givre');
+                if(is_object($cmd)) {
+                    $cmd->setConfiguration('value', $msg_givre);
+                    $cmd->save();
+                    $cmd->setCollectDate('');
+                    $cmd->event($msg_givre);
                         log::add('rosee', 'debug', '│ │ Message Alerte givre : ' . $msg_givre);
-                  }
-        
-        //Mise à jour de l'équipement message
-            $cmd = $this->getCmd('info', 'message_givre_num');
-                  if(is_object($cmd)) {
-                      $cmd->setConfiguration('value', $msg_givre_num);
-                      $cmd->save();
-                      $cmd->setCollectDate('');
-                      $cmd->event($msg_givre_num);
+                }
+
+            //Mise à jour de l'équipement message
+                $cmd = $this->getCmd('info', 'message_givre_num');
+                if(is_object($cmd)) {
+                    $cmd->setConfiguration('value', $msg_givre_num);
+                    $cmd->save();
+                    $cmd->setCollectDate('');
+                    $cmd->event($msg_givre_num);
                         log::add('rosee', 'debug', '│ │ Message Alerte givre numérique : ' . $msg_givre_num);
                         log::add('rosee', 'debug', '│ └─────────');
-                  };
-        
-                    log::add('rosee', 'debug', '└─────────');
-
-        log::add('rosee', 'debug', '================ FIN CRON =================');
-		return;
-	}
+                };
+            log::add('rosee', 'debug', '└─────────');
+            log::add('rosee', 'debug', '================ FIN CRON =================');
+            return;
+        }
 }
-
 class roseeCmd extends cmd {
-	/*     * *************************Attributs****************************** */
+    /*     * *************************Attributs****************************** */
 
 	/*     * ***********************Methode static*************************** */
 
 	/*     * *********************Methode d'instance************************* */
-	public function dontRemoveCmd()
-    {
+    public function dontRemoveCmd(){
         return true;
     }
 
 	public function execute($_options = null) {
-		if ($this->getLogicalId() == 'refresh') {
-			$this->getEqLogic()->getInformations();
-			return;
-		}
-	}
+        if ($this->getLogicalId() == 'refresh') {
+            $this->getEqLogic()->getInformations();
+            return;
+        }
+    }
 }
 ?>
