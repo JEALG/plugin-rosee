@@ -76,3 +76,8 @@ Le plugin calcule 4 niveaux d'alerte
 >Il faut bien indiquer un équipement température et un équipement humidité pour que le calcul du point de rosée puisse se faire.
 >
 >On peut rechercher les équipements grace au bouton de recherche de l’équipement
+
+- Le point de givrage indique la valeur 999
+
+>La température dépasse 10°C donc le point de givrage n'est plus calculé..
+>
