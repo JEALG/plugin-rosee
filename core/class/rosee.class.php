@@ -264,10 +264,8 @@ class rosee extends eqLogic {
                 //valeur par défaut pour la méthode de calcul
                     $calcul='rosee_givre';
                     log::add('rosee', 'debug', '│ Aucune méthode de calcul sélectionnée');
-                    log::add('rosee', 'debug', '│ Méthode de calcul par défaut : ' . $calcul);
-            } else {
-                    log::add('rosee', 'debug', '│ Méthode de calcul par défaut : ' . $calcul);
             }
+            log::add('rosee', 'debug', '│ Méthode de calcul par défaut : ' . $calcul);
             
         /*  ********************** PRESSION *************************** */
             $pression = $this->getConfiguration('pression');
