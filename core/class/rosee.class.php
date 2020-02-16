@@ -260,6 +260,7 @@ class rosee extends eqLogic {
             $idvirt = str_replace("#","",$this->getConfiguration('type_calcul'));
             if ($calcul== '') {
                 //valeur par défaut de la pression atmosphérique : 1013.25 hPa
+                    log::add('rosee', 'debug', '│ Méthode de calcul par défaut ACTUEL : ' . $calcul);
                     $calcul='rosee_givre';
                     log::add('rosee', 'debug', '│ Aucune méthode de calcul sélectionnée');
                     log::add('rosee', 'debug', '│ Méthode de calcul par défaut : ' . $calcul);
