@@ -259,7 +259,7 @@ class rosee extends eqLogic {
             }
 
         /*  ********************** Calcul *************************** */
-            $idvirt = str_replace("#","",$this->getConfiguration('type_calcul'));
+            $calcul=$this->getConfiguration('type_calcul');
             if ($calcul== '') {
                 //valeur par défaut pour la méthode de calcul
                     $calcul='rosee_givre';
