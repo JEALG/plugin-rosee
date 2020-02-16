@@ -113,7 +113,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </label>
                             <div class="col-sm-3">
                                 <select disable class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="type_calcul">
-                                    <option value='rosee_givre'>{{Rosée et Givre}}</option>
+                                    <option value=''>{{Rosée et Givre}}</option>
                                     <option value='rosee'>{{Rosée}}</option>
                                     <option value='givre'>{{Givre}}</option>
                                 </select>
