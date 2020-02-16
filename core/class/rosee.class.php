@@ -256,6 +256,18 @@ class rosee extends eqLogic {
                 log::add('rosee', 'error', '│ Configuration : Humidité Relative  non existante : ' . $this->getConfiguration('humidite'));
             }
 
+        /*  ********************** Calcul *************************** */
+            $idvirt = str_replace("#","",$this->getConfiguration('type_calcul'));
+            $cmdvirt = cmd::byId($idvirt);
+            if (is_object($cmdvirt)) {
+                $calcul='rosee_givre';
+                //$calcul = $cmdvirt->execCmd();
+                log::add('rosee', 'debug', '│ Humidité Relative : ' . $calcul.' %');
+            } else {
+                log::add('rosee', 'error', '│ Configuration : Humidité Relative  non existante : ' . $this->getConfiguration('type_calcul'));
+            }    
+            
+            
         /*  ********************** PRESSION *************************** */
             $pression = $this->getConfiguration('pression');
             if ($pression == '') {
