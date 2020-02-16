@@ -258,15 +258,20 @@ class rosee extends eqLogic {
 
         /*  ********************** Calcul *************************** */
             $idvirt = str_replace("#","",$this->getConfiguration('type_calcul'));
-            $cmdvirt = cmd::byId($idvirt);
-            if (is_object($cmdvirt)) {
-                $calcul='Rosée et Givre';
-                //$calcul = $cmdvirt->execCmd();
-                log::add('rosee', 'debug', '│ Humidité Relative : ' . $calcul.' %');
+            if ($calcul== '') {
+                //valeur par défaut de la pression atmosphérique : 1013.25 hPa
+                    $calcul='Rosée et Givre';
+                    log::add('rosee', 'debug', '│ Aucune méthode de calcul sélectionnée');
+                    log::add('rosee', 'debug', '│ Méthode de calcul par défaut : ' . $calcul);
             } else {
-                log::add('rosee', 'error', '│ Configuration : Humidité Relative  non existante : ' . $this->getConfiguration('type_calcul'));
-            }    
-            
+                $cmdvirt = cmd::byId($idvirt);
+                if (is_object($cmdvirt)) {
+                    $calcul = $cmdvirt->execCmd();
+                    log::add('rosee', 'debug', '│ Méthode de calcul par défaut : ' . $calcul);
+                } else {
+                    log::add('rosee', 'error', '│ Configuration : Pression Atmosphérique non existante : ' . $this->getConfiguration('type_calcul'));
+                }
+            }
             
         /*  ********************** PRESSION *************************** */
             $pression = $this->getConfiguration('pression');
