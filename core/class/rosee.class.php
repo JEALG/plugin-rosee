@@ -260,7 +260,7 @@ class rosee extends eqLogic {
             $idvirt = str_replace("#","",$this->getConfiguration('type_calcul'));
             $cmdvirt = cmd::byId($idvirt);
             if (is_object($cmdvirt)) {
-                $calcul='rosee_givre';
+                $calcul='Rosée et Givre';
                 //$calcul = $cmdvirt->execCmd();
                 log::add('rosee', 'debug', '│ Humidité Relative : ' . $calcul.' %');
             } else {
