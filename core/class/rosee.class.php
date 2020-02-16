@@ -269,7 +269,7 @@ class rosee extends eqLogic {
                     $calcul = $cmdvirt->execCmd();
                     log::add('rosee', 'debug', '│ Méthode de calcul par défaut : ' . $calcul);
                 } else {
-                    log::add('rosee', 'error', '│ Configuration : Pression Atmosphérique non existante : ' . $this->getConfiguration('type_calcul'));
+                    log::add('rosee', 'error', '│ Configuration : Méthode de calcul non existante : ' . $this->getConfiguration('type_calcul'));
                 }
             }
             
