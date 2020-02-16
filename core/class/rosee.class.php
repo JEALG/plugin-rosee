@@ -372,8 +372,8 @@ class rosee extends eqLogic {
             log::add('rosee', 'debug', '└─────────');
 
         // Pas de calcul si température
-            if($temperature <= 10) {
-                /*  ********************** Annulation Message spécifique Température >10° *************************** */
+            if($temperature <= 5) {
+                /*  ********************** Annulation Message spécifique Température <=5° *************************** */
                     $msg_givre2 ='';
                     $msg_givre3 ='';
                 
