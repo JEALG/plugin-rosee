@@ -564,9 +564,10 @@ class rosee extends eqLogic {
                         log::add('rosee', 'debug', '│ │ Message Alerte givre : ' . $msg_givre);
                 }
             
+            log::add('rosee', 'debug', '│ │ TEST : ');
             //Mise à jour de l'équipement message
                 $cmd = $this->getCmd('info', 'type_calcul');
-            log::add('rosee', 'debug', '│ │ TEST : ' . $msg_givre);
+            log::add('rosee', 'debug', '│ │ TEST : ');
                 if(is_object($cmd)) {
                     $cmd->setConfiguration('value', $calcul);
                     $cmd->save();
