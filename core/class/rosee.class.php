@@ -260,7 +260,7 @@ class rosee extends eqLogic {
             $idvirt = str_replace("#","",$this->getConfiguration('type_calcul'));
             if ($calcul== '') {
                 //valeur par défaut de la pression atmosphérique : 1013.25 hPa
-                    $calcul='Rosée et Givre';
+                    $calcul='rosee_givre';
                     log::add('rosee', 'debug', '│ Aucune méthode de calcul sélectionnée');
                     log::add('rosee', 'debug', '│ Méthode de calcul par défaut : ' . $calcul);
             } else {
@@ -509,7 +509,7 @@ class rosee extends eqLogic {
                     $cmd->event($humi_a_m3);
                         log::add('rosee', 'debug', '│ Humidité Absolue : ' . $humi_a_m3.' g/m3');
                 }
-        
+            
             //Mise à jour de l'équipement Alerte rosée
                 $cmd = $this->getCmd('info', 'alerte_rosee');
                 if(is_object($cmd)) {
