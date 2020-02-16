@@ -221,6 +221,8 @@ class rosee extends eqLogic {
                 $order ++;
                 $roseeMNGCmd->save();
             }
+            
+
         }
 
 	/*  **********************Getteur Setteur*************************** */
@@ -259,19 +261,12 @@ class rosee extends eqLogic {
         /*  ********************** Calcul *************************** */
             $idvirt = str_replace("#","",$this->getConfiguration('type_calcul'));
             if ($calcul== '') {
-                //valeur par défaut de la pression atmosphérique : 1013.25 hPa
-                    log::add('rosee', 'debug', '│ Méthode de calcul par défaut ACTUEL : ' . $calcul);
+                //valeur par défaut pour la méthode de calcul
                     $calcul='rosee_givre';
                     log::add('rosee', 'debug', '│ Aucune méthode de calcul sélectionnée');
                     log::add('rosee', 'debug', '│ Méthode de calcul par défaut : ' . $calcul);
             } else {
-                $cmdvirt = cmd::byId($idvirt);
-                if (is_object($cmdvirt)) {
-                    $calcul = $cmdvirt->execCmd();
                     log::add('rosee', 'debug', '│ Méthode de calcul par défaut : ' . $calcul);
-                } else {
-                    log::add('rosee', 'error', '│ Configuration : Méthode de calcul non existante : ' . $this->getConfiguration('type_calcul'));
-                }
             }
             
         /*  ********************** PRESSION *************************** */
@@ -482,9 +477,9 @@ class rosee extends eqLogic {
                         $msg_givre = 'Aucun risque de Givre';
                         $msg_givre_num = 0;
                         $alert_g  = 0;
-                        $frost_point = $temperature;
+                        $frost_point = 5;
                             $msg_givre2 ='│ │ Info supplémentaire : Il fait trop chaud pas de calcul de l\'alerte givre';
-                            $msg_givre3 ='│ │ Info supplémentaire : Point de givre fixé est égal à la température : '.$temperature .' = '.$frost_point ;
+                            $msg_givre3 ='│ │ Info supplémentaire : Point de givre fixé est : ' .$frost_point .' °C'; 
             };
                 log::add('rosee', 'debug', '│ ┌───────── CAS ACTUEL N°'.$msg_givre_num .' : ' .$msg_givre .' / Alerte givre : ' .$alert_g );
                 log::add('rosee', 'debug', '│ │ Message : ' .$msg_givre );
@@ -564,19 +559,6 @@ class rosee extends eqLogic {
                         log::add('rosee', 'debug', '│ │ Message Alerte givre : ' . $msg_givre);
                 }
             
-            log::add('rosee', 'debug', '│ │ TEST 2: ');
-            //Mise à jour de l'équipement message
-                $cmd = $this->getCmd('info', 'type_calcul');
-            log::add('rosee', 'debug', '│ │ TEST : ');
-                if(is_object($cmd)) {
-                    $cmd->setConfiguration('value', $calcul);
-                    $cmd->save();
-                    $cmd->setCollectDate('');
-                    $cmd->event($calcul);
-                        log::add('rosee', 'debug', '│ │ Méthode de calcul : ' . $calcul);
-                }
-
-
             //Mise à jour de l'équipement message
                 $cmd = $this->getCmd('info', 'message_givre_num');
                 if(is_object($cmd)) {
