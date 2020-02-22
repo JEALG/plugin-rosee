@@ -112,10 +112,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 <sup><i class="fas fa-question-circle" title="{{En cours de développement}}"></i></sup>
                             </label>
                             <div class="col-sm-3">
-                                <select disabled class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="type_calcul">
-                                    <option value=''>{{Rosée et Givre}}</option>
-                                    <option value='rosee'>{{Rosée}}</option>
-                                    <option value='givre'>{{Givre}}</option>
+                                <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="type_calcul">
+                                    <option value=''>{{Point de Rosée et Point de Givre}}</option>
+                                    <option value='givre'>{{Point de Givre}}</option>
+                                    <option value='humidityabs'>{{Humidité absolue}}</option>
+                                    <option value='rosee'>{{Point de Rosée}}</option>
                                 </select>
                             </div>
                         </div>
