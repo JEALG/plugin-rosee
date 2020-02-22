@@ -109,7 +109,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 					<fieldset>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">{{Type de Calcul}}
-                                <sup><i class="fas fa-question-circle" title="{{En cours de développement}}"></i></sup>
+                                <sup><i class="fas fa-question-circle" title="{{Il est possible de se limiter à un seul calcul, Point de Rosée et Point de Givre fait tous les calculs}}"></i></sup>
                             </label>
                             <div class="col-sm-3">
                                 <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="type_calcul">
