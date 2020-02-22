@@ -133,6 +133,14 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 						</div>
+                        <div class="form-group">
+							<label class="col-sm-2 control-label">{{Offset Température}}
+								<sup><i class="fas fa-question-circle" title="{{A ajuster en fonction des observations locales et de la position de la sonde, 0 par défaut.}}"></i></sup>
+							</label>
+							<div class="col-md-1">
+                                <input type="number" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="OffsetT" placeholder="{{0}}">
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">{{Humidité Relative}}
 								<sup><i class="fas fa-question-circle" title="{{Commande humidité en %.}}"></i></sup>
@@ -168,7 +176,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 						</div>
                         <div class="form-group">
-							<label class="col-sm-2 control-label">{{Seuil d'humidité absolue}}
+							<label class="col-sm-2 control-label">{{Seuil d'Humidité Absolue}}
 								<sup><i class="fas fa-question-circle" title="{{Seuil d'humidité absolue en dessous duquel il est peu probable qu'il givre, 2.8 par défaut.}}"></i></sup>
 							</label>
 							<div class="col-md-1">
