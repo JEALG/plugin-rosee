@@ -246,7 +246,7 @@ class rosee extends eqLogic {
                 $temperature = $cmdvirt->execCmd();
                 log::add('rosee', 'debug', '│ Température : ' . $temperature.' °C');
             } else {
-                log::add('rosee', 'error', '│ Configuration : Température non existante : ' . $this->getConfiguration('temperature'));
+                log::add('rosee', 'error', '│ Configuration : Température inexistante : ' . $this->getConfiguration('temperature'));
             }
       
         /*  ********************** HUMIDITE *************************** */
@@ -256,7 +256,7 @@ class rosee extends eqLogic {
                 $humidite = $cmdvirt->execCmd();
                 log::add('rosee', 'debug', '│ Humidité Relative : ' . $humidite.' %');
             } else {
-                log::add('rosee', 'error', '│ Configuration : Humidité Relative  non existante : ' . $this->getConfiguration('humidite'));
+                log::add('rosee', 'error', '│ Configuration : Humidité Relative inexistante : ' . $this->getConfiguration('humidite'));
             }
 
         /*  ********************** Calcul *************************** */
@@ -271,7 +271,7 @@ class rosee extends eqLogic {
             $pression = $this->getConfiguration('pression');
             if ($pression == '') {
                 $pression=1013.25;
-                log::add('rosee', 'debug', '│ Pression Atmosphérique aucun équipement de sélectionner');
+                log::add('rosee', 'debug', '│ Pression Atmosphérique aucun équipement sélectionné');
                 log::add('rosee', 'debug', '│ Pression Atmosphérique par défaut : ' . $pression. ' hPa');
             } else {
                 $idvirt = str_replace("#","",$this->getConfiguration('pression'));
@@ -280,7 +280,7 @@ class rosee extends eqLogic {
                     $pression = $cmdvirt->execCmd();
                     log::add('rosee', 'debug', '│ Pression Atmosphérique : ' . $pression.' hPa');
                 } else {
-                    log::add('rosee', 'error', '│ Configuration : Pression Atmosphérique non existante : ' . $this->getConfiguration('pression'));
+                    log::add('rosee', 'error', '│ Configuration : Pression Atmosphérique inexistante : ' . $this->getConfiguration('pression'));
                 }
             }
         
