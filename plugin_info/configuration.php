@@ -18,8 +18,8 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 include_file('core', 'authentification', 'php');
 if (!isConnect()) {
-	include_file('desktop', '404', 'php');
-	die();
+    include_file('desktop', '404', 'php');
+    die();
 }
 ?>
 
@@ -31,7 +31,7 @@ if (!isConnect()) {
     $("input[data-l1key='functionality::cron5::enable']").on('change',function(){
         if ($(this).is(':checked')) $("input[data-l1key='functionality::cron30::enable']").prop("checked", false)
     });
-
+    
     $("input[data-l1key='functionality::cron30::enable']").on('change',function(){
         if ($(this).is(':checked')) $("input[data-l1key='functionality::cron5::enable']").prop("checked", false)
     });
