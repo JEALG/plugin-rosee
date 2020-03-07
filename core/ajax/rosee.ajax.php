@@ -28,16 +28,12 @@ try {
 		$eqLogic = rosee::byId(init('id'));
 		if (!is_object($eqLogic)) {
 			throw new Exception(__('Rosee eqLogic non trouvé : ', __FILE__) . init('id'));
-		}
-		if (init('createcommand') == 1){
-			foreach ($eqLogic->getCmd() as $cmd) {
-				$cmd->remove();
-			}
-		}
-		$eqLogic->applyModuleConfiguration($eqLogic->getConfiguration('model'));
-		ajax::success();
-	}
-
+        }
+        foreach ($eqLogic->getCmd() as $cmd) {
+            $cmd->remove();
+        }
+        ajax::success();
+    }
 
     throw new Exception(__('{{Aucune méthode correspondante à}} : ', __FILE__) . init('action'));
     /*     * *********Catch exeption*************** */
