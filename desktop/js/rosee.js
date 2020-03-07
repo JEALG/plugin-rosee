@@ -35,9 +35,9 @@ $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder:
 
 
 $('#bt_autoDEL_eq').on('click', function () {
-    var dialog_title = '{{Recharge configuration}}';
+    var dialog_title = '{{Recréer les commandes}}';
     var dialog_message = '<form class="form-horizontal onsubmit="return false;"> ';
-    dialog_title = '{{Recharger la configuration}}';
+    dialog_title = '{{Recréer les commandes}';
     dialog_message += '<label class="lbl lbl-warning" for="name">{{Attention, cela va supprimer les commandes existantes.}}</label> ';
     dialog_message += '</form>';
     bootbox.dialog({
