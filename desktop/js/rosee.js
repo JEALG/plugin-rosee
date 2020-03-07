@@ -61,10 +61,8 @@ $('#bt_autoDEL_eq').on('click', function () {
                                data: {
                                    action: "autoDEL_eq",
                                    id: $('.eqLogicAttr[data-l1key=id]').value(),
-                                   createcommand: 1,
                                },
                                dataType: 'json',
-                               global: false,
                                error: function (request, status, error) {
                                    handleAjaxError(request, status, error);
                                },

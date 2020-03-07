@@ -31,6 +31,7 @@ try {
         }
         foreach ($eqLogic->getCmd() as $cmd) {
             $cmd->remove();
+            $cmd->save();
         }
         ajax::success();
     }
