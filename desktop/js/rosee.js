@@ -33,6 +33,58 @@ $('#bt_selectPresCmd').on('click', function () {
 
 $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 
+
+$('#bt_autoDEL_eq').on('click', function () {
+    var dialog_title = '{{Recharge configuration}}';
+    var dialog_message = '<form class="form-horizontal onsubmit="return false;"> ';
+    dialog_title = '{{Recharger la configuration}}';
+    dialog_message += '<label class="lbl lbl-warning" for="name">{{Attention, cela va supprimer les commandes existantes.}}</label> ';
+    dialog_message += '</form>';
+    bootbox.dialog({
+       title: dialog_title,
+       message: dialog_message,
+       buttons: {
+           "{{Annuler}}": {
+               className: "btn-danger",
+               callback: function () {
+               }
+           },
+           success: {
+               label: "{{Démarrer}}",
+               className: "btn-success",
+               callback: function () {
+                   bootbox.confirm('{{Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes}}', function (result) {
+                       if (result) {
+                           $.ajax({
+                               type: "POST",
+                               url: "plugins/rosee/core/ajax/rosee.ajax.php",
+                               data: {
+                                   action: "autoDEL_eq",
+                                   id: $('.eqLogicAttr[data-l1key=id]').value(),
+                                   createcommand: 1,
+                               },
+                               dataType: 'json',
+                               global: false,
+                               error: function (request, status, error) {
+                                   handleAjaxError(request, status, error);
+                               },
+                               success: function (data) {
+                                   if (data.state != 'ok') {
+                                       $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                                       return;
+                                   }
+                                   $('#div_alert').showAlert({message: '{{Opération réalisée avec succès}}', level: 'success'});
+                                   $('.eqLogicDisplayCard[data-eqLogic_id='+$('.eqLogicAttr[data-l1key=id]').value()+']').click();
+                               }
+                           });
+                       }
+                   });
+               }
+           },
+       }
+    });
+});
+
 function addCmdToTable(_cmd) {
     if (!isset(_cmd)) {
         var _cmd = {configuration: {}};
