@@ -119,7 +119,6 @@ class rosee extends eqLogic {
                 $roseeARCmd->setIsHistorized(0);
                 $roseeARCmd->setIsVisible(1);
                 $roseeARCmd->setDisplay('generic_type','SIREN_STATE');
-                //$roseeARCmd->setDisplay('icon','<i class="icon jeedom-alerte"></i>');
                 $roseeARCmd->setOrder($order);
                 $order ++;
                 $roseeARCmd->save();
@@ -139,7 +138,6 @@ class rosee extends eqLogic {
                 $roseePRCmd->setIsHistorized(0);
                 $roseePRCmd->setIsVisible(1);
                 $roseePRCmd->setDisplay('generic_type','GENERIC_INFO');
-                //$roseePRCmd->setDisplay('icon','<i class="icon jeedomapp-humidity"></i>');
                 $roseePRCmd->setOrder($order);
                 $order ++;
                 $roseePRCmd->save();
@@ -159,7 +157,6 @@ class rosee extends eqLogic {
                 $roseeAGCmd->setIsHistorized(0);
                 $roseeAGCmd->setIsVisible(1);
                 $roseeAGCmd->setDisplay('generic_type','SIREN_STATE');
-                //$roseeAGCmd->setDisplay('icon','<i class="icon jeedom-alerte2"></i>');
                 $roseeAGCmd->setOrder($order);
                 $order ++;
                 $roseeAGCmd->save();
@@ -179,7 +176,6 @@ class rosee extends eqLogic {
                 $roseePGCmd->setIsHistorized(0);
                 $roseePGCmd->setIsVisible(1);
                 $roseePGCmd->setDisplay('generic_type','GENERIC_INFO');
-                //$roseePGCmd->setDisplay('icon','<i class="icon nature-snowflake"></i>');
                 $roseePGCmd->setOrder($order);
                 $order ++;
                 $roseePGCmd->save();
