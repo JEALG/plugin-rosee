@@ -67,10 +67,11 @@ class rosee extends eqLogic {
                 throw new Exception(__('Le champ "Humidité Relative" ne peut être vide',__FILE__));
             }
             
-            //if ($this->getConfiguration('type_calcul') == '') {
+            if ($this->getConfiguration('type_calcul') == '') {
+                $this->setConfiguration('type_calcul', rosee_givre);
               //  $this->getConfiguration('type_calcul') == 'rosee_givre';
             //    throw new Exception(__('Le champ "Type calcul" ne peut être vide',__FILE__));
-            //}
+            }
         }
     
         public function postSave(){
