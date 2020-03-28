@@ -69,8 +69,6 @@ class rosee extends eqLogic {
             
             if ($this->getConfiguration('type_calcul') == '') {
                 $this->setConfiguration('type_calcul', 'rosee_givre');
-              //  $this->getConfiguration('type_calcul') == 'rosee_givre';
-            //    throw new Exception(__('Le champ "Type calcul" ne peut être vide',__FILE__));
             }
         }
     
@@ -241,6 +239,10 @@ class rosee extends eqLogic {
             foreach (eqLogic::byType('rosee') as $rosee) {
                 $rosee->getInformations();
             }
+        }
+    
+        public function preInsert() {
+            $this->setConfiguration('type_calcul', 'rosee_givre');
         }
     
         public function getInformations() {
