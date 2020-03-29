@@ -92,62 +92,66 @@ class rosee extends eqLogic {
             $refresh->setEqLogic_id($this->getId());
             $refresh->save();
 
-            $roseeHCmd = $this->getCmd(null, 'humidite_absolue');
-            if (!is_object($roseeHCmd)) {
-                $roseeHCmd = new roseeCmd();
-                $roseeHCmd->setName(__('Humidité absolue', __FILE__));
-                $roseeHCmd->setEqLogic_id($this->id);
-                $roseeHCmd->setLogicalId('humidite_absolue');
-                $roseeHCmd->setConfiguration('data', 'humidite_a');
-                $roseeHCmd->setUnite('g/m3');
-                $roseeHCmd->setIsHistorized(0);
-                $roseeHCmd->setIsVisible(1);
-                $roseeHCmd->setDisplay('generic_type','WEATHER_HUMIDITY');
-                $roseeHCmd->setOrder($order);
-                $order ++;   
-            }
-                $roseeHCmd->setEqLogic_id($this->getId());
-                $roseeHCmd->setLogicalId('humidite_absolue');
-                $roseeHCmd->setType('info');
-                $roseeHCmd->setSubType('numeric');
-                $roseeHCmd->save();
-        
-        // Ajout d'une commande pour l'alerte rosée
-            $roseeARCmd = $this->getCmd(null, 'alerte_rosee');
-            if (!is_object($roseeARCmd)) {
-                $roseeARCmd = new roseeCmd();
-                $roseeARCmd->setName(__('Alerte rosée', __FILE__));
-                $roseeARCmd->setEqLogic_id($this->id);
-                $roseeARCmd->setLogicalId('alerte_rosee');
-                $roseeARCmd->setConfiguration('data', 'alert_r');
-                $roseeARCmd->setType('info');
-                $roseeARCmd->setSubType('binary');
-                $roseeARCmd->setUnite('');
-                $roseeARCmd->setIsHistorized(0);
-                $roseeARCmd->setIsVisible(1);
-                $roseeARCmd->setDisplay('generic_type','SIREN_STATE');
-                $roseeARCmd->setOrder($order);
-                $order ++;
-                $roseeARCmd->save();
+            if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
+                $roseeHCmd = $this->getCmd(null, 'humidite_absolue');
+                if (!is_object($roseeHCmd)) {
+                    $roseeHCmd = new roseeCmd();
+                    $roseeHCmd->setName(__('Humidité absolue', __FILE__));
+                    $roseeHCmd->setEqLogic_id($this->id);
+                    $roseeHCmd->setLogicalId('humidite_absolue');
+                    $roseeHCmd->setConfiguration('data', 'humidite_a');
+                    $roseeHCmd->setUnite('g/m3');
+                    $roseeHCmd->setIsHistorized(0);
+                    $roseeHCmd->setIsVisible(1);
+                    $roseeHCmd->setDisplay('generic_type','WEATHER_HUMIDITY');
+                    $roseeHCmd->setOrder($order);
+                    $order ++;   
+                }
+                    $roseeHCmd->setEqLogic_id($this->getId());
+                    $roseeHCmd->setLogicalId('humidite_absolue');
+                    $roseeHCmd->setType('info');
+                    $roseeHCmd->setSubType('numeric');
+                    $roseeHCmd->save();
             }
         
-        // Ajout d'une commande pour le point de rosée
-            $roseePRCmd = $this->getCmd(null, 'rosee');
-            if (!is_object($roseePRCmd)) {
-                $roseePRCmd = new roseeCmd();
-                $roseePRCmd->setName(__('Point de rosée', __FILE__));
-                $roseePRCmd->setEqLogic_id($this->id);
-                $roseePRCmd->setLogicalId('rosee');
-                $roseePRCmd->setConfiguration('data', 'rosee_point');
-                $roseePRCmd->setType('info');
-                $roseePRCmd->setSubType('numeric');
-                $roseePRCmd->setUnite('°C');
-                $roseePRCmd->setIsHistorized(0);
-                $roseePRCmd->setIsVisible(1);
-                $roseePRCmd->setDisplay('generic_type','GENERIC_INFO');
-                $roseePRCmd->setOrder($order);
-                $order ++;
-                $roseePRCmd->save();
+            if ($calcul=='rosee_givre'|| $calcul=='rosee') {
+                // Ajout d'une commande pour l'alerte rosée
+                $roseeARCmd = $this->getCmd(null, 'alerte_rosee');
+                if (!is_object($roseeARCmd)) {
+                    $roseeARCmd = new roseeCmd();
+                    $roseeARCmd->setName(__('Alerte rosée', __FILE__));
+                    $roseeARCmd->setEqLogic_id($this->id);
+                    $roseeARCmd->setLogicalId('alerte_rosee');
+                    $roseeARCmd->setConfiguration('data', 'alert_r');
+                    $roseeARCmd->setType('info');
+                    $roseeARCmd->setSubType('binary');
+                    $roseeARCmd->setUnite('');
+                    $roseeARCmd->setIsHistorized(0);
+                    $roseeARCmd->setIsVisible(1);
+                    $roseeARCmd->setDisplay('generic_type','SIREN_STATE');
+                    $roseeARCmd->setOrder($order);
+                    $order ++;
+                    $roseeARCmd->save();
+                }
+
+                // Ajout d'une commande pour le point de rosée
+                $roseePRCmd = $this->getCmd(null, 'rosee');
+                if (!is_object($roseePRCmd)) {
+                    $roseePRCmd = new roseeCmd();
+                    $roseePRCmd->setName(__('Point de rosée', __FILE__));
+                    $roseePRCmd->setEqLogic_id($this->id);
+                    $roseePRCmd->setLogicalId('rosee');
+                    $roseePRCmd->setConfiguration('data', 'rosee_point');
+                    $roseePRCmd->setType('info');
+                    $roseePRCmd->setSubType('numeric');
+                    $roseePRCmd->setUnite('°C');
+                    $roseePRCmd->setIsHistorized(0);
+                    $roseePRCmd->setIsVisible(1);
+                    $roseePRCmd->setDisplay('generic_type','GENERIC_INFO');
+                    $roseePRCmd->setOrder($order);
+                    $order ++;
+                    $roseePRCmd->save();
+                }
             }
             
             if ($calcul=='rosee_givre'|| $calcul=='givre') {
@@ -396,31 +400,32 @@ class rosee extends eqLogic {
                             log::add('rosee', 'debug', '│ │ Humidité Absolue : ' . $humi_a_m3.' g/m3');
                             log::add('rosee', 'debug', '│ └─────────');
                     };
-                }; 
+                };
               
-            //Mise à jour de l'équipement Alerte rosée
-                $cmd = $this->getCmd('info', 'alerte_rosee');
-                if(is_object($cmd)) {
-                    $cmd->setConfiguration('value', $alert_r);
-                    $cmd->save();
-                    $cmd->setCollectDate('');
-                    $cmd->event($alert_r);
-                    log::add('rosee', 'debug', '│ ┌───────── ROSEE');
-                    log::add('rosee', 'debug', '│ │ Alerte Rosée : ' . $alert_r);
-                };
+                if ($calcul=='rosee_givre'|| $calcul=='rosee'){
+                    //Mise à jour de l'équipement Alerte rosée
+                        $cmd = $this->getCmd('info', 'alerte_rosee');
+                        if(is_object($cmd)) {
+                            $cmd->setConfiguration('value', $alert_r);
+                            $cmd->save();
+                            $cmd->setCollectDate('');
+                            $cmd->event($alert_r);
+                            log::add('rosee', 'debug', '│ ┌───────── ROSEE');
+                            log::add('rosee', 'debug', '│ │ Alerte Rosée : ' . $alert_r);
+                        };
         
-            //Mise à jour de l'équipement point de rosée
-                if ($calcul=='rosee_givre'|| $calcul=='rosee' ) {
-                    $cmd = $this->getCmd('info', 'rosee');
-                    $cmd->save();
-                    if(is_object($cmd)) {
-                        $cmd->setConfiguration('value', $rosee_point);
-                        $cmd->save();
-                        $cmd->event($rosee_point);
-                            log::add('rosee', 'debug', '│ │ Point de Rosée : ' . $rosee_point.' °C');
-                    };
+                    //Mise à jour de l'équipement point de rosée
+                        $cmd = $this->getCmd('info', 'rosee');
+                       // $cmd->save();
+                        if(is_object($cmd)) {
+                            $cmd->setConfiguration('value', $rosee_point);
+                            $cmd->save();
+                            $cmd->event($rosee_point);
+                                log::add('rosee', 'debug', '│ │ Point de Rosée : ' . $rosee_point.' °C');
+                        };
+                    log::add('rosee', 'debug', '│ └─────────');
                 };
-                            log::add('rosee', 'debug', '│ └─────────');
+                            
 
             if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
                 //Mise à jour de l'équipement Alerte givre
@@ -469,8 +474,8 @@ class rosee extends eqLogic {
                   //  $cmd->setConfiguration('value', $alert_g);
                     //$cmd->remove();
                     //$cmd->save();
-                        log::add('rosee', 'debug', '│ ┌───────── GIVRE');
-                        log::add('rosee', 'debug', '│ │ Suppression : ' );
+                       // log::add('rosee', 'debug', '│ ┌───────── GIVRE');
+                        //log::add('rosee', 'debug', '│ │ Suppression : ' );
                    // };
                  };
                 log::add('rosee', 'debug', '└─────────');
