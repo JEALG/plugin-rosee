@@ -112,7 +112,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 <sup><i class="fas fa-question-circle" title="{{Il est possible de se limiter à un seul calcul, Point de Rosée et Point de Givre fait tous les calculs}}"></i></sup>
                             </label>
                             <div class="col-sm-3">
-                                <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="type_calcul">
+                                <select id="type_calcul" class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="type_calcul">
                                     <option value=''>{{Aucun}}</option>
                                     <option value='rosee_givre'>{{Point de Rosée et Point de Givre}}</option>
                                     <option value='givre'>{{Point de Givre}}</option>
@@ -121,7 +121,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </select>
                             </div>
                         </div>
-						<div class="form-group">
+						<div id="temperature" class="form-group">
 							<label class="col-md-2 control-label">{{Température}}
 								<sup><i class="fas fa-question-circle" title="{{Commande température en °C.}}"></i></sup>
 							</label>
@@ -134,7 +134,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 						</div>
-                        <div class="form-group">
+                        <div id="temperature" class="form-group">
 							<label class="col-sm-2 control-label">{{Offset Température}}
 								<sup><i class="fas fa-question-circle" title="{{A ajuster en fonction des observations locales et de la position de la sonde, 0 par défaut.}}"></i></sup>
 							</label>
@@ -142,7 +142,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 <input type="number" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="OffsetT" placeholder="0">
 							</div>
 						</div>
-						<div class="form-group">
+						<div id="humidite" class="form-group">
 							<label class="col-sm-2 control-label">{{Humidité Relative}}
 								<sup><i class="fas fa-question-circle" title="{{Commande humidité en %.}}"></i></sup>
 							</label>
@@ -155,7 +155,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
+						<div id="pressure" class="form-group">
 							<label class="col-sm-2 control-label">{{Pression Atmosphérique}}
 								<sup><i class="fas fa-question-circle" title="{{Pression atmosphérique réelle sur le site. 1013.25 hPa par défaut si non renseignée.}}"></i></sup>
 							</label>
@@ -168,7 +168,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
+						<div id="DPR" class="form-group">
 							<label class="col-sm-2 control-label">{{Seuil (°C)}}
 								<sup><i class="fas fa-question-circle" title="{{Seuil de déclenchement de l'alerte rosée, 2°C par défaut (dépression du point de rosée T°-Tr°) A ajuster en fonction des observations locales.}}"></i></sup>
 							</label>
@@ -176,7 +176,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 <input type="number" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="DPR" placeholder="2.0">
 							</div>
 						</div>
-                        <div class="form-group">
+                        <div id="SHA" class="form-group">
 							<label class="col-sm-2 control-label">{{Seuil d'Humidité Absolue}}
 								<sup><i class="fas fa-question-circle" title="{{Seuil d'humidité absolue en dessous duquel il est peu probable qu'il givre, 2.8 par défaut.}}"></i></sup>
 							</label>

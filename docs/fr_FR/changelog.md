@@ -11,6 +11,7 @@ description: Ce plugin permet d'obtenir le point de rosée pour savoir si l'herb
 - Séparation des calculs
 - Nettoyage des infos dans les logs
 - Ajout bouton pour recréer les commandes
+- Résolution Bug Liste déroulante choix calcul Vide
 
 # Version 20200226
 - Le point de givre est égal à 5 si la température dépasse 5°
