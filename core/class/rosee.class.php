@@ -241,10 +241,6 @@ class rosee extends eqLogic {
             }
         }
     
-        public function preInsert() {
-            $this->setConfiguration('type_calcul', 'rosee_givre');
-        }
-    
         public function getInformations() {
             if (!$this->getIsEnable()) return;
             
@@ -364,7 +360,7 @@ class rosee extends eqLogic {
         /*  ********************** Calcul du Point de givrage *************************** */
             log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE GIVRAGE : '.$_eqName);
                 if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
-                    getGivre($temperature,$humi_a_m3,$SHA);
+                    getGivre();
                     
                     // Résultat : 
                         $msg_givre_num = $GLOBALS["msg_givre_num"];
@@ -555,7 +551,7 @@ function getRosee () {
     
     return;
 }
-function getGivre ($temperature,$humi_a_m3,$SHA) {
+function getGivre () {
     /*  ********************** Calcul du Point de givrage *************************** */
         global $msg_givre, $msg_givre_num, $alert_g,$frost_point,$msg_givre2,$msg_givre3;
             //$GLOBALS["SHA"]
