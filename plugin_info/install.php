@@ -44,8 +44,8 @@ function rosee_update() {
     $eqLogics = eqLogic::byType($plugin->getId());
     foreach ($eqLogics as $eqLogic)
     {
-        updateLogicalId($eqLogic, 'Point de rosée', 'rosee_point');
-        updateLogicalId($eqLogic, 'Humidité absolue', 'humidite_absolue');
+        updatename($eqLogic, 'Message Alerte givre', 'Message');
+		updatename($eqLogic, 'Message Alerte givre numérique', 'Message numérique');
     }
     
     //resave eqs for new cmd:
@@ -62,13 +62,6 @@ function rosee_update() {
             $e = print_r($e, 1);
             log::add('rosee', 'error', 'rosee_update ERROR: '.$e);
         }
-    
-    
-    foreach ($eqLogics as $eqLogic)
-    {
-        updatename($eqLogic, 'Message Alerte givre', 'Message');
-		updatename($eqLogic, 'Message Alerte givre numérique', 'Message numérique');
-	}
     
     
     //message::add('rosee', 'Merci pour la mise à jour de ce plugin, le plugin a été repris par JAG, merci à Claude Metzger pour son boulot');
