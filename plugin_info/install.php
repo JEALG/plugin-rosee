@@ -63,6 +63,14 @@ function rosee_update() {
             log::add('rosee', 'error', 'rosee_update ERROR: '.$e);
         }
     
+    
+    foreach ($eqLogics as $eqLogic)
+    {
+        updatename($eqLogic, 'Message Alerte givre', 'Message');
+		updatename($eqLogic, 'Message Alerte givre numérique', 'Message numérique');
+	}
+    
+    
     //message::add('rosee', 'Merci pour la mise à jour de ce plugin, le plugin a été repris par JAG, merci à Claude Metzger pour son boulot');
 }
 
