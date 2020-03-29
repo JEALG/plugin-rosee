@@ -195,7 +195,7 @@ class rosee extends eqLogic {
             $roseeMGCmd = $this->getCmd(null, 'message_givre');
             if (!is_object($roseeMGCmd)) {
                 $roseeMGCmd = new roseeCmd();
-                $roseeMGCmd->setName(__('Message Alerte givre', __FILE__));
+                $roseeMGCmd->setName(__('Message', __FILE__));
                 $roseeMGCmd->setEqLogic_id($this->id);
                 $roseeMGCmd->setLogicalId('message_givre');
                 $roseeMGCmd->setConfiguration('data', 'message_givre');
@@ -214,7 +214,7 @@ class rosee extends eqLogic {
             $roseeMNGCmd = $this->getCmd(null, 'message_givre_num');
             if (!is_object($roseeMNGCmd)) {
                 $roseeMNGCmd = new roseeCmd();
-                $roseeMNGCmd->setName(__('Message Alerte givre numérique', __FILE__));
+                $roseeMNGCmd->setName(__('Message numérique', __FILE__));
                 $roseeMNGCmd->setEqLogic_id($this->id);
                 $roseeMNGCmd->setLogicalId('message_givre_num');
                 $roseeMNGCmd->setConfiguration('data', 'message_givre_num');
