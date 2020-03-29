@@ -83,6 +83,51 @@ $('#bt_autoDEL_eq').on('click', function () {
     });
 });
 
+$('#type_calcul').change(function(){
+    var text = $("#type_calcul").val();
+    if ((text == '')) {
+        $('#temperature').hide();
+        $('#temperature_offset').hide();
+        $('#humidite').hide();
+        $('#pressure').hide();
+        $('#DPR').hide();
+        $('#SHA').hide();
+    }
+    if ((text == 'rosee_givre')) {
+        $('#temperature').show();
+        $('#temperature_offset').show();
+        $('#humidite').show();
+        $('#pressure').show();
+        $('#DPR').show();
+        $('#SHA').show();
+    }
+    if ((text == 'rosee')) {
+        $('#temperature').show();
+        $('#temperature_offset').show();
+        $('#humidite').show();
+        $('#pressure').show();
+        $('#DPR').show();
+        $('#SHA').hide();
+    }
+    if ((text == 'humidityabs')) {
+        $('#temperature').show();
+        $('#temperature_offset').show();
+        $('#humidite').show();
+        $('#pressure').show();
+        $('#DPR').hide();
+        $('#SHA').hide();
+    }
+    if ((text == 'givre')) {
+        $('#temperature').show();
+        $('#temperature_offset').show();
+        $('#humidite').show();
+        $('#pressure').show();
+        $('#DPR').hide();
+        $('#SHA').show();
+    }
+});
+
+
 function addCmdToTable(_cmd) {
     if (!isset(_cmd)) {
         var _cmd = {configuration: {}};
