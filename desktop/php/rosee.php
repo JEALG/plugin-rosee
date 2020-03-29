@@ -169,7 +169,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 						</div>
 						<div id="DPR" class="form-group" style="display:none">
-							<label class="col-sm-2 control-label">{{Seuil de l'alerte rosée(°C)}}
+							<label class="col-sm-2 control-label">{{Seuil de l'Alerte Rosée(°C)}}
 								<sup><i class="fas fa-question-circle" title="{{Seuil de déclenchement de l'alerte rosée, 2°C par défaut (dépression du point de rosée T°-Tr°) A ajuster en fonction des observations locales.}}"></i></sup>
 							</label>
 							<div class="col-md-1">
