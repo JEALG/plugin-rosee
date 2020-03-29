@@ -80,9 +80,7 @@ class rosee extends eqLogic {
                 $calcul='rosee_givre';
                 log::add('rosee', 'debug', '│ Aucune méthode de calcul sélectionnée');
             }
-                log::add('rosee', 'debug', ' Méthode de calcul : ' . $calcul);
-            
-            
+                        
             $order = 1;
             
             $refresh = $this->getCmd(null, 'refresh');
