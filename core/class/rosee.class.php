@@ -370,7 +370,7 @@ class rosee extends eqLogic {
                         $msg_givre3 = $GLOBALS["msg_givre3"];
                         $frost_point = $GLOBALS["frost_point"];
 
-                    log::add('rosee', 'debug', '│ ┌─────── CAS ACTUEL N°'.$msg_givre_num . ' / Alerte givre : ' .$alert_g );
+                    log::add('rosee', 'debug', '│ ┌─────── Cas Actuel N°'.$msg_givre_num . ' / Alerte givre : ' .$alert_g );
                     log::add('rosee', 'debug', '│ │ Message : ' .$msg_givre );
                     log::add('rosee', 'debug', '│ │ Point de Givrage : ' . $frost_point.' °C');
                         if ($msg_givre2 != '' && msg_givre3 != ''){
