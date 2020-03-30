@@ -122,7 +122,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </div>
                         </div>
 						<div id="temperature" class="form-group" style="display:none">
-							<label class="col-md-2 control-label">{{Température}}
+							<label class="col-md-2 control-label">{{Température (°C)}}
 								<sup><i class="fas fa-question-circle" title="{{Commande température en °C.}}"></i></sup>
 							</label>
 							<div class="col-md-6">
@@ -143,7 +143,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 						</div>
 						<div id="humidite" class="form-group" style="display:none">
-							<label class="col-sm-2 control-label">{{Humidité Relative}}
+							<label class="col-sm-2 control-label">{{Humidité Relative (%)}}
 								<sup><i class="fas fa-question-circle" title="{{Commande humidité en %.}}"></i></sup>
 							</label>
 							<div class="col-md-6">
@@ -156,7 +156,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 						</div>
 						<div id="pressure" class="form-group" style="display:none">
-							<label class="col-sm-2 control-label">{{Pression Atmosphérique}}
+							<label class="col-sm-2 control-label">{{Pression Atmosphérique (hPa)}}
 								<sup><i class="fas fa-question-circle" title="{{Pression atmosphérique réelle sur le site. 1013.25 hPa par défaut si non renseignée.}}"></i></sup>
 							</label>
 							<div class="col-md-6">
@@ -169,7 +169,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 						</div>
 						<div id="DPR" class="form-group" style="display:none">
-							<label class="col-sm-2 control-label">{{Seuil de l'Alerte Rosée(°C)}}
+							<label class="col-sm-2 control-label">{{Seuil de l'Alerte Rosée (°C)}}
 								<sup><i class="fas fa-question-circle" title="{{Seuil de déclenchement de l'alerte rosée, 2°C par défaut (dépression du point de rosée T°-Tr°) A ajuster en fonction des observations locales.}}"></i></sup>
 							</label>
 							<div class="col-md-1">
