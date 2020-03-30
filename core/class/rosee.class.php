@@ -502,7 +502,7 @@ function getHumidity() {
         log::add('rosee', 'debug', '│ terme_pvs1 : ' . $terme_pvs1);
         log::add('rosee', 'debug', '│ pvs : ' . $pvs);
         log::add('rosee', 'debug', '│ pv : ' . $pv);
-        log::add('rosee', 'debug', '│ Conversion Pression Atmosphérique de hPa à Pa : ' . $GLOBALS["pression"].' Pa');
+        log::add('rosee', 'debug', '│ Conversion Pression Atmosphérique de hPa à Pa (pour le calcul) : ' . $GLOBALS["pression"].' Pa');
         log::add('rosee', 'debug', '│ humi_a : ' . $humi_a);
         log::add('rosee', 'debug', '│ v : ' . $v);
         log::add('rosee', 'debug', '│ p : ' . $p);
