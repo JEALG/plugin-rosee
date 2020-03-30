@@ -491,7 +491,7 @@ function getHumidity() {
         $terme_pvs1 = 2.7877 + (7.625 * $GLOBALS["temperature"]) / (241.6 + $GLOBALS["temperature"]);
         $pvs = pow(10,$terme_pvs1);                                                                     // pression de saturation de la vapeur d'eau
         $pv = ($GLOBALS["humidite"] * $pvs) / 100.0;                                                    // pression partielle de vapeur d'eau
-        $GLOBALS["pression"] = $GLOBALS["pression"] * 100.0;                                            // conversion de la pression en Pa
+        $pression = $GLOBALS["pression"] * 100.0;                                            // conversion de la pression en Pa
         $humi_a = 0.622 * ($pv / ($GLOBALS["pression"] - $pv));                                         // Humidité absolue en kg d'eau par kg d'air
         $v = (461.24 * (0.622 + $humi_a) * ($GLOBALS["temperature"]+273.15)) / $GLOBALS["pression"];    // Volume specifique en m3 / kg
         $p = 1.0 / $v;                                                                                  // Poids spécifique en kg / m3
