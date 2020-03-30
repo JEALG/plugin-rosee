@@ -620,7 +620,7 @@ function getGivre () {
             $msg_givre_num = 0;
             $alert_g  = 0;
             $frost_point = 5;
-            $msg_givre2 ='│ │ Info supplémentaire : Il fait trop chaud pas de calcul de l\'alerte givre';
+            $msg_givre2 ='│ │ Info supplémentaire : Il fait trop chaud pas de calcul de l\'alerte givre (' .$GLOBALS["temperature"] .' > 5°C)';
             $msg_givre3 ='│ │ Info supplémentaire : Point de givre fixé est : ' .$frost_point .' °C';
         };
 
