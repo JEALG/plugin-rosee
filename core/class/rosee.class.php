@@ -517,20 +517,15 @@ function getRosee () {
             lambda = 243.12 °C*/
         global $alert_r,$rosee_point;         
         $alpha = 6.112;
-            log::add('rosee', 'debug', '│ alpha : ' . $alpha );
-    
+            log::add('rosee', 'debug', '│ alpha : ' . $alpha );   
         $beta = 17.62;
             log::add('rosee', 'debug', '│ beta : ' . $beta );
-    
         $lambda = 243.12;
             log::add('rosee', 'debug', '│ Lambda : ' . $lambda );
-    
         $Terme1 = log($GLOBALS["humidite"]/100);
             log::add('rosee', 'debug', '│ Terme1 : ' . $Terme1 );
-    
         $Terme2 = ($beta * $GLOBALS["temperature"]) / ($lambda + $GLOBALS["temperature"]);
             log::add('rosee', 'debug', '│ Terme2 : ' . $Terme2 );
-    
         $rosee = $lambda * ($Terme1 + $Terme2) / ($beta - $Terme1 - $Terme2);
             log::add('rosee', 'debug', '│ rosee : ' . $rosee .' °C');
     
