@@ -489,23 +489,22 @@ function getHumidity() {
     /*  ********************** Calcul de l'humidité absolue *************************** */
 
         $terme_pvs1 = 2.7877 + (7.625 * $GLOBALS["temperature"]) / (241.6 + $GLOBALS["temperature"]);
+            log::add('rosee', 'debug', '│ terme_pvs1 : ' . $terme_pvs1);
         $pvs = pow(10,$terme_pvs1);                                                                     // pression de saturation de la vapeur d'eau
+            log::add('rosee', 'debug', '│ pvs : ' . $pvs);
         $pv = ($GLOBALS["humidite"] * $pvs) / 100.0;                                                    // pression partielle de vapeur d'eau
+            log::add('rosee', 'debug', '│ pv : ' . $pv);
         $GLOBALS["pression"] = $GLOBALS["pression"] * 100.0;                                            // conversion de la pression en Pa
+            log::add('rosee', 'debug', '│ Conversion Pression Atmosphérique de hPa à Pa (pour le calcul) : ' . $GLOBALS["pression"].' Pa');
         $humi_a = 0.622 * ($pv / ($GLOBALS["pression"] - $pv));                                         // Humidité absolue en kg d'eau par kg d'air
         $v = (461.24 * (0.622 + $humi_a) * ($GLOBALS["temperature"]+273.15)) / $GLOBALS["pression"];    // Volume specifique en m3 / kg
+            log::add('rosee', 'debug', '│ v : ' . $v);
         $p = 1.0 / $v;                                                                                  // Poids spécifique en kg / m3
+            log::add('rosee', 'debug', '│ p : ' . $p);
         global $humi_a_m3; 
             $humi_a_m3 = 1000.0 * $humi_a * $p;                                                         // Humidité absolue en gr / m3
-            $humi_a_m3 = round(($humi_a_m3), 1);                                                        // Humidité absolue en gr / m3 (1 chiffre après la virgule)     
-            
-        log::add('rosee', 'debug', '│ terme_pvs1 : ' . $terme_pvs1);
-        log::add('rosee', 'debug', '│ pvs : ' . $pvs);
-        log::add('rosee', 'debug', '│ pv : ' . $pv);
-        log::add('rosee', 'debug', '│ Conversion Pression Atmosphérique de hPa à Pa (pour le calcul) : ' . $GLOBALS["pression"].' Pa');
-        log::add('rosee', 'debug', '│ humi_a : ' . $humi_a);
-        log::add('rosee', 'debug', '│ v : ' . $v);
-        log::add('rosee', 'debug', '│ p : ' . $p);
+            $humi_a_m3 = round(($humi_a_m3), 1);                                                        // Humidité absolue en gr / m3 (1 chiffre après la virgule)
+            log::add('rosee', 'debug', '│ humi_a : ' . $humi_a);
 
     return;
 }
