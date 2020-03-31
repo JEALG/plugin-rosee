@@ -18,7 +18,6 @@
 
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
-
 function rosee_install() {
     config::save('functionality::cron5::enable', 1, 'rosee');
     config::save('functionality::cron30::enable', 0, 'rosee');
@@ -46,7 +45,7 @@ function rosee_update() {
     //{
       //  updatename($eqLogic, 'Message Alerte givre', 'Message');
 //		updatename($eqLogic, 'Message Alerte givre numérique', 'Message numérique');
-  //  }
+  //  } 
     
     //resave eqs for new cmd:
         try
@@ -62,7 +61,6 @@ function rosee_update() {
             $e = print_r($e, 1);
             log::add('rosee', 'error', 'rosee_update ERROR: '.$e);
         }
-    
     
     //message::add('rosee', 'Merci pour la mise à jour de ce plugin, le plugin a été repris par JAG, merci à Claude Metzger pour son boulot');
 }
