@@ -42,11 +42,11 @@ function rosee_update() {
     
     $plugin = plugin::byId('rosee');
     $eqLogics = eqLogic::byType($plugin->getId());
-    foreach ($eqLogics as $eqLogic)
-    {
-        updatename($eqLogic, 'Message Alerte givre', 'Message');
-		updatename($eqLogic, 'Message Alerte givre numérique', 'Message numérique');
-    }
+    //foreach ($eqLogics as $eqLogic)
+    //{
+      //  updatename($eqLogic, 'Message Alerte givre', 'Message');
+//		updatename($eqLogic, 'Message Alerte givre numérique', 'Message numérique');
+  //  }
     
     //resave eqs for new cmd:
         try
