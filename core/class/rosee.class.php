@@ -132,7 +132,8 @@ class rosee extends eqLogic {
                     $order ++;
                     $roseeARCmd->save();
                 }
-
+            }
+            if ($calcul=='rosee_givre'|| $calcul=='rosee' || $calcul=='givre') {    
                 // Ajout d'une commande pour le point de rosée
                 $roseePRCmd = $this->getCmd(null, 'rosee');
                 if (!is_object($roseePRCmd)) {
@@ -343,10 +344,10 @@ class rosee extends eqLogic {
                     getRosee($temperature, $humidite,$calcul);
                     
                     // Résultat :
+                        $rosee_point = $GLOBALS["rosee_point"];
                         if ($calcul=='rosee_givre'|| $calcul=='rosee') {
                             $alert_r = $GLOBALS["alert_r"];
                                 log::add('rosee', 'debug', '│ Etat alerte rosée : ' . $alert_r);
-                            $rosee_point = $GLOBALS["rosee_point"];
                                 log::add('rosee', 'debug', '│ Point de Rosée : ' . $rosee_point .' °C');
                         } else {
                             $alert_r  = 0;
@@ -413,7 +414,9 @@ class rosee extends eqLogic {
                             log::add('rosee', 'debug', '│ ┌───────── ROSEE');
                             log::add('rosee', 'debug', '│ │ Alerte Rosée : ' . $alert_r);
                         };
-        
+                };
+            
+                if ($calcul=='rosee_givre'|| $calcul=='rosee' || $calcul=='givre') {
                     //Mise à jour de l'équipement point de rosée
                         $cmd = $this->getCmd('info', 'rosee');
                        // $cmd->save();
@@ -421,7 +424,10 @@ class rosee extends eqLogic {
                             $cmd->setConfiguration('value', $rosee_point);
                             $cmd->save();
                             $cmd->event($rosee_point);
-                                log::add('rosee', 'debug', '│ │ Point de Rosée : ' . $rosee_point.' °C');
+                                if ( $calcul=='givre') {
+                                    log::add('rosee', 'debug', '│ ┌───────── ROSEE');
+                                };
+                                log::add('rosee', 'debug', '│ │ Point de Rosée : ' . $rosee_point.' °C');  
                         };
                     log::add('rosee', 'debug', '│ └─────────');
                 };
