@@ -19,7 +19,6 @@
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
-
 class rosee extends eqLogic {
 	/*     * *************************Attributs****************************** */
 
@@ -338,7 +337,6 @@ class rosee extends eqLogic {
                 }
             log::add('rosee', 'debug', '└─────────');
             
-
         /*  ********************** Calcul du Point de rosée *************************** */
             log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE ROSEE : '.$_eqName);
                 if ($calcul=='rosee_givre'|| $calcul=='rosee' || $calcul=='givre' ) {
@@ -360,7 +358,6 @@ class rosee extends eqLogic {
                 }
             log::add('rosee', 'debug', '└─────────');
 
-            
         /*  ********************** Calcul du Point de givrage *************************** */
             log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE GIVRAGE : '.$_eqName);
                 if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
@@ -390,7 +387,6 @@ class rosee extends eqLogic {
             log::add('rosee', 'debug', '└─────────');
             
         /*  ********************** Mise à Jour des équipements *************************** */
-            
             log::add('rosee', 'debug', '┌───────── MISE A JOUR : '.$_eqName);        
             
             //Mise à jour de l'équipement Humidité absolue
@@ -430,7 +426,6 @@ class rosee extends eqLogic {
                     log::add('rosee', 'debug', '│ └─────────');
                 };
                             
-
             if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
                 //Mise à jour de l'équipement Alerte givre
                     $cmd = $this->getCmd('info', 'alerte_givre');
@@ -544,7 +539,6 @@ function getRosee ($temperature, $humidite, $calcul) {
 function getGivre ($temperature) {
     /*  ********************** Calcul du Point de givrage *************************** */
         global $msg_givre, $msg_givre_num, $alert_g,$frost_point,$msg_givre2,$msg_givre3;
-            //$GLOBALS["SHA"]
         if ($temperature <= 5  ) {
             $msg_givre2 ='';
             $msg_givre3 ='';
