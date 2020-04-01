@@ -326,7 +326,7 @@ class rosee extends eqLogic {
         /*  ********************** Calcul de l'humidité absolue *************************** */
             log::add('rosee', 'debug', '┌───────── CALCUL DE L HUMIDITE ABSOLUE : '.$_eqName);
                 if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
-                    getHumidity($temperature, $pression, $humidite);
+                    getHumidity($temperature, $humidite,$pression);
 
                     // Résultat :
                         $humi_a_m3 = $GLOBALS["humi_a_m3"];
@@ -485,12 +485,12 @@ class rosee extends eqLogic {
 
 function getHumidity($temperature, $humidite,$pression) {
     /*  ********************** Calcul de l'humidité absolue *************************** */
-
         $terme_pvs1 = 2.7877 + (7.625 * $temperature) / (241.6 + $temperature);
             log::add('rosee', 'debug', '│ terme_pvs1 : ' . $terme_pvs1);
         $pvs = pow(10,$terme_pvs1);
             log::add('rosee', 'debug', '│ Pression de saturation de la vapeur d\'eau (pvs) : ' . $pvs);
         $pv = ($humidite * $pvs) / 100.0;
+            log::add('rosee', 'debug', '│ Pression partielle de vapeur d\'eau (pv) : ' . $humidite);
             log::add('rosee', 'debug', '│ Pression partielle de vapeur d\'eau (pv) : ' . $pv);
         $humi_a = 0.622 * ($pv / (($pression * 100.0) - $pv));
             log::add('rosee', 'debug', '│ Humidité absolue en kg d\'eau par kg d\'air : ' . $humi_a .' kg');
