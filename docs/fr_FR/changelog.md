@@ -1,6 +1,6 @@
 ---
 title: Jeedom | Plugin Rosee
-description: Ce plugin permet d'obtenir le point de rosée pour savoir si l'herbe sera mouillée le matin, ou bien en hiver savoir si il va falloir gratter le pare-brise. Pour fonctionner, on doit indiquer un équipement température et un équipement humidité (extérieures, bien-sûr…)
+description: Ce plugin permet d'obtenir le point de rosée pour savoir si l'herbe sera mouillée le matin, ou bien en hiver desavoir s'il va falloir gratter le pare-brise. Pour fonctionner, on doit indiquer sélectionner un équipement de température, d'humidité et de pression (extérieures, bien-sûr…)
 
 ---
 
@@ -14,6 +14,7 @@ description: Ce plugin permet d'obtenir le point de rosée pour savoir si l'herb
 - Résolution Bug Liste déroulante choix calcul vide
 - Masquage des paramètres non nécessaire suivant le mode de calcul
 - Modification création des commandes cela tient compte désormais du mode de calcul
+- Suppression de certains calculs intermédiares
 
 # Version 20200226
 - Le point de givre est égal à 5 si la température dépasse 5°
