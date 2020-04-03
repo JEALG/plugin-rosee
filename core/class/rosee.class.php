@@ -523,15 +523,14 @@ function getRosee ($temperature, $humidite, $calcul,$dpr) {
         $rosee_point = round(($rosee), 1);                
                 
     /*  ********************** Calcul de l'alerte rosée en fonction du seuil d'alerte *************************** */
+        $alert_r = 0;
         if ($calcul=='rosee_givre'|| $calcul=='rosee' ) {
             $frost_alert_rosee = $temperature - $rosee_point;
-        
             log::add('rosee', 'debug', '│ Calcul point de rosée : (Température - point de Rosée) : (' .$temperature .' - '.$rosee_point .' )= ' . $frost_alert_rosee .' °C');
             if ($frost_alert_rosee <= $dpr) {
                 $alert_r = 1;
                 log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' <= ' .$dpr .') = Alerte active');
             } else {
-                $alert_r = 0;
                 log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' > ' .$dpr .') = Alerte désactivée');
             }
         }
