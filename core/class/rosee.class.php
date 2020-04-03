@@ -242,9 +242,7 @@ class rosee extends eqLogic {
     
         public function getInformations() {
             if (!$this->getIsEnable()) return;
-            
-            global $dpr,$SHA;
-            
+                
             $_eqName = $this->getName();
                 log::add('rosee', 'debug', '┌───────── CONFIGURATION EQUIPEMENT : '.$_eqName );
         
@@ -327,12 +325,9 @@ class rosee extends eqLogic {
         /*  ********************** Calcul de l'humidité absolue *************************** */
             log::add('rosee', 'debug', '┌───────── CALCUL DE L HUMIDITE ABSOLUE : '.$_eqName);
                 if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
-                    getHumidity($temperature, $humidite,$pression);
-
-                    // Résultat :
-                        $humi_a_m3 = $GLOBALS["humi_a_m3"];
-                        log::add('rosee', 'debug', '│ Humidité Absolue : ' . $humi_a_m3.' g/m3');
-                        
+                    // Appel de la fonction et résultat :
+                        $humi_a_m3 = getHumidity($temperature, $humidite,$pression);
+                            log::add('rosee', 'debug', '│ Humidité Absolue : ' . $humi_a_m3.' g/m3');        
                 } else {
                     log::add('rosee', 'debug', '│ Pas de calcul de l\'Humidité Absolue');
                 }
@@ -341,12 +336,11 @@ class rosee extends eqLogic {
         /*  ********************** Calcul du Point de rosée *************************** */
             log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE ROSEE : '.$_eqName);
                 if ($calcul=='rosee_givre'|| $calcul=='rosee' || $calcul=='givre' ) {
-                    getRosee($temperature, $humidite,$calcul);
-                    
-                    // Résultat :
-                        $rosee_point = $GLOBALS["rosee_point"];
+                    // Appel de la fonction et résultat :
+                        $rosee_point = getRosee($temperature, $humidite,$calcul,$dpr);
+                        
                         if ($calcul=='rosee_givre'|| $calcul=='rosee') {
-                            $alert_r = $GLOBALS["alert_r"];
+                           $alert_r = $GLOBALS["alert_r"];
                                 log::add('rosee', 'debug', '│ Etat alerte rosée : ' . $alert_r);
                                 log::add('rosee', 'debug', '│ Point de Rosée : ' . $rosee_point .' °C');
                         } else {
@@ -362,8 +356,7 @@ class rosee extends eqLogic {
         /*  ********************** Calcul du Point de givrage *************************** */
             log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE GIVRAGE : '.$_eqName);
                 if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
-                    //$rosee = $GLOBALS["rosee"];
-                    getGivre($temperature);
+                    getGivre($temperature, $SHA, $humi_a_m3);
                     
                     // Résultat : 
                         $msg_givre_num = $GLOBALS["msg_givre_num"];
@@ -504,14 +497,13 @@ function getHumidity($temperature, $humidite,$pression) {
             log::add('rosee', 'debug', '│ Volume specifique (v) : ' . $v .' m3/kg');
         $p = 1.0 / $v;
             log::add('rosee', 'debug', '│ Poids spécifique (p) : ' . $p.' m3/kg');
-        global $humi_a_m3; 
-            $humi_a_m3 = 1000.0 * $humi_a * $p;
-            $humi_a_m3 = round(($humi_a_m3), 1);
+        $humi_a_m3 = 1000.0 * $humi_a * $p;
+        $humi_a_m3 = round(($humi_a_m3), 1);
 
-    return;
+    return $humi_a_m3;
 }
 
-function getRosee ($temperature, $humidite, $calcul) {
+function getRosee ($temperature, $humidite, $calcul,$dpr) {
     /*  ********************** Calcul du Point de rosée ***************************
         Paramètres de MAGNUS pour l'air saturé (entre -45°C et +60°C) : */
             $alpha = 6.112; 
@@ -522,7 +514,7 @@ function getRosee ($temperature, $humidite, $calcul) {
             $Terme2 = ($beta * $temperature) / ($lambda + $temperature);
                 log::add('rosee', 'debug', '│ Terme1 = ' . $Terme1 .' // Terme2 = ' . $Terme2 );
         
-    global $alert_r,$rosee_point,$rosee;  
+    global $alert_r, $rosee;  
         $rosee = $lambda * ($Terme1 + $Terme2) / ($beta - $Terme1 - $Terme2);  
         $rosee_point = round(($rosee), 1);                
                 
@@ -531,18 +523,18 @@ function getRosee ($temperature, $humidite, $calcul) {
             $frost_alert_rosee = $temperature - $rosee_point;
         
             log::add('rosee', 'debug', '│ Calcul point de rosée : (Température - point de Rosée) : (' .$temperature .' - '.$rosee_point .' )= ' . $frost_alert_rosee .' °C');
-            if ($frost_alert_rosee <= $GLOBALS["dpr"]) {
+            if ($frost_alert_rosee <= $dpr) {
                 $alert_r = 1;
-                log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' <= ' .$GLOBALS["dpr"] .') = Alerte active');
+                log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' <= ' .$dpr .') = Alerte active');
             } else {
                 $alert_r = 0;
-                log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' > ' .$GLOBALS["dpr"] .') = Alerte désactivée');
+                log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' > ' .$dpr .') = Alerte désactivée');
             }
         }
     
-    return;
+    return $rosee_point;
 }
-function getGivre ($temperature) {
+function getGivre ($temperature,$SHA,$humi_a_m3) {
     /*  ********************** Calcul du Point de givrage *************************** */
         global $msg_givre, $msg_givre_num, $alert_g,$frost_point,$msg_givre2,$msg_givre3;
         if ($temperature <= 5  ) {
@@ -577,14 +569,14 @@ function getGivre ($temperature) {
 
                 // Cas Actuel
                         if($temperature <= 1 && $frost_point <= 0) {
-                            if ($GLOBALS["humi_a_m3"] > $GLOBALS["SHA"]) {
+                            if ($humi_a_m3 > $SHA) {
                                 // Cas N°3
                                 $msg_givre = $msg_givre_3;
                                 $msg_givre_num = $msg_givre_num_3;
                                 $alert_g  = $alert_g_3;
                                 $alert_r = 0;
                             };
-                            if ($GLOBALS["humi_a_m3"] < $$GLOBALS["SHA"]) {
+                            if ($humi_a_m3 < $SHA) {
                                 // Cas N°1
                                 $msg_givre = $msg_givre_1;
                                 $msg_givre_num = $msg_givre_num_1;
