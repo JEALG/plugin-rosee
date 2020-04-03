@@ -337,10 +337,13 @@ class rosee extends eqLogic {
             log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE ROSEE : '.$_eqName);
                 if ($calcul=='rosee_givre'|| $calcul=='rosee' || $calcul=='givre' ) {
                     // Appel de la fonction et résultat :
-                        $rosee_point = getRosee($temperature, $humidite,$calcul,$dpr);
-                        
+                        $va_result_R = getRosee($temperature, $humidite,$calcul,$dpr);
+                            // Partage des données du tableau
+                                $rosee_point = $va_result_R [0];
+                                $alert_r = $va_result_R [1];
+                                $rosee = $va_result_R [2];
+                                        
                         if ($calcul=='rosee_givre'|| $calcul=='rosee') {
-                           $alert_r = $GLOBALS["alert_r"];
                                 log::add('rosee', 'debug', '│ Etat alerte rosée : ' . $alert_r);
                                 log::add('rosee', 'debug', '│ Point de Rosée : ' . $rosee_point .' °C');
                         } else {
@@ -356,20 +359,22 @@ class rosee extends eqLogic {
         /*  ********************** Calcul du Point de givrage *************************** */
             log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE GIVRAGE : '.$_eqName);
                 if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
-                    getGivre($temperature, $SHA, $humi_a_m3);
-                    
-                    // Résultat : 
-                        $msg_givre_num = $GLOBALS["msg_givre_num"];
-                        $msg_givre = $GLOBALS["msg_givre"];
-                        $alert_g = $GLOBALS["alert_g"];
-                        $frost_point = $GLOBALS["frost_point"];
-
+                    // Appel de la fonction et résultat :
+                        $va_result_G = getGivre($temperature, $SHA, $humi_a_m3,$rosee);
+                            // Partage des données du tableau
+                                $msg_givre_num = $va_result_G [0];
+                                $msg_givre = $va_result_G [1];
+                                $alert_g  = $va_result_G [2];
+                                $frost_point  = $va_result_G [3];
+                                $msg_givre2 = $va_result_G [4];
+                                $msg_givre3 = $va_result_G [5];
+                                        
                     log::add('rosee', 'debug', '│ ┌─────── Cas Actuel N°'.$msg_givre_num . ' / Alerte givre : ' .$alert_g );
                     log::add('rosee', 'debug', '│ │ Message : ' .$msg_givre );
                     log::add('rosee', 'debug', '│ │ Point de Givrage : ' . $frost_point.' °C');
-                        if ($GLOBALS["msg_givre2"] != '' && $GLOBALS["msg_givre3"] != ''){
-                            log::add('rosee', 'debug', $GLOBALS["msg_givre2"] );
-                            log::add('rosee', 'debug', $GLOBALS["msg_givre3"] );
+                        if ($msg_givre2 != '' && $msg_givre3 != ''){
+                            log::add('rosee', 'debug', $msg_givre2 );
+                            log::add('rosee', 'debug', $msg_givre3 );
                         };
                     log::add('rosee', 'debug', '│ └───────');
 
@@ -514,7 +519,6 @@ function getRosee ($temperature, $humidite, $calcul,$dpr) {
             $Terme2 = ($beta * $temperature) / ($lambda + $temperature);
                 log::add('rosee', 'debug', '│ Terme1 = ' . $Terme1 .' // Terme2 = ' . $Terme2 );
         
-    global $alert_r, $rosee;  
         $rosee = $lambda * ($Terme1 + $Terme2) / ($beta - $Terme1 - $Terme2);  
         $rosee_point = round(($rosee), 1);                
                 
@@ -532,11 +536,10 @@ function getRosee ($temperature, $humidite, $calcul,$dpr) {
             }
         }
     
-    return $rosee_point;
+    return array($rosee_point, $alert_r, $rosee);
 }
-function getGivre ($temperature,$SHA,$humi_a_m3) {
+function getGivre ($temperature,$SHA,$humi_a_m3, $rosee) {
     /*  ********************** Calcul du Point de givrage *************************** */
-        global $msg_givre, $msg_givre_num, $alert_g,$frost_point,$msg_givre2,$msg_givre3;
         if ($temperature <= 5  ) {
             $msg_givre2 ='';
             $msg_givre3 ='';
@@ -544,7 +547,7 @@ function getGivre ($temperature,$SHA,$humi_a_m3) {
             $frost_K = $frost_K + 2.193665 * log(($temperature + 273.15));
             $frost_K = $frost_K - 13.3448;
             $frost_K = 2671.02 / $frost_K;
-            $frost_K = $frost_K + ($GLOBALS["rosee"] + 273.15) - ($temperature + 273.15);
+            $frost_K = $frost_K + ($rosee + 273.15) - ($temperature + 273.15);
                 log::add('rosee', 'debug', '│ Point de givrage : ' . $frost_K.' K');
             $frost = $frost_K -273.15;
             $frost_point = round(($frost), 1);
@@ -604,7 +607,7 @@ function getGivre ($temperature,$SHA,$humi_a_m3) {
             $msg_givre3 ='│ │ Info supplémentaire : Point de givre fixé est : ' .$frost_point .' °C';
         };
 
-    return;
+    return array ($msg_givre_num, $msg_givre, $alert_g, $frost_point,$msg_givre2 ,$msg_givre3);
 }   
 class roseeCmd extends cmd {
     /*     * *************************Attributs****************************** */
