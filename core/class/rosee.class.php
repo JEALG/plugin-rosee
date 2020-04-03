@@ -337,7 +337,7 @@ class rosee extends eqLogic {
             log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE ROSEE : '.$_eqName);
                 if ($calcul=='rosee_givre'|| $calcul=='rosee' || $calcul=='givre' ) {
                     // Appel de la fonction et résultat :
-                        $va_result_R = getRosee($temperature, $humidite,$calcul,$dpr);
+                        $va_result_R = getRosee($temperature, $humidite, $dpr);
                             // Partage des données du tableau
                                 $rosee_point = $va_result_R [0];
                                 $alert_r = $va_result_R [1];
@@ -508,33 +508,31 @@ function getHumidity($temperature, $humidite,$pression) {
     return $humi_a_m3;
 }
 
-function getRosee ($temperature, $humidite, $calcul,$dpr) {
+function getRosee ($temperature, $humidite, $dpr) {
     /*  ********************** Calcul du Point de rosée ***************************
-        Paramètres de MAGNUS pour l'air saturé (entre -45°C et +60°C) : */
-            $alpha = 6.112; 
-            $beta = 17.62;
-            $lambda = 243.12;
-                log::add('rosee', 'debug', '│ Paramètres de MAGNUS pour l\'air saturé (entre -45°C et +60°C) : Lambda = ' . $lambda .' °C // alpha = ' . $alpha .' hPa // beta = ' . $beta );
-            $Terme1 = log($humidite/100);
-            $Terme2 = ($beta * $temperature) / ($lambda + $temperature);
-                log::add('rosee', 'debug', '│ Terme1 = ' . $Terme1 .' // Terme2 = ' . $Terme2 );
-        
-        $rosee = $lambda * ($Terme1 + $Terme2) / ($beta - $Terme1 - $Terme2);  
-        $rosee_point = round(($rosee), 1);                
+	Paramètres de MAGNUS pour l'air saturé (entre -45°C et +60°C) : */
+	$alpha = 6.112; 
+	$beta = 17.62;
+	$lambda = 243.12;
+	log::add('rosee', 'debug', '│ Paramètres de MAGNUS pour l\'air saturé (entre -45°C et +60°C) : Lambda = ' . $lambda .' °C // alpha = ' . $alpha .' hPa // beta = ' . $beta );
+	$Terme1 = log($humidite/100);
+	$Terme2 = ($beta * $temperature) / ($lambda + $temperature);
+	log::add('rosee', 'debug', '│ Terme1 = ' . $Terme1 .' // Terme2 = ' . $Terme2 );
+	
+	$rosee = $lambda * ($Terme1 + $Terme2) / ($beta - $Terme1 - $Terme2);  
+	$rosee_point = round(($rosee), 1);
                 
     /*  ********************** Calcul de l'alerte rosée en fonction du seuil d'alerte *************************** */
-        if ($calcul=='rosee_givre'|| $calcul=='rosee' ) {
-            $frost_alert_rosee = $temperature - $rosee_point;
-        
-            log::add('rosee', 'debug', '│ Calcul point de rosée : (Température - point de Rosée) : (' .$temperature .' - '.$rosee_point .' )= ' . $frost_alert_rosee .' °C');
-            if ($frost_alert_rosee <= $dpr) {
-                $alert_r = 1;
-                log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' <= ' .$dpr .') = Alerte active');
-            } else {
-                $alert_r = 0;
-                log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' > ' .$dpr .') = Alerte désactivée');
-            }
-        }
+	$alert_r = 0;
+	$frost_alert_rosee = $temperature - $rosee_point;
+
+	log::add('rosee', 'debug', '│ Calcul point de rosée : (Température - point de Rosée) : (' .$temperature .' - '.$rosee_point .' )= ' . $frost_alert_rosee .' °C');
+	if ($frost_alert_rosee <= $dpr) {
+		$alert_r = 1;
+		log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' <= ' .$dpr .') = Alerte active');
+	} else {
+		log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' > ' .$dpr .') = Alerte désactivée');
+	}
     
     return array($rosee_point, $alert_r, $rosee);
 }
