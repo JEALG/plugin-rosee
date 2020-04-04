@@ -367,6 +367,7 @@ class rosee extends eqLogic {
                                 $frost_point  = $va_result_G [3];
                                 $msg_givre2 = $va_result_G [4];
                                 $msg_givre3 = $va_result_G [5];
+                                $alert_r = $va_result_G [6];
                                         
                     log::add('rosee', 'debug', '│ ┌─────── Cas Actuel N°'.$msg_givre_num . ' / Alerte givre : ' .$alert_g );
                     log::add('rosee', 'debug', '│ │ Message : ' .$msg_givre );
@@ -571,16 +572,16 @@ function getGivre ($temperature,$SHA,$humi_a_m3, $rosee) {
                                 $msg_givre_num = 1;
                             };
                         } elseif ($temperature <= 4 && $frost_point <= 0.5) {
-                                // Cas N°2
-                                $msg_givre = 'Risque de givre';
-                                $msg_givre_num = 2;
-                                $alert_g  = 1;
-                                $alert_r = 0;
+                            // Cas N°2
+                            $msg_givre = 'Risque de givre';
+                            $msg_givre_num = 2;
+                            $alert_g  = 1;
+                            $alert_r = 0;
                         } else {
-                                // Cas N°0
-                                $msg_givre = 'Aucun risque de Givre';
-                                $msg_givre_num = 0;
-                                $alert_g  = 0;
+                            // Cas N°0
+                            //$msg_givre = 'Aucun risque de Givre';
+                            //$msg_givre_num = 0;
+                            $alert_g  = 0;
                         };
         } else {   
             $frost_point = 5;
@@ -588,7 +589,7 @@ function getGivre ($temperature,$SHA,$humi_a_m3, $rosee) {
             $msg_givre3 ='│ │ Info supplémentaire : Point de givre fixé est : ' .$frost_point .' °C';
         };
 
-    return array ($msg_givre_num, $msg_givre, $alert_g, $frost_point,$msg_givre2 ,$msg_givre3);
+    return array ($msg_givre_num, $msg_givre, $alert_g, $frost_point,$msg_givre2 ,$msg_givre3, $alert_r);
 }   
 class roseeCmd extends cmd {
     /*     * *************************Attributs****************************** */
