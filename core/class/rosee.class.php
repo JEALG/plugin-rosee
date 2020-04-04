@@ -558,19 +558,17 @@ function getGivre ($temperature,$SHA,$humi_a_m3, $rosee) {
                               
                 // Cas Actuel
                         if($temperature <= 1 && $frost_point <= 0) {
+                            $alert_r = 0;
+                            $alert_g  = 1;
                             if ($humi_a_m3 > $SHA) {
                                 // Cas N°3
                                 $msg_givre = 'Givre, Présence de givre';
                                 $msg_givre_num = 3;
-                                $alert_g  = 1;
-                                $alert_r = 0;
                             };
                             if ($humi_a_m3 < $SHA) {
                                 // Cas N°1
                                 $msg_givre = 'Givre peu probable malgré la température';
                                 $msg_givre_num = 1;
-                                $alert_g  = 1;
-                                $alert_r = 0;
                             };
                         } elseif ($temperature <= 4 && $frost_point <= 0.5) {
                                 // Cas N°2
