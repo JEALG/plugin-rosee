@@ -1,5 +1,4 @@
 <?php
-
 if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
@@ -122,8 +121,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </div>
                         </div>
 						<div id="temperature" class="form-group" style="display:none">
-							<label class="col-md-2 control-label">{{Température (°C)}}
-								<sup><i class="fas fa-question-circle" title="{{Commande température en °C.}}"></i></sup>
+							<label class="col-md-2 control-label">{{Température}}
+								<sup><i class="fas fa-question-circle" title="{{(°C) Commande température}}"></i></sup>
 							</label>
 							<div class="col-md-6">
 								<div class="input-group">
@@ -143,8 +142,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 						</div>
 						<div id="humidite" class="form-group" style="display:none">
-							<label class="col-sm-2 control-label">{{Humidité Relative (%)}}
-								<sup><i class="fas fa-question-circle" title="{{Commande humidité en %.}}"></i></sup>
+							<label class="col-sm-2 control-label">{{Humidité Relative}}
+								<sup><i class="fas fa-question-circle" title="{{(%) Commande humidité}}"></i></sup>
 							</label>
 							<div class="col-md-6">
 								<div class="input-group">
@@ -156,8 +155,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 						</div>
 						<div id="pressure" class="form-group" style="display:none">
-							<label class="col-sm-2 control-label">{{Pression Atmosphérique (hPa)}}
-								<sup><i class="fas fa-question-circle" title="{{Pression atmosphérique réelle sur le site. 1013.25 hPa par défaut si non renseignée.}}"></i></sup>
+							<label class="col-sm-2 control-label">{{Pression Atmosphérique}}
+								<sup><i class="fas fa-question-circle" title="{{(hPa) Pression atmosphérique réelle sur le site. 1013.25 hPa par défaut si non renseignée.}}"></i></sup>
 							</label>
 							<div class="col-md-6">
 								<div class="input-group">
@@ -169,8 +168,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 						</div>
 						<div id="DPR" class="form-group" style="display:none">
-							<label class="col-sm-2 control-label">{{Seuil de l'Alerte Rosée (°C)}}
-								<sup><i class="fas fa-question-circle" title="{{Seuil de déclenchement de l'alerte rosée, 2°C par défaut (dépression du point de rosée T°-Tr°) A ajuster en fonction des observations locales.}}"></i></sup>
+							<label class="col-sm-2 control-label">{{Seuil de l'Alerte Rosée}}
+								<sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de l'alerte rosée, 2°C par défaut (dépression du point de rosée T°-Tr°) A ajuster en fonction des observations locales.}}"></i></sup>
 							</label>
 							<div class="col-md-1">
                                 <input type="number" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="DPR" placeholder="2.0">
