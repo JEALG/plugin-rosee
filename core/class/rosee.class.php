@@ -1,5 +1,4 @@
 <?php
-
 /* This file is part of Jeedom.
 *
 * Jeedom is free software: you can redistribute it and/or modify
@@ -417,7 +416,6 @@ class rosee extends eqLogic {
                 if ($calcul=='rosee_givre'|| $calcul=='rosee' || $calcul=='givre') {
                     //Mise à jour de l'équipement point de rosée
                         $cmd = $this->getCmd('info', 'rosee');
-                       // $cmd->save();
                         if(is_object($cmd)) {
                             $cmd->setConfiguration('value', $rosee_point);
                             $cmd->save();
@@ -511,36 +509,44 @@ function getHumidity($temperature, $humidite,$pression) {
 function getRosee ($temperature, $humidite, $dpr) {
     /*  ********************** Calcul du Point de rosée ***************************
 	Paramètres de MAGNUS pour l'air saturé (entre -45°C et +60°C) : */
-	$alpha = 6.112; 
-	$beta = 17.62;
-	$lambda = 243.12;
-	log::add('rosee', 'debug', '│ Paramètres de MAGNUS pour l\'air saturé (entre -45°C et +60°C) : Lambda = ' . $lambda .' °C // alpha = ' . $alpha .' hPa // beta = ' . $beta );
-	$Terme1 = log($humidite/100);
-	$Terme2 = ($beta * $temperature) / ($lambda + $temperature);
-	log::add('rosee', 'debug', '│ Terme1 = ' . $Terme1 .' // Terme2 = ' . $Terme2 );
+	   $alpha = 6.112; 
+	   $beta = 17.62;
+	   $lambda = 243.12;
+	       log::add('rosee', 'debug', '│ Paramètres de MAGNUS pour l\'air saturé (entre -45°C et +60°C) : Lambda = ' . $lambda .' °C // alpha = ' . $alpha .' hPa // beta = ' . $beta );
+    
+        $Terme1 = log($humidite/100);
+        $Terme2 = ($beta * $temperature) / ($lambda + $temperature);
+	       log::add('rosee', 'debug', '│ Terme1 = ' . $Terme1 .' // Terme2 = ' . $Terme2 );
 	
-	$rosee = $lambda * ($Terme1 + $Terme2) / ($beta - $Terme1 - $Terme2);  
-	$rosee_point = round(($rosee), 1);
+	   $rosee = $lambda * ($Terme1 + $Terme2) / ($beta - $Terme1 - $Terme2);  
+	   $rosee_point = round(($rosee), 1);
                 
     /*  ********************** Calcul de l'alerte rosée en fonction du seuil d'alerte *************************** */
-	$alert_r = 0;
-	$frost_alert_rosee = $temperature - $rosee_point;
+        // Reset valeur 
+	       $alert_r = 0;
+	   
+    $frost_alert_rosee = $temperature - $rosee_point;
 
-	log::add('rosee', 'debug', '│ Calcul point de rosée : (Température - point de Rosée) : (' .$temperature .' - '.$rosee_point .' )= ' . $frost_alert_rosee .' °C');
-	if ($frost_alert_rosee <= $dpr) {
-		$alert_r = 1;
-		log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' <= ' .$dpr .') = Alerte active');
-	} else {
-		log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' > ' .$dpr .') = Alerte désactivée');
-	}
+	   log::add('rosee', 'debug', '│ Calcul point de rosée : (Température - point de Rosée) : (' .$temperature .' - '.$rosee_point .' )= ' . $frost_alert_rosee .' °C');
+	   if ($frost_alert_rosee <= $dpr) {
+		  $alert_r = 1;
+		  log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' <= ' .$dpr .') = Alerte active');
+	   } else {
+		  log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' > ' .$dpr .') = Alerte désactivée');
+	   }
     
     return array($rosee_point, $alert_r, $rosee);
 }
 function getGivre ($temperature,$SHA,$humi_a_m3, $rosee) {
     /*  ********************** Calcul du Point de givrage *************************** */
-        if ($temperature <= 5  ) {
+        // Reset valeur 
+            $msg_givre_num = 0;
+            $alert_g  = 0;
+            $msg_givre = 'Aucun risque de Givre';
             $msg_givre2 ='';
             $msg_givre3 ='';
+    
+        if ($temperature <= 5  ) {
             $frost_K = 2954.61 / ($temperature + 273.15);
             $frost_K = $frost_K + 2.193665 * log(($temperature + 273.15));
             $frost_K = $frost_K - 13.3448;
@@ -549,57 +555,36 @@ function getGivre ($temperature,$SHA,$humi_a_m3, $rosee) {
                 log::add('rosee', 'debug', '│ Point de givrage : ' . $frost_K.' K');
             $frost = $frost_K -273.15;
             $frost_point = round(($frost), 1);
-                
-                // Déclaration des variables
-                    // Cas N°0
-                        $msg_givre_0 = 'Aucun risque de Givre';
-                        $msg_givre_num_0 = 0;
-                        $alert_g_0 = 0;
-                    // Cas N°1
-                        $msg_givre_1 = 'Givre peu probable malgré la température';
-                        $msg_givre_num_1 = 1;
-                        $alert_g_1 = 1;
-                    // Cas N°2
-                        $msg_givre_2 = 'Risque de givre';
-                        $msg_givre_num_2 = 2;
-                        $alert_g_2 = 1;
-                    // Cas N°3
-                        $msg_givre_3 = 'Givre, Présence de givre';
-                        $msg_givre_num_3 = 3;
-                        $alert_g_3 = 1;
-
+                              
                 // Cas Actuel
                         if($temperature <= 1 && $frost_point <= 0) {
                             if ($humi_a_m3 > $SHA) {
                                 // Cas N°3
-                                $msg_givre = $msg_givre_3;
-                                $msg_givre_num = $msg_givre_num_3;
-                                $alert_g  = $alert_g_3;
+                                $msg_givre = 'Givre, Présence de givre';
+                                $msg_givre_num = 3;
+                                $alert_g  = 1;
                                 $alert_r = 0;
                             };
                             if ($humi_a_m3 < $SHA) {
                                 // Cas N°1
-                                $msg_givre = $msg_givre_1;
-                                $msg_givre_num = $msg_givre_num_1;
-                                $alert_g  = $alert_g_1;
+                                $msg_givre = 'Givre peu probable malgré la température';
+                                $msg_givre_num = 1;
+                                $alert_g  = 1;
                                 $alert_r = 0;
                             };
                         } elseif ($temperature <= 4 && $frost_point <= 0.5) {
                                 // Cas N°2
-                                $msg_givre = $msg_givre_2;
-                                $msg_givre_num = $msg_givre_num_2;
-                                $alert_g  = $alert_g_2;
+                                $msg_givre = 'Risque de givre';
+                                $msg_givre_num = 2;
+                                $alert_g  = 1;
                                 $alert_r = 0;
                         } else {
                                 // Cas N°0
-                                $msg_givre = $msg_givre_0;
-                                $msg_givre_num = $msg_givre_num_0;
-                                $alert_g  = $alert_g_0;
+                                $msg_givre = 'Aucun risque de Givre';
+                                $msg_givre_num = 0;
+                                $alert_g  = 0;
                         };
-        } else {
-            $msg_givre = 'Aucun risque de Givre';
-            $msg_givre_num = 0;
-            $alert_g  = 0;
+        } else {   
             $frost_point = 5;
             $msg_givre2 ='│ │ Info supplémentaire : Il fait trop chaud pas de calcul de l\'alerte givre (' .$temperature .' > 5°C)';
             $msg_givre3 ='│ │ Info supplémentaire : Point de givre fixé est : ' .$frost_point .' °C';
