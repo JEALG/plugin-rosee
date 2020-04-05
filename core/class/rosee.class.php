@@ -337,7 +337,7 @@ class rosee extends eqLogic {
             log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE ROSEE : '.$_eqName);
                 if ($calcul=='rosee_givre'|| $calcul=='rosee' || $calcul=='givre' ) {
                     // Appel de la fonction et résultat :
-                        $va_result_R = getRosee($temperature,$humidite,$dpr);
+                        $va_result_R = getRosee ($temperature,$humidite,$dpr);
                             // Partage des données du tableau
                                 $rosee_point = $va_result_R [0];
                                 $alert_r = $va_result_R [1];
@@ -360,7 +360,7 @@ class rosee extends eqLogic {
             log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE GIVRAGE : '.$_eqName);
                 if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
                     // Appel de la fonction et résultat :
-                        $va_result_G = getGivre($temperature, $SHA, $humi_a_m3,$rosee);
+                        $va_result_G = getGivre($temperature,$SHA,$humi_a_m3,$rosee);
                             // Partage des données du tableau
                                 $msg_givre_num = $va_result_G [0];
                                 $msg_givre = $va_result_G [1];
@@ -486,7 +486,7 @@ class rosee extends eqLogic {
             return;
         }
     
-    function getHumidity($temperature, $humidite, $pression) {
+    function getHumidity($temperature,$humidite,$pression) {
         /*  ********************** Calcul de l'humidité absolue *************************** */
             $terme_pvs1 = 2.7877 + (7.625 * $temperature) / (241.6 + $temperature);
                 log::add('rosee', 'debug', '│ terme_pvs1 : ' . $terme_pvs1);
@@ -505,7 +505,7 @@ class rosee extends eqLogic {
             $humi_a_m3 = round(($humi_a_m3), 1);
         return array($humi_a_m3);
     }
-    
+   
     function getRosee ($temperature,$humidite,$dpr) {
         /*  ********************** Calcul du Point de rosée ***************************
         Paramètres de MAGNUS pour l'air saturé (entre -45°C et +60°C) : */
