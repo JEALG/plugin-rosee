@@ -19,15 +19,15 @@
 try {
     require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
     include_file('core', 'authentification', 'php');
-
+    
     if (!isConnect('admin')) {
         throw new Exception(__('401 - {{Accès non autorisé}}', __FILE__));
     }
-
-	if (init('action') == 'autoDEL_eq') {
-		$eqLogic = rosee::byId(init('id'));
-		if (!is_object($eqLogic)) {
-			throw new Exception(__('Rosee eqLogic non trouvé : ', __FILE__) . init('id'));
+    
+    if (init('action') == 'autoDEL_eq') {
+        $eqLogic = rosee::byId(init('id'));
+        if (!is_object($eqLogic)) {
+            throw new Exception(__('Rosee eqLogic non trouvé : ', __FILE__) . init('id'));
         }
         foreach ($eqLogic->getCmd() as $cmd) {
             $cmd->remove();
@@ -35,7 +35,7 @@ try {
         }
         ajax::success();
     }
-
+    
     throw new Exception(__('{{Aucune méthode correspondante à}} : ', __FILE__) . init('action'));
     /*     * *********Catch exeption*************** */
 } catch (Exception $e) {

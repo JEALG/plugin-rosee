@@ -14,25 +14,46 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 $('#bt_selectTempCmd').on('click', function () {
-    jeedom.cmd.getSelectModal({cmd: {type: 'info', subType: 'numeric'}}, function (result) {
+    jeedom.cmd.getSelectModal({
+        cmd: {
+            type: 'info',
+            subType: 'numeric'
+        }
+    }, function (result) {
         $('.eqLogicAttr[data-l2key=temperature]').atCaret('insert', result.human);
-	});
+    });
 });
 
 $('#bt_selectHumiCmd').on('click', function () {
-    jeedom.cmd.getSelectModal({cmd: {type: 'info', subType: 'numeric'}}, function (result) {
+    jeedom.cmd.getSelectModal({
+        cmd: {
+            type: 'info',
+            subType: 'numeric'
+        }
+    }, function (result) {
         $('.eqLogicAttr[data-l2key=humidite]').atCaret('insert', result.human);
     });
 });
 
 $('#bt_selectPresCmd').on('click', function () {
-    jeedom.cmd.getSelectModal({cmd: {type: 'info', subType: 'numeric'}}, function (result) {
+    jeedom.cmd.getSelectModal({
+        cmd: {
+            type: 'info',
+            subType: 'numeric'
+        }
+    }, function (result) {
         $('.eqLogicAttr[data-l2key=pression]').atCaret('insert', result.human);
     });
 });
 
-$("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
-
+$("#table_cmd").sortable({
+    axis: "y",
+    cursor: "move",
+    items: ".cmd",
+    placeholder: "ui-state-highlight",
+    tolerance: "intersect",
+    forcePlaceholderSize: true
+});
 
 $('#bt_autoDEL_eq').on('click', function () {
     var dialog_title = '{{Recréer les commandes}}';
@@ -41,49 +62,54 @@ $('#bt_autoDEL_eq').on('click', function () {
     dialog_message += '<label class="lbl lbl-warning" for="name">{{Attention, cela va supprimer les commandes existantes.}}</label> ';
     dialog_message += '</form>';
     bootbox.dialog({
-       title: dialog_title,
-       message: dialog_message,
-       buttons: {
-           "{{Annuler}}": {
-               className: "btn-danger",
-               callback: function () {
-               }
-           },
-           success: {
-               label: "{{Démarrer}}",
-               className: "btn-success",
-               callback: function () {
-                   bootbox.confirm('{{Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes}}', function (result) {
-                       if (result) {
-                           $.ajax({
-                               type: "POST",
-                               url: "plugins/rosee/core/ajax/rosee.ajax.php",
-                               data: {
-                                   action: "autoDEL_eq",
-                                   id: $('.eqLogicAttr[data-l1key=id]').value(),
-                               },
-                               dataType: 'json',
-                               error: function (request, status, error) {
-                                   handleAjaxError(request, status, error);
-                               },
-                               success: function (data) {
-                                   if (data.state != 'ok') {
-                                       $('#div_alert').showAlert({message: data.result, level: 'danger'});
-                                       return;
-                                   }
-                                   $('#div_alert').showAlert({message: '{{Opération réalisée avec succès}}', level: 'success'});
-                                   $('.eqLogicDisplayCard[data-eqLogic_id='+$('.eqLogicAttr[data-l1key=id]').value()+']').click();
-                               }
-                           });
-                       }
-                   });
-               }
-           },
-       }
+        title: dialog_title,
+        message: dialog_message,
+        buttons: {
+            "{{Annuler}}": {
+                className: "btn-danger",
+                callback: function () {}
+            },
+            success: {
+                label: "{{Démarrer}}",
+                className: "btn-success",
+                callback: function () {
+                    bootbox.confirm('{{Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes}}', function (result) {
+                        if (result) {
+                            $.ajax({
+                                type: "POST",
+                                url: "plugins/rosee/core/ajax/rosee.ajax.php",
+                                data: {
+                                    action: "autoDEL_eq",
+                                    id: $('.eqLogicAttr[data-l1key=id]').value(),
+                                },
+                                dataType: 'json',
+                                error: function (request, status, error) {
+                                    handleAjaxError(request, status, error);
+                                },
+                                success: function (data) {
+                                    if (data.state != 'ok') {
+                                        $('#div_alert').showAlert({
+                                            message: data.result,
+                                            level: 'danger'
+                                        });
+                                        return;
+                                    }
+                                    $('#div_alert').showAlert({
+                                        message: '{{Opération réalisée avec succès}}',
+                                        level: 'success'
+                                    });
+                                    $('.eqLogicDisplayCard[data-eqLogic_id=' + $('.eqLogicAttr[data-l1key=id]').value() + ']').click();
+                                }
+                            });
+                        }
+                    });
+                }
+            },
+        }
     });
 });
 
-$('#type_calcul').change(function(){
+$('#type_calcul').change(function () {
     var text = $("#type_calcul").val();
     if ((text == '')) {
         $('#temperature').hide();
@@ -130,7 +156,9 @@ $('#type_calcul').change(function(){
 
 function addCmdToTable(_cmd) {
     if (!isset(_cmd)) {
-        var _cmd = {configuration: {}};
+        var _cmd = {
+            configuration: {}
+        };
     }
     if (!isset(_cmd.configuration)) {
         _cmd.configuration = {};
@@ -138,10 +166,10 @@ function addCmdToTable(_cmd) {
     if (init(_cmd.logicalId) == 'refresh') {
         return;
     }
-    
+
     if (init(_cmd.type) == 'info') {
         var disabled = (init(_cmd.configuration.virtualAction) == '1') ? 'readonly' : '';
-		var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
+        var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
         tr += '<td>';
         tr += '<span class="cmdAttr" data-l1key="id"></span>';
         tr += '</td>';
