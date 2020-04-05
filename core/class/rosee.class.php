@@ -484,6 +484,18 @@ class rosee extends eqLogic {
                 log::add('rosee', 'debug', '================ FIN CRON =================');
             return;
         }
+    
+    public static function generatePassword($length = 16) {
+		$possibleChars = "abcdefghijklmnopqrstuvwxyz";
+		$password = '';
+
+		for($i = 0; $i < $length; $i++) {
+			$rand = rand(0, strlen($possibleChars) - 1);
+			$password .= substr($possibleChars, $rand, 1);
+		}
+
+		return $password;
+	}
 }
 
 function getHumidity($temperature, $humidite,$pression) {
@@ -590,7 +602,7 @@ function getGivre ($temperature,$SHA,$humi_a_m3, $rosee) {
         };
 
     return array ($msg_givre_num, $msg_givre, $alert_g, $frost_point,$msg_givre2 ,$msg_givre3, $alert_r);
-}   
+}
 class roseeCmd extends cmd {
     /*     * *************************Attributs****************************** */
 
