@@ -347,7 +347,6 @@ class rosee extends eqLogic {
                 log::add('rosee', 'debug', '│ Etat alerte rosée : ' . $alert_r);
                 log::add('rosee', 'debug', '│ Point de Rosée : ' . $rosee_point .' °C');
             } else {
-                $alert_r  = 0;
                 log::add('rosee', 'debug', '│ Pas de mise à jour du point de  l\'alerte rosée car le calcul est désactivé');
             }
         } else {
@@ -358,7 +357,7 @@ class rosee extends eqLogic {
         /*  ********************** Calcul du Point de givrage *************************** */
         log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE GIVRAGE : '.$_eqName);
         if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
-            $va_result_G = rosee::getGivre($temperature, $SHA, $humi_a_m3, $rosee, $alert_r);
+            $va_result_G = rosee::getGivre($temperature, $SHA, $humi_a_m3, $rosee);
             // Partage des données du tableau
             $msg_givre_num = $va_result_G [0];
             $msg_givre = $va_result_G [1];
@@ -366,7 +365,6 @@ class rosee extends eqLogic {
             $frost_point  = $va_result_G [3];
             $msg_givre2 = $va_result_G [4];
             $msg_givre3 = $va_result_G [5];
-            $alert_r = $va_result_G [6];
             
             log::add('rosee', 'debug', '│ ┌─────── Cas Actuel N°'.$msg_givre_num . ' / Alerte givre : ' .$alert_g );
             log::add('rosee', 'debug', '│ │ Message : ' .$msg_givre );
@@ -375,6 +373,10 @@ class rosee extends eqLogic {
                 log::add('rosee', 'debug', $msg_givre2 );
                 log::add('rosee', 'debug', $msg_givre3 );
             };
+            if ($alert_g == 1 && $alert_r == 1) {
+                $alert_r = 0;
+                log::add('rosee', 'debug', '│ │ Annulation alerte rosée : ' .$alert_r );
+            };                
             log::add('rosee', 'debug', '│ └───────');
         } else {
             $alert_g = 0;
@@ -523,7 +525,7 @@ class rosee extends eqLogic {
         return array($rosee_point, $alert_r,$rosee);
     }
     /*  ********************** Calcul du Point de givrage *************************** */
-    public function getGivre ($temperature, $SHA, $humi_a_m3, $rosee, $alert_r) {
+    public function getGivre ($temperature, $SHA, $humi_a_m3, $rosee) {
         $msg_givre = 'Aucun risque de Givre';
         $msg_givre_num = 0;
         $alert_g  = 0;
@@ -541,7 +543,6 @@ class rosee extends eqLogic {
             
             if($temperature <= 1 && $frost_point <= 0) {
                 $alert_g  = 1;
-                $alert_r = 0;
                 if ($humi_a_m3 > $SHA) {// Cas N°3
                     $msg_givre = 'Givre, Présence de givre';
                     $msg_givre_num = 3;
@@ -554,7 +555,6 @@ class rosee extends eqLogic {
                 $msg_givre = 'Risque de givre';
                 $msg_givre_num = 2;
                 $alert_g  = 1;
-                $alert_r = 0;
             //} else {// Cas N°0
             };
         } else {
@@ -562,7 +562,7 @@ class rosee extends eqLogic {
             $msg_givre2 ='│ │ Info supplémentaire : Il fait trop chaud pas de calcul de l\'alerte givre (' .$temperature .' °C > 5 °C)';
             $msg_givre3 ='│ │ Info supplémentaire : Point de givre fixé est : ' .$frost_point .' °C';
         };
-        return array ($msg_givre_num, $msg_givre, $alert_g, $frost_point,$msg_givre2 ,$msg_givre3,$alert_r);
+        return array ($msg_givre_num, $msg_givre, $alert_g, $frost_point,$msg_givre2 ,$msg_givre3);
     }
 }
 
