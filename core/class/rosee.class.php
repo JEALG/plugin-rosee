@@ -497,7 +497,7 @@ class rosee extends eqLogic {
     }
     
     /*  ********************** Calcul du Point de rosée *************************** */
-    public function getRosee ($temperature, $humidite, $dpr) {
+    public function getRosee($temperature, $humidite, $dpr) {
         /* Paramètres de MAGNUS pour l'air saturé (entre -45°C et +60°C) : */
         $alpha = 6.112;
         $beta = 17.62;
@@ -524,7 +524,7 @@ class rosee extends eqLogic {
         return array($rosee_point, $alert_r,$rosee);
     }
     /*  ********************** Calcul du Point de givrage *************************** */
-    public function getGivre ($temperature, $SHA, $humi_a_m3, $rosee) {
+    public function getGivre($temperature, $SHA, $humi_a_m3, $rosee) {
         $msg_givre = 'Aucun risque de Givre';
         $msg_givre_num = 0;
         $alert_g  = 0;
