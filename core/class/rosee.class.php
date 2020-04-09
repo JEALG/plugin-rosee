@@ -79,18 +79,6 @@ class rosee extends eqLogic {
         /*  ********************** Calcul *************************** */
         $calcul=$this->getConfiguration('type_calcul');
 
-        $refresh = $this->getCmd(null, 'refresh');
-        if (!is_object($refresh)) {
-            $refresh = new roseeCmd();
-            $refresh->setLogicalId('refresh');
-            $refresh->setIsVisible(1);
-            $refresh->setName(__('Rafraichir', __FILE__));
-        }
-        $refresh->setEqLogic_id($this->getId());
-        $refresh->setType('action');
-        $refresh->setSubType('other');
-        $refresh->save();
-
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
             $roseeCmd = $this->getCmd(null, 'humidite_absolue');
             if (!is_object($roseeCmd)) {
@@ -234,6 +222,18 @@ class rosee extends eqLogic {
             $roseeCmd->setConfiguration('maxValue', 3);
             $roseeCmd->save();
         }
+        $refresh = $this->getCmd(null, 'refresh');
+        if (!is_object($refresh)) {
+            $refresh = new roseeCmd();
+            $refresh->setLogicalId('refresh');
+            $refresh->setIsVisible(1);
+            $refresh->setName(__('Rafraichir', __FILE__));
+            $refresh->setOrder($order);
+        }
+        $refresh->setType('action');
+        $refresh->setSubType('other');
+        $refresh->setEqLogic_id($this->getId());
+        $refresh->save();
     }
 
     /*  **********************Getteur Setteur*************************** */

@@ -65,7 +65,6 @@ function rosee_update() {
     }
 
     message::add('rosee', 'Mise à jour du plugin Rosée terminée.');
-    //message::add('rosee', 'Merci pour la mise à jour de ce plugin, le plugin a été repris par JAG, merci à Claude Metzger pour son boulot');
 }
 
 function updateLogicalId($eqLogic, $from, $to) {
