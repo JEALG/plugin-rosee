@@ -43,34 +43,35 @@ function rosee_update() {
     
     $plugin = plugin::byId('rosee');
     $eqLogics = eqLogic::byType($plugin->getId());
-    //foreach ($eqLogics as $eqLogic)
-    //{
-      //  updatename($eqLogic, 'Message Alerte givre', 'Message');
-//		updatename($eqLogic, 'Message Alerte givre numérique', 'Message numérique');
-  //  } 
+    foreach ($eqLogics as $eqLogic) {
+        //  updatename($eqLogic, 'Message Alerte givre', 'Message');
+        //	updatename($eqLogic, 'Message Alerte givre numérique', 'Message numérique');
+        $eqLogics->save();
+    } 
     
-    //resave eqs for new cmd:
-        try
-        {
-            $eqs = eqLogic::byType('rosee');
-            foreach ($eqs as $eq){
-                $eq->save();
-            }
+    //resave eqLogics for new cmd:
+    try
+    {
+        $eqLogics = eqLogic::byType($plugin->getId());
+        foreach ($eqLogics as $eqLogics){
+            $eqLogics->save();
         }
-        catch (Exception $e)
-        {
-            $e = print_r($e, 1);
-            log::add('rosee', 'error', 'rosee_update ERROR: '.$e);
-        }
+    }
+    catch (Exception $e)
+    {
+        $e = print_r($e, 1);
+        log::add('rosee', 'error', 'rosee_update ERROR: '.$e);
+    }
     
+    message::add('rosee', 'Mise à jour du plugin Rosée terminée.', null, null);
     //message::add('rosee', 'Merci pour la mise à jour de ce plugin, le plugin a été repris par JAG, merci à Claude Metzger pour son boulot');
 }
 
 function updateLogicalId($eqLogic, $from, $to) {
-    $roseeCmd = $eqLogic->getCmd(null, $from);
-    if (is_object($roseeCmd)) {
-        $roseeCmd->setLogicalId($to);
-        $roseeCmd->save();
+    $roseeCmd- = $eqLogic->getCmd(null, $from);
+    if (is_object($roseeCmd-)) {
+        $roseeCmd-->setLogicalId($to);
+        $roseeCmd-->save();
     }
 }
 
