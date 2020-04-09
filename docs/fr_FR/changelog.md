@@ -14,7 +14,7 @@ description: Ce plugin permet d'obtenir le point de rosée pour savoir si l'herb
 - Résolution Bug Liste déroulante choix calcul vide
 - Masquage des paramètres non nécessaire suivant le mode de calcul
 - Modification création des commandes cela tient compte désormais du mode de calcul
-- Suppression de certains calculs intermédiares
+- Suppression de certains calculs intermédiaires
 - Affectation valeur Min et Max sur le "Message numérique"
 
 # Version 20200226
