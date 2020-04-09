@@ -53,8 +53,7 @@ function rosee_update() {
         try
         {
             $eqs = eqLogic::byType('rosee');
-            foreach ($eqs as $eq)
-            {
+            foreach ($eqs as $eq){
                 $eq->save();
             }
         }

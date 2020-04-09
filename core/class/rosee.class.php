@@ -21,7 +21,7 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class rosee extends eqLogic {
     /*     * *************************Attributs****************************** */
-    
+
     /*     * ***********************Methode static*************************** */
     public static function cron5() {
         foreach (eqLogic::byType('rosee') as $rosee) {
@@ -44,7 +44,7 @@ class rosee extends eqLogic {
             }
         }
     }
-    
+
     /*     * *********************Methode d'instance************************* */
     public function refresh() {
         foreach ($this->getCmd() as $cmd) {
@@ -53,29 +53,32 @@ class rosee extends eqLogic {
             $cmd->execute();
         }
     }
-    
+
     public function preUpdate() {
         if (!$this->getIsEnable()) return;
-        
+
         if ($this->getConfiguration('temperature') == '') {
             throw new Exception(__('Le champ "Température" ne peut être vide',__FILE__));
         }
-        
+
         if ($this->getConfiguration('humidite') == '') {
             throw new Exception(__('Le champ "Humidité Relative" ne peut être vide',__FILE__));
         }
-        
+
         if ($this->getConfiguration('type_calcul') == '') {
             $this->setConfiguration('type_calcul', 'rosee_givre');
         }
     }
-    
+    public function postInsert() {
+
+    }
+
     public function postSave(){
         log::add('rosee', 'debug', 'postSave()');
         $order = 1;
         /*  ********************** Calcul *************************** */
         $calcul=$this->getConfiguration('type_calcul');
-        
+
         $refresh = $this->getCmd(null, 'refresh');
         if (!is_object($refresh)) {
             $refresh = new roseeCmd();
@@ -83,11 +86,11 @@ class rosee extends eqLogic {
             $refresh->setIsVisible(1);
             $refresh->setName(__('Rafraichir', __FILE__));
         }
+        $refresh->setEqLogic_id($this->getId());
         $refresh->setType('action');
         $refresh->setSubType('other');
-        $refresh->setEqLogic_id($this->getId());
         $refresh->save();
-        
+
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
             $roseeCmd = $this->getCmd(null, 'humidite_absolue');
             if (!is_object($roseeCmd)) {
@@ -109,7 +112,7 @@ class rosee extends eqLogic {
             $roseeCmd->setSubType('numeric');
             $roseeCmd->save();
         }
-        
+
         if ($calcul=='rosee_givre'|| $calcul=='rosee') {
             $roseeCmd = $this->getCmd(null, 'alerte_rosee');
             if (!is_object($roseeCmd)) {
@@ -119,7 +122,7 @@ class rosee extends eqLogic {
                 $roseeCmd->setLogicalId('alerte_rosee');
                 $roseeCmd->setConfiguration('data', 'alert_r');
                 $roseeCmd->setType('info');
-                $roseeCmd->setSubType('binary'); 
+                $roseeCmd->setSubType('binary');
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible(1);
                 $roseeCmd->setDisplay('generic_type','SIREN_STATE');
@@ -130,7 +133,7 @@ class rosee extends eqLogic {
             $roseeCmd->setUnite('');
             $roseeCmd->save();
         }
-            
+
         if ($calcul=='rosee_givre'|| $calcul=='rosee' || $calcul=='givre') {
             $roseeCmd = $this->getCmd(null, 'rosee');
             if (!is_object($roseeCmd)) {
@@ -151,7 +154,7 @@ class rosee extends eqLogic {
             $roseeCmd->setUnite('°C');
             $roseeCmd->save();
         }
-        
+
         if ($calcul=='rosee_givre'|| $calcul=='givre') {
             $roseeCmd = $this->getCmd(null, 'alerte_givre');
             if (!is_object($roseeCmd)) {
@@ -171,7 +174,7 @@ class rosee extends eqLogic {
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('');
             $roseeCmd->save();
-            
+
             $roseeCmd  = $this->getCmd(null, 'givrage');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
@@ -180,7 +183,7 @@ class rosee extends eqLogic {
                 $roseeCmd->setLogicalId('givrage');
                 $roseeCmd->setConfiguration('data', 'frost_point');
                 $roseeCmd->setType('info');
-                $roseeCmd->setSubType('numeric'); 
+                $roseeCmd->setSubType('numeric');
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible(1);
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
@@ -190,7 +193,7 @@ class rosee extends eqLogic {
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('°C');
             $roseeCmd->save();
-            
+
             $roseeCmd = $this->getCmd(null, 'message_givre');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
@@ -209,7 +212,7 @@ class rosee extends eqLogic {
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('');
             $roseeCmd->save();
-            
+
             $roseeCmd = $this->getCmd(null, 'message_givre_num');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
@@ -232,20 +235,20 @@ class rosee extends eqLogic {
             $roseeCmd->save();
         }
     }
-    
+
     /*  **********************Getteur Setteur*************************** */
     public function postUpdate() {
         foreach (eqLogic::byType('rosee') as $rosee) {
             $rosee->getInformations();
         }
     }
-    
+
     public function getInformations() {
         if (!$this->getIsEnable()) return;
-        
+
         $_eqName = $this->getName();
         log::add('rosee', 'debug', '┌───────── CONFIGURATION EQUIPEMENT : '.$_eqName );
-        
+
         /*  ********************** TEMPERATURE *************************** */
         $idvirt = str_replace("#","",$this->getConfiguration('temperature'));
         $cmdvirt = cmd::byId($idvirt);
@@ -255,7 +258,7 @@ class rosee extends eqLogic {
         } else {
             log::add('rosee', 'error', '│ Configuration : Température inexistante : ' . $this->getConfiguration('temperature'));
         }
-        
+
         /*  ********************** Offset Température *************************** */
         $OffsetT=$this->getConfiguration('OffsetT');
         if ($OffsetT== '') {
@@ -266,7 +269,7 @@ class rosee extends eqLogic {
             $temperature = $temperature + $OffsetT;
             log::add('rosee', 'debug', '│ Température avec Offset : ' .$temperature.' °C');
         }
-        
+
         /*  ********************** PRESSION *************************** */
         $pression = $this->getConfiguration('pression');
         if ($pression == '') {//valeur par défaut de la pression atmosphérique : 1013.25 hPa
@@ -283,7 +286,7 @@ class rosee extends eqLogic {
                 log::add('rosee', 'error', '│ Configuration : Pression Atmosphérique inexistante : ' . $this->getConfiguration('pression'));
             }
         }
-        
+
         /*  ********************** HUMIDITE *************************** */
         $idvirt = str_replace("#","",$this->getConfiguration('humidite'));
         $cmdvirt = cmd::byId($idvirt);
@@ -293,7 +296,7 @@ class rosee extends eqLogic {
         } else {
             log::add('rosee', 'error', '│ Configuration : Humidité Relative  inexistante : ' . $this->getConfiguration('humidite'));
         }
-        
+
         /*  ********************** Calcul *************************** */
         $calcul=$this->getConfiguration('type_calcul');
         if ($calcul== '') {
@@ -301,28 +304,28 @@ class rosee extends eqLogic {
             log::add('rosee', 'debug', '│ Aucune méthode de calcul sélectionnée');
         }
         log::add('rosee', 'debug', '│ Méthode de calcul : ' . $calcul);
-        
+
         /*  ********************** SEUIL D'ALERTE ROSEE *************************** */
         $dpr=$this->getConfiguration('DPR');
         if ($dpr == '') {
             $dpr=2.0;
             log::add('rosee', 'debug', '│ Seuil DPR : Aucune valeur de saisie => Valeur par défaut : '. $dpr.' °C');
         } else {
-            log::add('rosee', 'debug', '│ Seuil DPR : ' . $dpr.' °C'); 
+            log::add('rosee', 'debug', '│ Seuil DPR : ' . $dpr.' °C');
         }
-        
+
         /*  ********************** SEUIL D'HUMIDITE ABSOLUE ***************************  */
         $SHA=$this->getConfiguration('SHA');
         if ($SHA == '') {
             $SHA=2.8;
-            log::add('rosee', 'debug', '│ Seuil d\'Humidité Absolue : Aucune valeur de saisie => Valeur par défaut : ' . $SHA.'');  
+            log::add('rosee', 'debug', '│ Seuil d\'Humidité Absolue : Aucune valeur de saisie => Valeur par défaut : ' . $SHA.'');
         } else {
             log::add('rosee', 'debug', '│ Seuil d\'Humidité Absolue : ' . $SHA.'');
         }
         log::add('rosee', 'debug', '└─────────');
-        
+
         /*  ********************** Conversion (si Besoin) *************************** */
-        
+
         /*  ********************** Calcul de l'humidité absolue *************************** */
         log::add('rosee', 'debug', '┌───────── CALCUL DE L HUMIDITE ABSOLUE : '.$_eqName);
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
@@ -332,7 +335,7 @@ class rosee extends eqLogic {
             log::add('rosee', 'debug', '│ Pas de calcul de l\'Humidité Absolue');
         }
         log::add('rosee', 'debug', '└─────────');
-        
+
         /*  ********************** Calcul du Point de rosée *************************** */
         log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE ROSEE : '.$_eqName);
         $alert_r  = 0;
@@ -342,7 +345,7 @@ class rosee extends eqLogic {
             $rosee_point = $va_result_R [0];
             $alert_r = $va_result_R [1];
             $rosee = $va_result_R [2];
-            
+
             if ($calcul=='rosee_givre'|| $calcul=='rosee') {
                 log::add('rosee', 'debug', '│ Etat alerte rosée : ' . $alert_r);
                 log::add('rosee', 'debug', '│ Point de Rosée : ' . $rosee_point .' °C');
@@ -353,7 +356,7 @@ class rosee extends eqLogic {
             log::add('rosee', 'debug', '│ Pas de calcul du point de rosée et de l\'alerte  ');
         }
         log::add('rosee', 'debug', '└─────────');
-        
+
         /*  ********************** Calcul du Point de givrage *************************** */
         log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE GIVRAGE : '.$_eqName);
         if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
@@ -365,7 +368,7 @@ class rosee extends eqLogic {
             $frost_point  = $va_result_G [3];
             $msg_givre2 = $va_result_G [4];
             $msg_givre3 = $va_result_G [5];
-            
+
             log::add('rosee', 'debug', '│ ┌─────── Cas Actuel N°'.$msg_givre_num . ' / Alerte givre : ' .$alert_g );
             log::add('rosee', 'debug', '│ │ Message : ' .$msg_givre );
             log::add('rosee', 'debug', '│ │ Point de Givrage : ' . $frost_point.' °C');
@@ -376,7 +379,7 @@ class rosee extends eqLogic {
             if ($alert_g == 1 && $alert_r == 1) {
                 $alert_r = 0;
                 log::add('rosee', 'debug', '│ │ Annulation alerte rosée : ' .$alert_r );
-            };                
+            };
             log::add('rosee', 'debug', '│ └───────');
         } else {
             $alert_g = 0;
@@ -384,10 +387,10 @@ class rosee extends eqLogic {
             log::add('rosee', 'debug', '│ Pas de calcul du point de givrage et de l\'alerte');
         };
         log::add('rosee', 'debug', '└─────────');
-        
+
         /*  ********************** Mise à Jour des équipements *************************** */
         log::add('rosee', 'debug', '┌───────── MISE A JOUR : '.$_eqName);
-        
+
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
             $cmd = $this->getCmd('info', 'humidite_absolue');//Mise à jour de l'équipement Humidité absolue
             if(is_object($cmd)) {
@@ -399,7 +402,7 @@ class rosee extends eqLogic {
                 log::add('rosee', 'debug', '│ └─────────');
             };
         };
-        
+
         if ($calcul=='rosee_givre'|| $calcul=='rosee'){
             $cmd = $this->getCmd('info', 'alerte_rosee');//Mise à jour de l'équipement Alerte rosée
             if(is_object($cmd)) {
@@ -411,7 +414,7 @@ class rosee extends eqLogic {
                 log::add('rosee', 'debug', '│ │ Alerte Rosée : ' . $alert_r);
             };
         };
-        
+
         if ($calcul=='rosee_givre'|| $calcul=='rosee' || $calcul=='givre') {
             $cmd = $this->getCmd('info', 'rosee');//Mise à jour de l'équipement point de rosée
             if(is_object($cmd)) {
@@ -425,7 +428,7 @@ class rosee extends eqLogic {
             };
             log::add('rosee', 'debug', '│ └─────────');
         };
-        
+
         if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
             $cmd = $this->getCmd('info', 'alerte_givre');//Mise à jour de l'équipement Alerte givre
             if (is_object($cmd)) {
@@ -436,7 +439,7 @@ class rosee extends eqLogic {
                 log::add('rosee', 'debug', '│ ┌───────── GIVRE');
                 log::add('rosee', 'debug', '│ │ Alerte Givre : ' . $alert_g);
             };
-            
+
             $cmd = $this->getCmd('info', 'givrage');//Mise à jour de l'équipement Givrage
             if(is_object($cmd)) {
                 $cmd->setConfiguration('value', $frost_point);
@@ -444,7 +447,7 @@ class rosee extends eqLogic {
                 $cmd->event($frost_point);
                 log::add('rosee', 'debug', '│ │ Point de givrage : ' . $frost_point.' °C');
             }
-                
+
             $cmd = $this->getCmd('info', 'message_givre'); //Mise à jour de l'équipement message
             if(is_object($cmd)) {
                 $cmd->setConfiguration('value', $msg_givre);
@@ -453,7 +456,7 @@ class rosee extends eqLogic {
                 $cmd->event($msg_givre);
                 log::add('rosee', 'debug', '│ │ Message Alerte givre : ' . $msg_givre);
             }
-            
+
             $cmd = $this->getCmd('info', 'message_givre_num'); //Mise à jour de l'équipement message
             if(is_object($cmd)) {
                 $cmd->setConfiguration('value', $msg_givre_num);
@@ -495,7 +498,7 @@ class rosee extends eqLogic {
         $humi_a_m3 = round(($humi_a_m3), 1);
         return $humi_a_m3;
     }
-    
+
     /*  ********************** Calcul du Point de rosée *************************** */
     public function getRosee($temperature, $humidite, $dpr) {
         /* Paramètres de MAGNUS pour l'air saturé (entre -45°C et +60°C) : */
@@ -503,14 +506,14 @@ class rosee extends eqLogic {
         $beta = 17.62;
         $lambda = 243.12;
         log::add('rosee', 'debug', '│ Paramètres de MAGNUS pour l\'air saturé (entre -45°C et +60°C) : Lambda = ' . $lambda .' °C // alpha = ' . $alpha .' hPa // beta = ' . $beta );
-        
+
         $Terme1 = log($humidite/100);
         $Terme2 = ($beta * $temperature) / ($lambda + $temperature);
         log::add('rosee', 'debug', '│ Terme1 = ' . $Terme1 .' // Terme2 = ' . $Terme2 );
         $rosee = $lambda * ($Terme1 + $Terme2) / ($beta - $Terme1 - $Terme2);
         $rosee_point = round(($rosee), 1);
         $alert_r = 0;
-        
+
         /*  ********************** Calcul de l'alerte rosée en fonction du seuil d'alerte *************************** */
         $frost_alert_rosee = $temperature - $rosee_point;
         log::add('rosee', 'debug', '│ Calcul point de rosée : (Température - point de Rosée) : (' .$temperature .' - '.$rosee_point .' )= ' . $frost_alert_rosee .' °C');
@@ -520,7 +523,7 @@ class rosee extends eqLogic {
         } else {
             log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' > ' .$dpr .') = Alerte désactivée');
         }
-        
+
         return array($rosee_point, $alert_r,$rosee);
     }
     /*  ********************** Calcul du Point de givrage *************************** */
@@ -539,7 +542,7 @@ class rosee extends eqLogic {
             log::add('rosee', 'debug', '│ Point de givrage : ' . $frost_K.' K');
             $frost = $frost_K -273.15;
             $frost_point = round(($frost), 1);
-            
+
             if($temperature <= 1 && $frost_point <= 0) {
                 $alert_g  = 1;
                 if ($humi_a_m3 > $SHA) {// Cas N°3
@@ -567,14 +570,14 @@ class rosee extends eqLogic {
 
 class roseeCmd extends cmd {
     /*     * *************************Attributs****************************** */
-    
+
     /*     * ***********************Methode static*************************** */
-    
+
     /*     * *********************Methode d'instance************************* */
     public function dontRemoveCmd(){
         return true;
     }
-    
+
     public function execute($_options = null) {
         if ($this->getLogicalId() == 'refresh') {
             $this->getEqLogic()->getInformations();
