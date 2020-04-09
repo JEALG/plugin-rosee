@@ -26,29 +26,30 @@ function rosee_install() {
     if (is_object($cron)) {
         $cron->remove();
     }
+    message::add('rosee', 'Installation du plugin Rosée terminée.');
 }
 
 function rosee_update() {
     jeedom::getApiKey('rosee');
     if (config::byKey('functionality::cron5::enable', 'rosee', -1) == -1)
         config::save('functionality::cron5::enable', 1, 'rosee');
-    
+
     if (config::byKey('functionality::cron30::enable', 'rosee', -1) == -1)
         config::save('functionality::cron30::enable', 0, 'rosee');
     $cron = cron::byClassAndFunction('rosee', 'pull');
-    
+
     if (is_object($cron)) {
         $cron->remove();
     }
-    
+
     $plugin = plugin::byId('rosee');
     $eqLogics = eqLogic::byType($plugin->getId());
     foreach ($eqLogics as $eqLogic) {
         //  updatename($eqLogic, 'Message Alerte givre', 'Message');
         //	updatename($eqLogic, 'Message Alerte givre numérique', 'Message numérique');
         $eqLogics->save();
-    } 
-    
+    }
+
     //resave eqLogics for new cmd:
     try
     {
@@ -62,8 +63,8 @@ function rosee_update() {
         $e = print_r($e, 1);
         log::add('rosee', 'error', 'rosee_update ERROR: '.$e);
     }
-    
-    message::add('rosee', 'Mise à jour du plugin Rosée terminée.', null, null);
+
+    message::add('rosee', 'Mise à jour du plugin Rosée terminée.');
     //message::add('rosee', 'Merci pour la mise à jour de ce plugin, le plugin a été repris par JAG, merci à Claude Metzger pour son boulot');
 }
 
