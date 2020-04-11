@@ -175,7 +175,7 @@ class rosee extends eqLogic {
             $roseeCmd->setUnite('°C');
             $roseeCmd->save();
         }
-        if ($calcul != 'tendance'|| $calcul=='rosee_givre'|| $calcul=='givre') {
+        if ($calcul == 'tendance'|| $calcul=='rosee_givre'|| $calcul=='givre') {
             $roseeCmd = $this->getCmd(null, 'td');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
@@ -205,7 +205,11 @@ class rosee extends eqLogic {
                 $roseeCmd->setType('info');
                 $roseeCmd->setSubType('numeric');
                 $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(0);
+                if ($calcul == 'tendance') {
+                    $roseeCmd->setIsVisible(1);
+                } else {
+                    $roseeCmd->setIsVisible(0);
+                }
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
                 $roseeCmd->setOrder($order);
                 $order ++;
@@ -213,7 +217,11 @@ class rosee extends eqLogic {
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('');
             $roseeCmd->setConfiguration('minValue', 0);
-            $roseeCmd->setConfiguration('maxValue', 3);
+            if ($calcul == 'tendance') {
+                $roseeCmd->setConfiguration('maxValue', 5);
+            } else {
+                $roseeCmd->setConfiguration('maxValue', 3);
+            }
             $roseeCmd->save();
         }
 
@@ -277,17 +285,17 @@ class rosee extends eqLogic {
         }
 
         /*  ********************** PRESSION *************************** */
-        $pression = $this->getConfiguration('pression');
-        if ($pression == '' && $calcul !='tendance') {//valeur par défaut de la pression atmosphérique : 1013.25 hPa
-            $pression=1013.25;
+        $pressure = $this->getConfiguration('pression');
+        if ($pressure == '' && $calcul !='tendance') {//valeur par défaut de la pression atmosphérique : 1013.25 hPa
+            $pressure=1013.25;
             log::add('rosee', 'debug', '│ Pression Atmosphérique aucun équipement sélectionné');
-            log::add('rosee', 'debug', '│ Pression Atmosphérique par défaut : ' . $pression. ' hPa');
+            log::add('rosee', 'debug', '│ Pression Atmosphérique par défaut : ' . $pressure. ' hPa');
         } else {
             $idvirt = str_replace("#","",$this->getConfiguration('pression'));
             $cmdvirt = cmd::byId($idvirt);
             if (is_object($cmdvirt)) {
-                $pression = $cmdvirt->execCmd();
-                log::add('rosee', 'debug', '│ Pression Atmosphérique : ' . $pression.' hPa');
+                $pressure = $cmdvirt->execCmd();
+                log::add('rosee', 'debug', '│ Pression Atmosphérique : ' . $pressure.' hPa');
             } else {
                 throw new Exception(__('Le champ "Pression Atmosphérique" ne peut être vide',__FILE__));
                 log::add('rosee', 'error', '│ Configuration : Pression Atmosphérique inexistante : ' . $this->getConfiguration('pression'));
@@ -298,8 +306,8 @@ class rosee extends eqLogic {
         $idvirt = str_replace("#","",$this->getConfiguration('humidite'));
         $cmdvirt = cmd::byId($idvirt);
         if (is_object($cmdvirt)) {
-            $humidite = $cmdvirt->execCmd();
-            log::add('rosee', 'debug', '│ Humidité Relative : ' . $humidite.' %');
+            $humidity = $cmdvirt->execCmd();
+            log::add('rosee', 'debug', '│ Humidité Relative : ' . $humidity.' %');
         } else {
             if ($calcul != 'tendance') {
                 throw new Exception(__('Le champ "Humidité Relative" ne peut être vide',__FILE__));
@@ -330,12 +338,26 @@ class rosee extends eqLogic {
         /*  ********************** Conversion (si Besoin) *************************** */
 
         /*  ********************** Calcul de l'humidité absolue *************************** */
-        log::add('rosee', 'debug', '┌───────── CALCUL DE L HUMIDITE ABSOLUE : '.$_eqName);
+        log::add('rosee', 'debug', '┌───────── CALCUL DE L\'HUMIDITE ABSOLUE : '.$_eqName);
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
-            $humi_a_m3 = rosee::getHumidity($temperature, $humidite,$pression);
+            $humi_a_m3 = rosee::getHumidity($temperature, $humidity,$pressure);
             log::add('rosee', 'debug', '│ Humidité Absolue : ' . $humi_a_m3.' g/m3');
         } else {
             log::add('rosee', 'debug', '│ Pas de calcul de l\'Humidité Absolue');
+        }
+        log::add('rosee', 'debug', '└─────────');
+
+        /*  ********************** Calcul de la tendance *************************** */
+        log::add('rosee', 'debug', '┌───────── CALCUL DE LA TENDANCE : '.$_eqName);
+        if ($calcul=='tendance') {
+            $va_result_T = rosee::getTendance($pressure);
+            // Partage des données du tableau
+            $td_num = $va_result_T [0];
+            $td = $va_result_T [1];
+            log::add('rosee', 'debug' , '│ Tendance : ' . $td . '' );
+            log::add('rosee', 'debug' , '│ Tendance numérique : ' . $td_num . '');
+        } else {
+            log::add('rosee', 'debug', '│ Pas de calcul de la tendance');
         }
         log::add('rosee', 'debug', '└─────────');
 
@@ -343,7 +365,7 @@ class rosee extends eqLogic {
         log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE ROSEE : '.$_eqName);
         $alert_r  = 0;
         if ($calcul=='rosee_givre'|| $calcul=='rosee' || $calcul=='givre' ) {
-            $va_result_R = rosee::getRosee($temperature, $humidite, $dpr);
+            $va_result_R = rosee::getRosee($temperature, $humidity, $dpr);
             // Partage des données du tableau
             $rosee_point = $va_result_R [0];
             $alert_r = $va_result_R [1];
@@ -365,15 +387,15 @@ class rosee extends eqLogic {
         if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
             $va_result_G = rosee::getGivre($temperature, $SHA, $humi_a_m3, $rosee);
             // Partage des données du tableau
-            $msg_givre_num = $va_result_G [0];
-            $msg_givre = $va_result_G [1];
+            $td_num = $va_result_G [0];
+            $td = $va_result_G [1];
             $alert_g  = $va_result_G [2];
             $frost_point  = $va_result_G [3];
             $msg_givre2 = $va_result_G [4];
             $msg_givre3 = $va_result_G [5];
 
-            log::add('rosee', 'debug', '│ ┌─────── Cas Actuel N°'.$msg_givre_num . ' / Alerte givre : ' .$alert_g );
-            log::add('rosee', 'debug', '│ │ Message : ' .$msg_givre );
+            log::add('rosee', 'debug', '│ ┌─────── Cas Actuel N°'.$td_num . ' / Alerte givre : ' .$alert_g );
+            log::add('rosee', 'debug', '│ │ Message : ' .$td );
             log::add('rosee', 'debug', '│ │ Point de Givrage : ' . $frost_point.' °C');
             if ($msg_givre2 != '' && $msg_givre3 != ''){
                 log::add('rosee', 'debug', $msg_givre2 );
@@ -450,25 +472,36 @@ class rosee extends eqLogic {
                 $cmd->event($frost_point);
                 log::add('rosee', 'debug', '│ │ Point de givrage : ' . $frost_point.' °C');
             }
+        }
+        if ($calcul=='tendance') {
+            $start_log_td ='Tendance : ';
+            $start_log_td_num ='Tendance numérique : ';
+            $end_log_td ='';
+        }else{
+            $start_log_td =' │ Message Alerte givre : ';
+            $start_log_td_num =' │ Message Alerte givre numérique : ';
+            $end_log_td ='│ └─────────';
+        }
 
+        if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='tendance' ) {
             $cmd = $this->getCmd('info', 'td'); //Mise à jour de l'équipement message
             if(is_object($cmd)) {
-                $cmd->setConfiguration('value', $msg_givre);
+                $cmd->setConfiguration('value', $td);
                 $cmd->save();
                 $cmd->setCollectDate('');
-                $cmd->event($msg_givre);
-                log::add('rosee', 'debug', '│ │ Message Alerte givre : ' . $msg_givre);
+                $cmd->event($td);
+                log::add('rosee', 'debug', '│'.$start_log_td . $td);
             }
 
             $cmd = $this->getCmd('info', 'td_num'); //Mise à jour de l'équipement message
             if(is_object($cmd)) {
-                $cmd->setConfiguration('value', $msg_givre_num);
+                $cmd->setConfiguration('value', $td_num);
                 $cmd->save();
                 $cmd->setCollectDate('');
-                $cmd->event($msg_givre_num);
-                log::add('rosee', 'debug', '│ │ Message Alerte givre numérique : ' . $msg_givre_num);
+                $cmd->event($td_num);
+                log::add('rosee', 'debug', '│'.$start_log_td_num . $td);
             };
-            log::add('rosee', 'debug', '│ └─────────');
+            log::add('rosee', 'debug','' .$end_log_td);
         } else{
             // $cmd = $this->getCmd('info', 'alerte_givre');
             //if (is_object($cmd)) {
@@ -485,16 +518,16 @@ class rosee extends eqLogic {
         return;
     }
     /*  ********************** Calcul de l'humidité absolue *************************** */
-    public function getHumidity($temperature, $humidite, $pression) {
+    public function getHumidity($temperature, $humidity, $pressure) {
         $terme_pvs1 = 2.7877 + (7.625 * $temperature) / (241.6 + $temperature);
         log::add('rosee', 'debug', '│ terme_pvs1 : ' . $terme_pvs1);
         $pvs = pow(10,$terme_pvs1);
         log::add('rosee', 'debug', '│ Pression de saturation de la vapeur d\'eau (pvs) : ' . $pvs);
-        $pv = ($humidite * $pvs) / 100.0;
+        $pv = ($humidity * $pvs) / 100.0;
         log::add('rosee', 'debug', '│ Pression partielle de vapeur d\'eau (pv) : ' . $pv);
-        $humi_a = 0.622 * ($pv / (($pression * 100.0) - $pv));
+        $humi_a = 0.622 * ($pv / (($pressure * 100.0) - $pv));
         log::add('rosee', 'debug', '│ Humidité absolue en kg d\'eau par kg d\'air : ' . $humi_a .' kg');
-        $v = (461.24 * (0.622 + $humi_a) * ($temperature +273.15)) / ($pression * 100.0);
+        $v = (461.24 * (0.622 + $humi_a) * ($temperature +273.15)) / ($pressure * 100.0);
         log::add('rosee', 'debug', '│ Volume specifique (v) : ' . $v .' m3/kg');
         $p = 1.0 / $v;
         log::add('rosee', 'debug', '│ Poids spécifique (p) : ' . $p.' m3/kg');
@@ -504,14 +537,14 @@ class rosee extends eqLogic {
     }
 
     /*  ********************** Calcul du Point de rosée *************************** */
-    public function getRosee($temperature, $humidite, $dpr) {
+    public function getRosee($temperature, $humidity, $dpr) {
         /* Paramètres de MAGNUS pour l'air saturé (entre -45°C et +60°C) : */
         $alpha = 6.112;
         $beta = 17.62;
         $lambda = 243.12;
         log::add('rosee', 'debug', '│ Paramètres de MAGNUS pour l\'air saturé (entre -45°C et +60°C) : Lambda = ' . $lambda .' °C // alpha = ' . $alpha .' hPa // beta = ' . $beta );
 
-        $Terme1 = log($humidite/100);
+        $Terme1 = log($humidity/100);
         $Terme2 = ($beta * $temperature) / ($lambda + $temperature);
         log::add('rosee', 'debug', '│ Terme1 = ' . $Terme1 .' // Terme2 = ' . $Terme2 );
         $rosee = $lambda * ($Terme1 + $Terme2) / ($beta - $Terme1 - $Terme2);
@@ -532,8 +565,8 @@ class rosee extends eqLogic {
     }
     /*  ********************** Calcul du Point de givrage *************************** */
     public function getGivre($temperature, $SHA, $humi_a_m3, $rosee) {
-        $msg_givre = 'Aucun risque de Givre';
-        $msg_givre_num = 0;
+        $td = 'Aucun risque de Givre';
+        $td_num = 0;
         $alert_g  = 0;
         if ($temperature <= 5  ) {
             $msg_givre2 ='';
@@ -550,16 +583,16 @@ class rosee extends eqLogic {
             if($temperature <= 1 && $frost_point <= 0) {
                 $alert_g  = 1;
                 if ($humi_a_m3 > $SHA) {// Cas N°3
-                    $msg_givre = 'Givre, Présence de givre';
-                    $msg_givre_num = 3;
+                    $td = 'Givre, Présence de givre';
+                    $td_num = 3;
                 };
                 if ($humi_a_m3 < $SHA) {// Cas N°1
-                    $msg_givre = 'Givre peu probable malgré la température';
-                    $msg_givre_num = 1;
+                    $td = 'Givre peu probable malgré la température';
+                    $td_num = 1;
                 };
             } elseif ($temperature <= 4 && $frost_point <= 0.5) {// Cas N°2
-                $msg_givre = 'Risque de givre';
-                $msg_givre_num = 2;
+                $td = 'Risque de givre';
+                $td_num = 2;
                 $alert_g  = 1;
             //} else {// Cas N°0
             };
@@ -568,7 +601,7 @@ class rosee extends eqLogic {
             $msg_givre2 ='│ │ Info supplémentaire : Il fait trop chaud pas de calcul de l\'alerte givre (' .$temperature .' °C > 5 °C)';
             $msg_givre3 ='│ │ Info supplémentaire : Point de givre fixé est : ' .$frost_point .' °C';
         };
-        return array ($msg_givre_num, $msg_givre, $alert_g, $frost_point,$msg_givre2 ,$msg_givre3);
+        return array ($td_num, $td, $alert_g, $frost_point,$msg_givre2 ,$msg_givre3);
     }
     /*  ********************** Calcul de la tendance *************************** */
     public function getTendance($pressure) {
@@ -653,11 +686,10 @@ class rosee extends eqLogic {
             $td='Forte dégradation, instable';
             $td_num=0;
         };
-        log::add('rosee', 'debug' , '│ Tendance : ' . $td . '' );
-        log::add('rosee', 'debug' , '│ Tendance numérique : ' . $td_num . '');
+
         log::add('rosee', 'debug' , '└─────────' );
 
-        return array ($td, $td_num, $tendance_format);
+        return array ($td_num, $td);
     }
 }
 
