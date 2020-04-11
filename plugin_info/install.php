@@ -20,42 +20,49 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function rosee_install() {
     jeedom::getApiKey('rosee');
+
     config::save('functionality::cron5::enable', 1, 'rosee');
     config::save('functionality::cron30::enable', 0, 'rosee');
+
     $cron = cron::byClassAndFunction('rosee', 'pull');
     if (is_object($cron)) {
         $cron->remove();
     }
-    message::add('rosee', 'Installation du plugin Rosée terminée.');
+
+    message::add('rosee', 'Merci pour l\'installation du plugin Rosée');
 }
 
 function rosee_update() {
     jeedom::getApiKey('rosee');
-    if (config::byKey('functionality::cron5::enable', 'rosee', -1) == -1)
-        config::save('functionality::cron5::enable', 1, 'rosee');
 
-    if (config::byKey('functionality::cron30::enable', 'rosee', -1) == -1)
-        config::save('functionality::cron30::enable', 0, 'rosee');
     $cron = cron::byClassAndFunction('rosee', 'pull');
-
     if (is_object($cron)) {
         $cron->remove();
     }
 
+    if (config::byKey('functionality::cron5::enable', 'rosee', -1) == -1) {
+        config::save('functionality::cron5::enable', 1, 'rosee');
+    }
+
+    if (config::byKey('functionality::cron30::enable', 'rosee', -1) == -1) {
+        config::save('functionality::cron30::enable', 0, 'rosee');
+    }
+
     $plugin = plugin::byId('rosee');
     $eqLogics = eqLogic::byType($plugin->getId());
-    foreach ($eqLogics as $eqLogic) {
-        //  updatename($eqLogic, 'Message Alerte givre', 'Message');
-        //	updatename($eqLogic, 'Message Alerte givre numérique', 'Message numérique');
-        $eqLogics->save();
+    foreach ($eqLogics as $eqLogic)
+    {
+        updateLogicalId($eqLogic, 'message_givre', 'td');
+        updateLogicalId($eqLogic, 'message_givre_num', 'td_num');
     }
 
     //resave eqLogics for new cmd:
     try
     {
-        $eqLogics = eqLogic::byType($plugin->getId());
-        foreach ($eqLogics as $eqLogics){
-            $eqLogics->save();
+        $eqs = eqLogic::byType('rosee');
+        foreach ($eqs as $eq)
+        {
+            $eq->save();
         }
     }
     catch (Exception $e)
@@ -64,14 +71,16 @@ function rosee_update() {
         log::add('rosee', 'error', 'rosee_update ERROR: '.$e);
     }
 
-    message::add('rosee', 'Mise à jour du plugin Rosée terminée.');
+    message::add('rosee', 'Merci pour la mise à jour de ce plugin, consultez le changelog');
+
 }
 
 function updateLogicalId($eqLogic, $from, $to) {
-    $roseeCmd- = $eqLogic->getCmd(null, $from);
-    if (is_object($roseeCmd-)) {
-        $roseeCmd-->setLogicalId($to);
-        $roseeCmd-->save();
+    //  Fonction pour renommer une commande
+    $roseeCmd = $eqLogic->getCmd(null, $from);
+    if (is_object($roseeCmd)) {
+        $roseeCmd->setLogicalId($to);
+        $roseeCmd->save();
     }
 }
 
