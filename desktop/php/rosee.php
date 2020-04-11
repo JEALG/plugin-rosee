@@ -113,10 +113,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <div class="col-sm-3">
                                 <select id="type_calcul" class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="type_calcul">
                                     <option value=''>{{Aucun}}</option>
-                                    <option value='rosee_givre'>{{Point de Rosée et Point de Givre}}</option>
-                                    <option value='givre'>{{Point de Givre}}</option>
                                     <option value='humidityabs'>{{Humidité absolue}}</option>
+                                    <option value='givre'>{{Point de Givre}}</option>
                                     <option value='rosee'>{{Point de Rosée}}</option>
+                                    <option value='rosee_givre'>{{Point de Rosée et Point de Givre}}</option>
+                                    <option value='tendance'>{{Tendance Météo}}</option>
                                 </select>
                             </div>
                         </div>

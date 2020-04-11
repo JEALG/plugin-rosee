@@ -57,17 +57,10 @@ class rosee extends eqLogic {
     public function preUpdate() {
         if (!$this->getIsEnable()) return;
 
-        if ($this->getConfiguration('temperature') == '') {
-            throw new Exception(__('Le champ "Température" ne peut être vide',__FILE__));
-        }
-
-        if ($this->getConfiguration('humidite') == '') {
-            throw new Exception(__('Le champ "Humidité Relative" ne peut être vide',__FILE__));
-        }
-
         if ($this->getConfiguration('type_calcul') == '') {
-            $this->setConfiguration('type_calcul', 'rosee_givre');
+            throw new Exception(__('Le champ "Type de Calcul " ne peut être vide',__FILE__));
         }
+
     }
     public function postInsert() {
 
@@ -181,7 +174,8 @@ class rosee extends eqLogic {
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('°C');
             $roseeCmd->save();
-
+        }
+        if ($calcul != 'tendance'|| $calcul=='rosee_givre'|| $calcul=='givre') {
             $roseeCmd = $this->getCmd(null, 'td');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
@@ -222,6 +216,7 @@ class rosee extends eqLogic {
             $roseeCmd->setConfiguration('maxValue', 3);
             $roseeCmd->save();
         }
+
         $refresh = $this->getCmd(null, 'refresh');
         if (!is_object($refresh)) {
             $refresh = new roseeCmd();
@@ -249,6 +244,14 @@ class rosee extends eqLogic {
         $_eqName = $this->getName();
         log::add('rosee', 'debug', '┌───────── CONFIGURATION EQUIPEMENT : '.$_eqName );
 
+        /*  ********************** Calcul *************************** */
+        $calcul=$this->getConfiguration('type_calcul');
+        if ($calcul== '') {
+            $calcul='rosee_givre';
+            log::add('rosee', 'debug', '│ Aucune méthode de calcul sélectionnée');
+        }
+        log::add('rosee', 'debug', '│ Méthode de calcul : ' . $calcul);
+
         /*  ********************** TEMPERATURE *************************** */
         $idvirt = str_replace("#","",$this->getConfiguration('temperature'));
         $cmdvirt = cmd::byId($idvirt);
@@ -256,7 +259,10 @@ class rosee extends eqLogic {
             $temperature = $cmdvirt->execCmd();
             log::add('rosee', 'debug', '│ Température : ' . $temperature.' °C');
         } else {
-            log::add('rosee', 'error', '│ Configuration : Température inexistante : ' . $this->getConfiguration('temperature'));
+            if ($calcul != 'tendance') {
+                throw new Exception(__('Le champ "Température" ne peut être vide',__FILE__));
+                log::add('rosee', 'error', '│ Configuration : Température inexistante : ' . $this->getConfiguration('temperature'));
+            }
         }
 
         /*  ********************** Offset Température *************************** */
@@ -272,7 +278,7 @@ class rosee extends eqLogic {
 
         /*  ********************** PRESSION *************************** */
         $pression = $this->getConfiguration('pression');
-        if ($pression == '') {//valeur par défaut de la pression atmosphérique : 1013.25 hPa
+        if ($pression == '' && $calcul !='tendance') {//valeur par défaut de la pression atmosphérique : 1013.25 hPa
             $pression=1013.25;
             log::add('rosee', 'debug', '│ Pression Atmosphérique aucun équipement sélectionné');
             log::add('rosee', 'debug', '│ Pression Atmosphérique par défaut : ' . $pression. ' hPa');
@@ -283,6 +289,7 @@ class rosee extends eqLogic {
                 $pression = $cmdvirt->execCmd();
                 log::add('rosee', 'debug', '│ Pression Atmosphérique : ' . $pression.' hPa');
             } else {
+                throw new Exception(__('Le champ "Pression Atmosphérique" ne peut être vide',__FILE__));
                 log::add('rosee', 'error', '│ Configuration : Pression Atmosphérique inexistante : ' . $this->getConfiguration('pression'));
             }
         }
@@ -294,16 +301,12 @@ class rosee extends eqLogic {
             $humidite = $cmdvirt->execCmd();
             log::add('rosee', 'debug', '│ Humidité Relative : ' . $humidite.' %');
         } else {
-            log::add('rosee', 'error', '│ Configuration : Humidité Relative  inexistante : ' . $this->getConfiguration('humidite'));
+            if ($calcul != 'tendance') {
+                throw new Exception(__('Le champ "Humidité Relative" ne peut être vide',__FILE__));
+                log::add('rosee', 'error', '│ Configuration : Humidité Relative  inexistante : ' . $this->getConfiguration('humidite'));
+            }
         }
 
-        /*  ********************** Calcul *************************** */
-        $calcul=$this->getConfiguration('type_calcul');
-        if ($calcul== '') {
-            $calcul='rosee_givre';
-            log::add('rosee', 'debug', '│ Aucune méthode de calcul sélectionnée');
-        }
-        log::add('rosee', 'debug', '│ Méthode de calcul : ' . $calcul);
 
         /*  ********************** SEUIL D'ALERTE ROSEE *************************** */
         $dpr=$this->getConfiguration('DPR');

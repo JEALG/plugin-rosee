@@ -151,6 +151,14 @@ $('#type_calcul').change(function () {
         $('#DPR').hide();
         $('#SHA').show();
     }
+    if ((text == 'tendance')) {
+        $('#temperature').hide();
+        $('#temperature_offset').hide();
+        $('#humidite').hide();
+        $('#pressure').show();
+        $('#DPR').hide();
+        $('#SHA').hide();
+    }
 });
 
 
