@@ -468,13 +468,12 @@ class rosee extends eqLogic {
             }
         }
         if ($calcul=='tendance') {
-            $start_log_td ='Tendance : ';
-            $start_log_td_num ='Tendance numérique : ';
-            $end_log_td ='';
+            $start_log_td =' │ Tendance : ';
+            $start_log_td_num =' │ Tendance numérique : ';
+            log::add('rosee', 'debug', '│ ┌───────── MESSAGE');
         }else{
             $start_log_td =' │ Message Alerte givre : ';
             $start_log_td_num =' │ Message Alerte givre numérique : ';
-            $end_log_td ='│ └─────────';
         }
 
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='tendance' ) {
@@ -495,7 +494,7 @@ class rosee extends eqLogic {
                 $cmd->event($td_num);
                 log::add('rosee', 'debug', '│'.$start_log_td_num . $td_num);
             };
-            log::add('rosee', 'debug','' .$end_log_td);
+            log::add('rosee', 'debug','│ └─────────');
         } else{
             // $cmd = $this->getCmd('info', 'alerte_givre');
             //if (is_object($cmd)) {
