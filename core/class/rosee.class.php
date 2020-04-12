@@ -291,8 +291,8 @@ class rosee extends eqLogic {
             log::add('rosee', 'debug', '│ Pression Atmosphérique aucun équipement sélectionné');
             log::add('rosee', 'debug', '│ Pression Atmosphérique par défaut : ' . $pressure. ' hPa');
         } else {
-            $idvirt = str_replace("#","",$this->getConfiguration('pression'));
-            $cmdvirt = cmd::byId($idvirt);
+            $pressureID = str_replace("#","",$this->getConfiguration('pression'));
+            $cmdvirt = cmd::byId($pressureID);
             if (is_object($cmdvirt)) {
                 $pressure = $cmdvirt->execCmd();
                 log::add('rosee', 'debug', '│ Pression Atmosphérique : ' . $pressure.' hPa');
@@ -338,33 +338,29 @@ class rosee extends eqLogic {
         /*  ********************** Conversion (si Besoin) *************************** */
 
         /*  ********************** Calcul de l'humidité absolue *************************** */
-        log::add('rosee', 'debug', '┌───────── CALCUL DE L\'HUMIDITE ABSOLUE : '.$_eqName);
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
+            log::add('rosee', 'debug', '┌───────── CALCUL DE L\'HUMIDITE ABSOLUE : '.$_eqName);
             $humi_a_m3 = rosee::getHumidity($temperature, $humidity,$pressure);
             log::add('rosee', 'debug', '│ Humidité Absolue : ' . $humi_a_m3.' g/m3');
-        } else {
-            log::add('rosee', 'debug', '│ Pas de calcul de l\'Humidité Absolue');
+            log::add('rosee', 'debug', '└─────────');
         }
-        log::add('rosee', 'debug', '└─────────');
 
         /*  ********************** Calcul de la tendance *************************** */
-        log::add('rosee', 'debug', '┌───────── CALCUL DE LA TENDANCE : '.$_eqName);
         if ($calcul=='tendance') {
-            $va_result_T = rosee::getTendance($pressure);
+            log::add('rosee', 'debug', '┌───────── CALCUL DE LA TENDANCE : '.$_eqName);
+            $va_result_T = rosee::getTendance($pressureID);
             // Partage des données du tableau
             $td_num = $va_result_T [0];
             $td = $va_result_T [1];
             log::add('rosee', 'debug' , '│ Tendance : ' . $td . '' );
             log::add('rosee', 'debug' , '│ Tendance numérique : ' . $td_num . '');
-        } else {
-            log::add('rosee', 'debug', '│ Pas de calcul de la tendance');
+            log::add('rosee', 'debug' , '└─────────');
         }
-        log::add('rosee', 'debug', '└─────────');
 
         /*  ********************** Calcul du Point de rosée *************************** */
-        log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE ROSEE : '.$_eqName);
         $alert_r  = 0;
         if ($calcul=='rosee_givre'|| $calcul=='rosee' || $calcul=='givre' ) {
+            log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE ROSEE : '.$_eqName);
             $va_result_R = rosee::getRosee($temperature, $humidity, $dpr);
             // Partage des données du tableau
             $rosee_point = $va_result_R [0];
@@ -377,14 +373,12 @@ class rosee extends eqLogic {
             } else {
                 log::add('rosee', 'debug', '│ Pas de mise à jour du point de  l\'alerte rosée car le calcul est désactivé');
             }
-        } else {
-            log::add('rosee', 'debug', '│ Pas de calcul du point de rosée et de l\'alerte  ');
+            log::add('rosee', 'debug', '└─────────');
         }
-        log::add('rosee', 'debug', '└─────────');
 
         /*  ********************** Calcul du Point de givrage *************************** */
-        log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE GIVRAGE : '.$_eqName);
         if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
+            log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE GIVRAGE : '.$_eqName);
             $va_result_G = rosee::getGivre($temperature, $SHA, $humi_a_m3, $rosee);
             // Partage des données du tableau
             $td_num = $va_result_G [0];
@@ -394,24 +388,24 @@ class rosee extends eqLogic {
             $msg_givre2 = $va_result_G [4];
             $msg_givre3 = $va_result_G [5];
 
-            log::add('rosee', 'debug', '│ ┌─────── Cas Actuel N°'.$td_num . ' / Alerte givre : ' .$alert_g );
-            log::add('rosee', 'debug', '│ │ Message : ' .$td );
-            log::add('rosee', 'debug', '│ │ Point de Givrage : ' . $frost_point.' °C');
+            log::add('rosee', 'debug', '│ Cas Actuel N°' .$td_num );
+            log::add('rosee', 'debug', '│ Alerte givre : ' .$alert_g);
+            log::add('rosee', 'debug', '│ Message : ' .$td );
+            log::add('rosee', 'debug', '│ Point de Givrage : ' . $frost_point.' °C');
             if ($msg_givre2 != '' && $msg_givre3 != ''){
                 log::add('rosee', 'debug', $msg_givre2 );
                 log::add('rosee', 'debug', $msg_givre3 );
             };
             if ($alert_g == 1 && $alert_r == 1) {
                 $alert_r = 0;
-                log::add('rosee', 'debug', '│ │ Annulation alerte rosée : ' .$alert_r );
+                log::add('rosee', 'debug', '│ Annulation alerte rosée : ' .$alert_r );
             };
-            log::add('rosee', 'debug', '│ └───────');
+            log::add('rosee', 'debug', '└───────');
         } else {
             $alert_g = 0;
             $frost_point = 5;
-            log::add('rosee', 'debug', '│ Pas de calcul du point de givrage et de l\'alerte');
+            //log::add('rosee', 'debug', '│ Pas de calcul du point de givrage et de l\'alerte');
         };
-        log::add('rosee', 'debug', '└─────────');
 
         /*  ********************** Mise à Jour des équipements *************************** */
         log::add('rosee', 'debug', '┌───────── MISE A JOUR : '.$_eqName);
@@ -499,7 +493,7 @@ class rosee extends eqLogic {
                 $cmd->save();
                 $cmd->setCollectDate('');
                 $cmd->event($td_num);
-                log::add('rosee', 'debug', '│'.$start_log_td_num . $td);
+                log::add('rosee', 'debug', '│'.$start_log_td_num . $td_num);
             };
             log::add('rosee', 'debug','' .$end_log_td);
         } else{
@@ -508,8 +502,6 @@ class rosee extends eqLogic {
             //  $cmd->setConfiguration('value', $alert_g);
             //$cmd->remove();
             //$cmd->save();
-            // log::add('rosee', 'debug', '│ ┌───────── GIVRE');
-            //log::add('rosee', 'debug', '│ │ Suppression : ' );
             // };
         };
 
@@ -598,74 +590,73 @@ class rosee extends eqLogic {
             };
         } else {
             $frost_point = 5;
-            $msg_givre2 ='│ │ Info supplémentaire : Il fait trop chaud pas de calcul de l\'alerte givre (' .$temperature .' °C > 5 °C)';
-            $msg_givre3 ='│ │ Info supplémentaire : Point de givre fixé est : ' .$frost_point .' °C';
+            $msg_givre2 ='│ Info supplémentaire : Il fait trop chaud pas de calcul de l\'alerte givre (' .$temperature .' °C > 5 °C)';
+            $msg_givre3 ='│ Info supplémentaire : Point de givre fixé est : ' .$frost_point .' °C';
         };
         return array ($td_num, $td, $alert_g, $frost_point,$msg_givre2 ,$msg_givre3);
     }
     /*  ********************** Calcul de la tendance *************************** */
-    public function getTendance($pressure) {
-        log::add('rosee', 'debug', '┌───────── CALCUL Timestamp : '.$_eqName); // récupération du timestamp de la dernière mesure
+    public function getTendance($pressureID) {
         $histo = new scenarioExpression();
-        $endDate = $histo -> collectDate($pressure);
+        $endDate = $histo -> collectDate($pressureID);
 
         // calcul du timestamp actuel
-        log::add('rosee', 'debug', '│ ┌─────── Timestamp -15min : ' .$_eqName);
+        log::add('rosee', 'debug', '│ ┌─────── Timestamp -15min');
         $_date1 = new DateTime("$endDate");
         $_date2 = new DateTime("$endDate");
         $startDate = $_date1 -> modify('-15 minute');
         $startDate = $_date1 -> format('Y-m-d H:i:s');
-        log::add('rosee', 'debug', '│ │ Start Date -15min : ' .$startDate );
-        log::add('rosee', 'debug', '│ │ End Date -15min : ' .$endDate );
+        log::add('rosee', 'debug', '│ │ Start Date : ' .$startDate );
+        log::add('rosee', 'debug', '│ │ End Date : ' .$endDate );
 
         // dernière mesure barométrique
-        $h1 = $histo->lastBetween($pressure, $startDate, $endDate);
-        log::add('rosee', 'debug', '│ │ Pression Atmosphérique -15min : ' .$h1 . ' hPa' );
+        $h1 = $histo->lastBetween($pressureID, $startDate, $endDate);
+        log::add('rosee', 'debug', '│ │ Pression Atmosphérique : ' .$h1 . ' hPa' );
         log::add('rosee', 'debug', '│ └───────');
 
         // calcul du timestamp - 2h
-        log::add('rosee', 'debug', '│ ┌─────── Timestamp -2h : ' .$_eqName);
+        log::add('rosee', 'debug', '│ ┌─────── Timestamp -2h');
         $endDate = $_date2 -> modify('-2 hour');
         $endDate = $_date2 -> format('Y-m-d H:i:s');
         $startDate = $_date1 -> modify('-2 hour');
         $startDate = $_date1 -> format('Y-m-d H:i:s');
-        log::add('rosee', 'debug', '│ │ Start Date -2h : ' .$startDate );
-        log::add('rosee', 'debug', '│ │ End Date -2h : ' .$endDate );
+        log::add('rosee', 'debug', '│ │ Start Date : ' .$startDate );
+        log::add('rosee', 'debug', '│ │ End Date : ' .$endDate );
 
         // mesure barométrique -2h
-        $h2 = $histo->lastBetween($pressure, $startDate, $endDate);
-        log::add('rosee', 'debug', '│ │ Pression Atmosphérique -2h : ' .$h2 . ' hPa' );
+        $h2 = $histo->lastBetween($pressureID, $startDate, $endDate);
+        log::add('rosee', 'debug', '│ │ Pression Atmosphérique : ' .$h2 . ' hPa' );
         // calculs de tendance
         $tendance2h = ($h1 - $h2) / 2;
-        log::add('rosee', 'debug', '│ │ Tendance -2h : ' . $tendance2h . ' hPa/h' );
+        log::add('rosee', 'debug', '│ │ Tendance : ' . $tendance2h . ' hPa/h' );
         log::add('rosee', 'debug', '│ └───────');
 
         // calcul du timestamp - 4h
-        log::add('rosee', 'debug', '│ ┌─────── Timestamp -4h : ' .$_eqName);
+        log::add('rosee', 'debug', '│ ┌─────── Timestamp -4h');
         $endDate = $_date2 -> modify('-2 hour');
         $endDate = $_date2 -> format('Y-m-d H:i:s');
         $startDate = $_date1 -> modify('-2 hour');
         $startDate = $_date1 -> format('Y-m-d H:i:s');
-        log::add('rosee', 'debug', '│ │ Start Date -4h : ' .$startDate );
-        log::add('rosee', 'debug', '│ │ End Date -4h : ' .$endDate );
+        log::add('rosee', 'debug', '│ │ Start Date : ' .$startDate );
+        log::add('rosee', 'debug', '│ │ End Date : ' .$endDate );
         // mesure barométrique -4h
-        $h4 = $histo->lastBetween($pressure, $startDate, $endDate);
-        log::add('rosee', 'debug', '│ │ Pression Atmosphérique -4h : ' .$h4 . ' hPa' );
+        $h4 = $histo->lastBetween($pressureID, $startDate, $endDate);
+        log::add('rosee', 'debug', '│ │ Pression Atmosphérique : ' .$h4 . ' hPa' );
         // calculs de tendance
         $tendance4h = ($h1 - $h4) / 4;
-        log::add('rosee', 'debug', '│ │ Tendance -4h : ' . $tendance4h . ' hPa/h' );
+        log::add('rosee', 'debug', '│ │ Tendance : ' . $tendance4h . ' hPa/h' );
         log::add('rosee', 'debug', '│ └───────');
-        log::add('rosee', 'debug', '└─────────');
+
 
         // calculs de tendance
-        log::add('rosee', 'debug', '┌───────── CALCUL TENDANCE : '.$_eqName);
+        log::add('rosee', 'debug', '│ ┌───────── Calcul Tendance Moyenne');
         // sources : http://www.freescale.com/files/sensors/doc/app_note/AN3914.pdf
         // et : https://www.parallax.com/sites/default/files/downloads/29124-Altimeter-Application-Note-501.pdf
 
         // moyennation de la tendance à -2h (50%) et -4h (50%)
         $tendance = (0.5 * $tendance2h + 0.5 * $tendance4h);
         $tendance_format = number_format($tendance, 3, '.', '');
-        log::add('rosee', 'debug', '│ Tendance Moyenne : ' . $tendance . ' hPa/h' );
+        log::add('rosee', 'debug', '│ │ Tendance Moyenne : ' . $tendance_format . ' hPa/h' );
 
         if ($tendance > 2.5) { // Quickly rising High Pressure System, not stable
         $td = 'Forte embellie, instable';
@@ -686,9 +677,7 @@ class rosee extends eqLogic {
             $td='Forte dégradation, instable';
             $td_num=0;
         };
-
-        log::add('rosee', 'debug' , '└─────────' );
-
+        log::add('rosee', 'debug', '│ └─────────');
         return array ($td_num, $td);
     }
 }
