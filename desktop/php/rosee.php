@@ -16,7 +16,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 <span>{{Ajouter}}</span>
             </div>
         </div>
-        <legend><i class="fas fa-umbrella"></i> {{Mes Points de Rosée, de Givre, de tendance}}</legend>
+        <legend><i class="fas fa-umbrella"></i> {{Mes Points de Rosée, de Givre, de Tendance}}</legend>
         <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
         <div class="eqLogicThumbnailContainer">
             <?php
