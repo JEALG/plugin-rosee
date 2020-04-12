@@ -16,21 +16,42 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 <span>{{Ajouter}}</span>
             </div>
         </div>
-        <legend><i class="fas fa-umbrella"></i> {{Mes Points de Rosée, de Givre, de Tendance}}</legend>
         <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
+        <legend><i class="fas fa-umbrella"></i> <i class="icon jeedomapp-weather"></i> {{Mes Points de Rosée, de Givre}}</legend>
         <div class="eqLogicThumbnailContainer">
             <?php
 			foreach ($eqLogics as $eqLogic) {
 				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-				echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '" >';
-				if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
-					echo '<img src="' . $eqLogic->getImage() . '"/>';
-				} else {
-					echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
-				}
-				echo '<br>';
-				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
-				echo '</div>';
+                if ($eqLogic->getConfiguration('type_calcul') != 'tendance'){
+                    echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '" >';
+                    if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
+                        echo '<img src="' . $eqLogic->getImage() . '"/>';
+                    } else {
+                        echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
+                    }
+                    echo '<br>';
+                    echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+                    echo '</div>';
+                }
+			}
+			?>
+        </div>
+        <legend><i class="fas fa-chart-bar"></i> {{Mes Tendances}}</legend>
+        <div class="eqLogicThumbnailContainer">
+            <?php
+			foreach ($eqLogics as $eqLogic) {
+                $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+                if ($eqLogic->getConfiguration('type_calcul') == 'tendance'){
+                    echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '" >';
+                    if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
+                        echo '<img src="' . $eqLogic->getImage() . '"/>';
+                    } else {
+                        echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
+                    }
+                    echo '<br>';
+                    echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+                    echo '</div>';
+                }
 			}
 			?>
         </div>
