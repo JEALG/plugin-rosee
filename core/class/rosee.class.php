@@ -58,7 +58,8 @@ class rosee extends eqLogic {
         if (!$this->getIsEnable()) return;
 
         if ($this->getConfiguration('type_calcul') == '') {
-            throw new Exception(__('Le champ "Type de Calcul " ne peut être vide',__FILE__));
+            throw new Exception(__('Le champ "Calcul" ne peut être vide',__FILE__));
+            log::add('rosee', 'error', '│ Configuration : Méthode de Calcul inexistant : ' . $this->getConfiguration('type_calcul'));
         }
 
     }
@@ -71,6 +72,13 @@ class rosee extends eqLogic {
         $order = 1;
         /*  ********************** Calcul *************************** */
         $calcul=$this->getConfiguration('type_calcul');
+        if ($calcul=='tendance') {
+            $td_num_max =5;
+            $td_num_visible =1;
+        }else{
+            $td_num_max =0;
+            $td_num_visible =0;
+        }
 
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
             $roseeCmd = $this->getCmd(null, 'humidite_absolue');
@@ -205,11 +213,7 @@ class rosee extends eqLogic {
                 $roseeCmd->setType('info');
                 $roseeCmd->setSubType('numeric');
                 $roseeCmd->setIsHistorized(0);
-                if ($calcul == 'tendance') {
-                    $roseeCmd->setIsVisible(1);
-                } else {
-                    $roseeCmd->setIsVisible(0);
-                }
+                $roseeCmd->setIsVisible($td_num_visible);
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
                 $roseeCmd->setOrder($order);
                 $order ++;
@@ -217,11 +221,7 @@ class rosee extends eqLogic {
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('');
             $roseeCmd->setConfiguration('minValue', 0);
-            if ($calcul == 'tendance') {
-                $roseeCmd->setConfiguration('maxValue', 5);
-            } else {
-                $roseeCmd->setConfiguration('maxValue', 3);
-            }
+            $roseeCmd->setConfiguration('maxValue', $td_num_max);
             $roseeCmd->save();
         }
 
@@ -255,10 +255,19 @@ class rosee extends eqLogic {
         /*  ********************** Calcul *************************** */
         $calcul=$this->getConfiguration('type_calcul');
         if ($calcul== '') {
-            $calcul='rosee_givre';
-            log::add('rosee', 'debug', '│ Aucune méthode de calcul sélectionnée');
+            throw new Exception(__('Le champ "Calcul" ne peut être vide',__FILE__));
+            log::add('rosee', 'error', '│ Configuration : Méthode de Calcul inexistant : ' . $this->getConfiguration('type_calcul'));
         }
         log::add('rosee', 'debug', '│ Méthode de calcul : ' . $calcul);
+
+        if ($calcul=='tendance') {
+            $start_log_td =' │ Tendance : ';
+            $start_log_td_num =' │ Tendance numérique : ';
+            log::add('rosee', 'debug', '│ ┌───────── MESSAGE');
+        }else{
+            $start_log_td =' │ Message Alerte givre : ';
+            $start_log_td_num =' │ Message Alerte givre numérique : ';
+        }
 
         /*  ********************** TEMPERATURE *************************** */
         $idvirt = str_replace("#","",$this->getConfiguration('temperature'));
@@ -430,7 +439,7 @@ class rosee extends eqLogic {
                 $cmd->setCollectDate('');
                 $cmd->event($alert_r);
                 log::add('rosee', 'debug', '│ ┌───────── ROSEE');
-                log::add('rosee', 'debug', '│ │ Alerte Rosée : ' . $alert_r);
+                log::add('rosee', 'debug', '│ │ Etat Alerte Rosée : ' . $alert_r);
             };
         };
 
@@ -456,7 +465,7 @@ class rosee extends eqLogic {
                 $cmd->setCollectDate('');
                 $cmd->event($alert_g);
                 log::add('rosee', 'debug', '│ ┌───────── GIVRE');
-                log::add('rosee', 'debug', '│ │ Alerte Givre : ' . $alert_g);
+                log::add('rosee', 'debug', '│ │ Etat Alerte Givre : ' . $alert_g);
             };
 
             $cmd = $this->getCmd('info', 'givrage');//Mise à jour de l'équipement Givrage
@@ -466,14 +475,6 @@ class rosee extends eqLogic {
                 $cmd->event($frost_point);
                 log::add('rosee', 'debug', '│ │ Point de givrage : ' . $frost_point.' °C');
             }
-        }
-        if ($calcul=='tendance') {
-            $start_log_td =' │ Tendance : ';
-            $start_log_td_num =' │ Tendance numérique : ';
-            log::add('rosee', 'debug', '│ ┌───────── MESSAGE');
-        }else{
-            $start_log_td =' │ Message Alerte givre : ';
-            $start_log_td_num =' │ Message Alerte givre numérique : ';
         }
 
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='tendance' ) {
