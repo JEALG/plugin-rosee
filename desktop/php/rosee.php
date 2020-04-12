@@ -2,7 +2,7 @@
 if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
-$plugin = plugin::byId('rosee');
+$plugin = plugin::byId('rosee'); // Obtenir l'identifiant du plugin
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
 ?>
@@ -16,14 +16,18 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 <span>{{Ajouter}}</span>
             </div>
         </div>
-        <legend><i class="fas fa-umbrella"></i> {{Mes Points de Rosée}}</legend>
+        <legend><i class="fas fa-umbrella"></i> {{Mes Points de Rosée, de Givre, de tendance}}</legend>
         <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
         <div class="eqLogicThumbnailContainer">
             <?php
 			foreach ($eqLogics as $eqLogic) {
 				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 				echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '" >';
-				echo '<img src="' . $plugin->getPathImgIcon() . '" />';
+				if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
+					echo '<img src="' . $eqLogic->getImage() . '"/>';
+				} else {
+					echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
+				}
 				echo '<br>';
 				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 				echo '</div>';
@@ -95,7 +99,10 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 <form class="form-horizontal col-sm-2">
                     <fieldset>
                         <div class="form-group">
-                            <img src="<?php echo $plugin->getPathImgIcon(); ?>" style="width:120px;" />
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-8">
+                                <img src="core/img/no_image.gif" data-original=".png" id="img_device" style="width:120px;" />
+                            </div>
                         </div>
                     </fieldset>
                 </form>

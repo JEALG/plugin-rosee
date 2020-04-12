@@ -7,6 +7,12 @@ description: Ce plugin permet d'obtenir le point de rosée pour savoir si l'herb
 # Info
 >*Important : en cas de mise à jour disponible pour laquelle il n’y a pas d’information dans cette section, c’est qu’elle n’intègre aucune nouveauté majeure. Cela peut être un ajout de documentation, une correction de documentation, des traductions ou bien de la correction de bugs mineurs.*
 
+# Version 202004xx
+- Ajout calcul "Tendance Météo"
+- Nettoyage log
+- Corrections bugs
+- Corrections bug sur le choix d'équipement obligatoire
+
 # Version 20200409
 - Séparation des calculs
 - Nettoyage des infos dans les logs
