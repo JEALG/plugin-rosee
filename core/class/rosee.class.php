@@ -85,7 +85,7 @@ class rosee extends eqLogic {
             $td_num_max =5;
             $td_num_visible =1;
         }else{
-            $td_num_max =0;
+            $td_num_max =3;
             $td_num_visible =0;
         }
 
