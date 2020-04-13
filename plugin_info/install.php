@@ -29,7 +29,7 @@ function rosee_install() {
         $cron->remove();
     }
 
-    message::add('rosee', 'Merci pour l\'installation du plugin Rosée');
+    message::add('Plugin Rosée', 'Merci pour l\'installation du plugin.');
 }
 
 function rosee_update() {
@@ -71,7 +71,7 @@ function rosee_update() {
         log::add('rosee', 'error', 'rosee_update ERROR: '.$e);
     }
 
-    message::add('rosee', 'Merci pour la mise à jour de ce plugin, consultez le changelog');
+    message::add('Plugin Rosée', 'Merci pour la mise à jour de ce plugin, consultez le changelog.');
 
 }
 

@@ -1,6 +1,6 @@
 {
     "id": "rosee",
-    "name": "Rosee - Givre - Tendance",
+    "name": "Rosée - Givre - Tendance",
     "description": "Plugin permetant de calculer le point de rosée, le point de givrage et l'humidité absolue. <BR/>Le point de givrage ainsi que l'alerte ne se calculent uniquement dans le cas où la température < 5°C. ",
     "usage": "Il faut renseigner les champs Temperature et Humidité en sélectionnant l'équipement Jeedom. (Les boutons de recherche des équipements permettent de les rechercher). <br/>Pour l'humidité absolue, on peut indiquer également une pression barométrique, sinon une valeur par défaut est prise en compte<br/> Il est possible d'ajouter un offset sur la température",
     "licence": "AGPL",
