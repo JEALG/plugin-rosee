@@ -29,7 +29,7 @@ function rosee_install() {
         $cron->remove();
     }
 
-    message::add('Plugin Rosée - Givre - Tendance', 'Merci pour l\'installation du plugin.');
+    //message::add('Plugin Rosée - Givre - Tendance', 'Merci pour l\'installation du plugin.');
 }
 
 function rosee_update() {
@@ -76,7 +76,7 @@ function rosee_update() {
         log::add('rosee', 'error', 'rosee_update ERROR: '.$e);
     }
 
-    message::add('Plugin Rosée - Givre - Tendance', 'Merci pour la mise à jour de ce plugin, consultez le changelog.');
+    //message::add('Plugin Rosée - Givre - Tendance', 'Merci pour la mise à jour de ce plugin, consultez le changelog.');
 
 }
 
