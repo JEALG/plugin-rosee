@@ -112,12 +112,12 @@ class rosee extends eqLogic {
         }
 
         if ($calcul=='rosee_givre'|| $calcul=='rosee') {
-            $roseeCmd = $this->getCmd(null, 'alerte_rosee');
+            $roseeCmd = $this->getCmd(null, 'alert_1');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
                 $roseeCmd->setName(__('Alerte rosée', __FILE__));
                 $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('alerte_rosee');
+                $roseeCmd->setLogicalId('alert_1');
                 $roseeCmd->setConfiguration('data', 'alert_1');
                 $roseeCmd->setType('info');
                 $roseeCmd->setSubType('binary');
@@ -154,12 +154,12 @@ class rosee extends eqLogic {
         }
 
         if ($calcul=='rosee_givre'|| $calcul=='givre') {
-            $roseeCmd = $this->getCmd(null, 'alerte_givre');
+            $roseeCmd = $this->getCmd(null, 'alert_2');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
                 $roseeCmd->setName(__('Alerte givre', __FILE__));
                 $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('alerte_givre');
+                $roseeCmd->setLogicalId('alert_2');
                 $roseeCmd->setConfiguration('data', 'alert_2');
                 $roseeCmd->setType('info');
                 $roseeCmd->setSubType('binary');
@@ -431,7 +431,7 @@ class rosee extends eqLogic {
         };
 
         if ($calcul=='rosee_givre'|| $calcul=='rosee'){
-            $cmd = $this->getCmd('info', 'alerte_rosee');//Mise à jour de l'équipement Alerte rosée
+            $cmd = $this->getCmd('info', 'alert_1');//Mise à jour de l'équipement Alerte rosée
             if(is_object($cmd)) {
                 $cmd->setConfiguration('value', $alert_1);
                 $cmd->save();
@@ -457,7 +457,7 @@ class rosee extends eqLogic {
         };
 
         if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
-            $cmd = $this->getCmd('info', 'alerte_givre');//Mise à jour de l'équipement Alerte givre
+            $cmd = $this->getCmd('info', 'alert_2');//Mise à jour de l'équipement Alerte givre
             if (is_object($cmd)) {
                 $cmd->setConfiguration('value', $alert_2);
                 $cmd->save();
@@ -505,7 +505,7 @@ class rosee extends eqLogic {
             };
             log::add('rosee', 'debug','│ └─────────');
         } else{
-            // $cmd = $this->getCmd('info', 'alerte_givre');
+            // $cmd = $this->getCmd('info', 'alert_2');
             //if (is_object($cmd)) {
             //  $cmd->setConfiguration('value', $alert_2);
             //$cmd->remove();
