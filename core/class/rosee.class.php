@@ -667,18 +667,18 @@ class rosee extends eqLogic {
         log::add('rosee', 'debug', '│ │ Tendance Moyenne : ' . $tendance_format . ' hPa/h' );
 
         if ($tendance > 2.5) { // Quickly rising High Pressure System, not stable
-        $td = 'Forte embellie, instable';
-        $td_num=5;
-        } elseif ($tendance > 0.5 || $tendance <= 2.5) { // Slowly rising High Pressure System, stable good weather
+            $td = 'Forte embellie, instable';
+            $td_num=5;
+        } elseif ($tendance > 0.5 && $tendance <= 2.5) { // Slowly rising High Pressure System, stable good weather
             $td='Amélioration, beau temps durable';
             $td_num=4;
-        } elseif ($tendance> 0.0 || $tendance <= 0.5) { // Stable weather condition
+        } elseif ($tendance> 0.0 && $tendance <= 0.5) { // Stable weather condition
             $td='Lente amélioration, temps stable';
             $td_num=3;
-        } elseif ($tendance> -0.5|| $tendance <= 0) { // Stable weather condition
+        } elseif ($tendance> -0.5 && $tendance <= 0) { // Stable weather condition
             $td='Lente dégradation, temps stable';
             $td_num=2;
-        } elseif ($tendance> -2.5 || $tendance <= -0.5) { // Slowly falling Low Pressure System, stable rainy weather
+        } elseif ($tendance> -2.5 && $tendance <= -0.5) { // Slowly falling Low Pressure System, stable rainy weather
             $td='Dégradation, mauvais temps durable';
             $td_num=1;
         } else { // Quickly falling Low Pressure, Thunderstorm, not stable
