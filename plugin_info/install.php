@@ -54,6 +54,8 @@ function rosee_update() {
     {
         updateLogicalId($eqLogic, 'message_givre', 'td');
         updateLogicalId($eqLogic, 'message_givre_num', 'td_num');
+        updateLogicalId($eqLogic, 'alert_r', 'alert_1');
+        updateLogicalId($eqLogic, 'alert_g', 'alert_2');
     }
 
     //resave eqLogics for new cmd:
