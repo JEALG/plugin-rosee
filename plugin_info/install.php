@@ -58,6 +58,7 @@ function rosee_update() {
         updateLogicalId($eqLogic, 'alert_g', 'alert_2');
         updateLogicalId($eqLogic, 'alerte_rosee', 'alert_1');
         updateLogicalId($eqLogic, 'alerte_givre', 'alert_2');
+        updateLogicalId($eqLogic, 'humidite_absolue', 'humidityabs');
     }
 
     //resave eqLogics for new cmd:

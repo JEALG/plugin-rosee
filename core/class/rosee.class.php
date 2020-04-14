@@ -90,13 +90,13 @@ class rosee extends eqLogic {
         }
 
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
-            $roseeCmd = $this->getCmd(null, 'humidite_absolue');
+            $roseeCmd = $this->getCmd(null, 'humidityabs');
             if (!is_object($roseeCmd)) {
                 $roseeCmd = new roseeCmd();
                 $roseeCmd->setName(__('Humidité absolue', __FILE__));
                 $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('humidite_absolue');
-                $roseeCmd->setConfiguration('data', 'humidite_a');
+                $roseeCmd->setLogicalId('humidityabs');
+                $roseeCmd->setConfiguration('data', 'humidityabs');
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible(1);
                 $roseeCmd->setDisplay('generic_type','WEATHER_HUMIDITY');
@@ -105,7 +105,7 @@ class rosee extends eqLogic {
             }
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('g/m3');
-            $roseeCmd->setLogicalId('humidite_absolue');
+            $roseeCmd->setLogicalId('humidityabs');
             $roseeCmd->setType('info');
             $roseeCmd->setSubType('numeric');
             $roseeCmd->save();
@@ -348,8 +348,8 @@ class rosee extends eqLogic {
         /*  ********************** Calcul de l'humidité absolue *************************** */
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
             log::add('rosee', 'debug', '┌───────── CALCUL DE L\'HUMIDITE ABSOLUE : '.$_eqName);
-            $humi_a_m3 = rosee::getHumidity($temperature, $humidity,$pressure);
-            log::add('rosee', 'debug', '│ Humidité Absolue : ' . $humi_a_m3.' g/m3');
+            $humidityabs_m3 = rosee::getHumidity($temperature, $humidity,$pressure);
+            log::add('rosee', 'debug', '│ Humidité Absolue : ' . $humidityabs_m3.' g/m3');
             log::add('rosee', 'debug', '└─────────');
         }
 
@@ -387,7 +387,7 @@ class rosee extends eqLogic {
         /*  ********************** Calcul du Point de givrage *************************** */
         if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
             log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE GIVRAGE : '.$_eqName);
-            $va_result_G = rosee::getGivre($temperature, $SHA, $humi_a_m3, $rosee);
+            $va_result_G = rosee::getGivre($temperature, $SHA, $humidityabs_m3, $rosee);
             // Partage des données du tableau
             $td_num = $va_result_G [0];
             $td = $va_result_G [1];
@@ -419,13 +419,13 @@ class rosee extends eqLogic {
         log::add('rosee', 'debug', '┌───────── MISE A JOUR : '.$_eqName);
 
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
-            $cmd = $this->getCmd('info', 'humidite_absolue');//Mise à jour de l'équipement Humidité absolue
+            $cmd = $this->getCmd('info', 'humidityabs');//Mise à jour de l'équipement Humidité absolue
             if(is_object($cmd)) {
-                $cmd->setConfiguration('value', $humi_a_m3);
+                $cmd->setConfiguration('value', $humidityabs_m3);
                 $cmd->save();
-                $cmd->event($humi_a_m3);
+                $cmd->event($humidityabs_m3);
                 log::add('rosee', 'debug', '│ ┌───────── HUMIDITE ABSOLUE');
-                log::add('rosee', 'debug', '│ │ Humidité Absolue : ' . $humi_a_m3.' g/m3');
+                log::add('rosee', 'debug', '│ │ Humidité Absolue : ' . $humidityabs_m3.' g/m3');
                 log::add('rosee', 'debug', '│ └─────────');
             };
         };
@@ -531,9 +531,9 @@ class rosee extends eqLogic {
         log::add('rosee', 'debug', '│ Volume specifique (v) : ' . $v .' m3/kg');
         $p = 1.0 / $v;
         log::add('rosee', 'debug', '│ Poids spécifique (p) : ' . $p.' m3/kg');
-        $humi_a_m3 = 1000.0 * $humi_a * $p;
-        $humi_a_m3 = round(($humi_a_m3), 1);
-        return $humi_a_m3;
+        $humidityabs_m3 = 1000.0 * $humi_a * $p;
+        $humidityabs_m3 = round(($humidityabs_m3), 1);
+        return $humidityabs_m3;
     }
 
     /*  ********************** Calcul du Point de rosée *************************** */
@@ -564,7 +564,7 @@ class rosee extends eqLogic {
         return array($rosee_point, $alert_1,$rosee);
     }
     /*  ********************** Calcul du Point de givrage *************************** */
-    public function getGivre($temperature, $SHA, $humi_a_m3, $rosee) {
+    public function getGivre($temperature, $SHA, $humidityabs_m3, $rosee) {
         $td = 'Aucun risque de Givre';
         $td_num = 0;
         $alert_2  = 0;
@@ -582,11 +582,11 @@ class rosee extends eqLogic {
 
             if($temperature <= 1 && $frost_point <= 0) {
                 $alert_2  = 1;
-                if ($humi_a_m3 > $SHA) {// Cas N°3
+                if ($humidityabs_m3 > $SHA) {// Cas N°3
                     $td = 'Givre, Présence de givre';
                     $td_num = 3;
                 };
-                if ($humi_a_m3 < $SHA) {// Cas N°1
+                if ($humidityabs_m3 < $SHA) {// Cas N°1
                     $td = 'Givre peu probable malgré la température';
                     $td_num = 1;
                 };
