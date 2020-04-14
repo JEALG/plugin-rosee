@@ -269,15 +269,6 @@ class rosee extends eqLogic {
         }
         log::add('rosee', 'debug', '│ Méthode de calcul : ' . $calcul);
 
-        if ($calcul=='tendance') {
-            $start_log_td =' │ Tendance : ';
-            $start_log_td_num =' │ Tendance numérique : ';
-            log::add('rosee', 'debug', '│ ┌───────── MESSAGE');
-        }else{
-            $start_log_td =' │ Message Alerte givre : ';
-            $start_log_td_num =' │ Message Alerte givre numérique : ';
-        }
-
         /*  ********************** TEMPERATURE *************************** */
         $idvirt = str_replace("#","",$this->getConfiguration('temperature'));
         $cmdvirt = cmd::byId($idvirt);
@@ -369,8 +360,8 @@ class rosee extends eqLogic {
             // Partage des données du tableau
             $td_num = $va_result_T [0];
             $td = $va_result_T [1];
-            log::add('rosee', 'debug' , '│ Tendance : ' . $td . '' );
-            log::add('rosee', 'debug' , '│ Tendance numérique : ' . $td_num . '');
+            //log::add('rosee', 'debug' , '│ Tendance : ' . $td . '' );
+            //log::add('rosee', 'debug' , '│ Tendance numérique : ' . $td_num . '');
             log::add('rosee', 'debug' , '└─────────');
         }
 
@@ -483,6 +474,15 @@ class rosee extends eqLogic {
                 $cmd->event($frost_point);
                 log::add('rosee', 'debug', '│ │ Point de givrage : ' . $frost_point.' °C');
             }
+        }
+
+        if ($calcul=='tendance') {
+            $start_log_td =' │ Tendance : ';
+            $start_log_td_num =' │ Tendance numérique : ';
+            log::add('rosee', 'debug', '│ ┌───────── MESSAGE');
+        }else{
+            $start_log_td =' │ Message Alerte givre : ';
+            $start_log_td_num =' │ Message Alerte givre numérique : ';
         }
 
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='tendance' ) {
