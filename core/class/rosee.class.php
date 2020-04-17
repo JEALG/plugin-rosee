@@ -242,15 +242,19 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible($td_num_visible);
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
-                $roseeCmd->setTemplate('dashboard','rosee::tendance');
-                $roseeCmd->setTemplate('mobile','rosee::tendance');
+                if ($calcul=='tendance') {
+                    $roseeCmd->setTemplate('dashboard','rosee::tendance');
+                    $roseeCmd->setTemplate('mobile','rosee::tendance');
+                }
                 $roseeCmd->setOrder($order);
                 $order ++;
             }
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('');
-            $roseeCmd->setTemplate('dashboard','rosee::tendance');
-            $roseeCmd->setTemplate('mobile','rosee::tendance');
+            if ($calcul=='tendance') {
+                $roseeCmd->setTemplate('dashboard','rosee::tendance');
+                $roseeCmd->setTemplate('mobile','rosee::tendance');
+            }
             $roseeCmd->setConfiguration('minValue', 0);
             $roseeCmd->setConfiguration('maxValue', $td_num_max);
             $roseeCmd->save();
