@@ -215,6 +215,8 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible(1);
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
+                $roseeCmd->setTemplate('dashboard','core::line');
+                $roseeCmd->setTemplate('mobile','core::line');
                 $roseeCmd->setOrder($order);
                 $order ++;
             }
@@ -235,7 +237,7 @@ class rosee extends eqLogic {
                 $roseeCmd->setType('info');
                 $roseeCmd->setSubType('string');
                 $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(0);
+                $roseeCmd->setIsVisible($td_num_visible);
                 $roseeCmd->setDisplay('generic_type','WEATHER_CONDITION');
                 $roseeCmd->setTemplate('dashboard','core::multiline');
                 $roseeCmd->setTemplate('mobile','core::multiline');
