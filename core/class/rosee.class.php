@@ -44,16 +44,7 @@ class rosee extends eqLogic {
             }
         }
     }
-    public static function templateWidget(){
-	$return = array('info' => array('string' => array()));
-	$return['info']['string']['Tendance'] = array(
-		'template' => 'tmplmultistate',
-		'test' => array(
-			array('operation' => '#value# == 2','state' => '<i class="icon maison-vacuum6"></i>'),
-			array('operation' => '#value# == 3','state' => '<i class="fa fa-pause"></i>'),
-			array('operation' => '#value# > 3 || #value# < 2','state' => '<i class="fa fa-home"></i>')
-		)
-	);
+
 
     /*     * *********************Methode d'instance************************* */
     public function refresh() {
