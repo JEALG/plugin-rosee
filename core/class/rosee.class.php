@@ -50,12 +50,12 @@ class rosee extends eqLogic {
         $return['info']['numeric']['tendance'] = array(
             'template' => 'tmplmultistate',
             'test' => array(
-                array('operation' => '#value# == 0','tendance' => 'state_light ,<i class="icon divers-umbrella2"></i>'),
-                array('operation' => '#value# == 1','tendance' => 'state_light, <i class="icon divers-umbrella2"></i>'),
-                array('operation' => '#value# == 2','tendance' => 'state_light, <i class="icon divers-umbrella2"></i>'),
-                array('operation' => '#value# == 3','tendance' => 'state_light, <i class="icon divers-umbrella2"></i>'),
-                array('operation' => '#value# == 4','tendance' => 'state_light, <i class="icon divers-umbrella2"></i>'),
-                array('operation' => '#value# == 5','tendance' => 'state_light, <i class="icon divers-umbrella2"></i>')
+                array('operation' => '#value# == 0','state_light' => '<i class="icon divers-umbrella2"></i>'),
+                array('operation' => '#value# == 1','state_light' => '<i class="icon divers-umbrella2"></i>'),
+                array('operation' => '#value# == 2','state_light' => '<i class="icon divers-umbrella2"></i>'),
+                array('operation' => '#value# == 3','state_light' => '<i class="icon divers-umbrella2"></i>'),
+                array('operation' => '#value# == 4','state_light' => '<i class="icon divers-umbrella2"></i>'),
+                array('operation' => '#value# == 5','state_light' => '<i class="icon divers-umbrella2"></i>')
             )
         );
         return $return;
