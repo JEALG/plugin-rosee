@@ -44,16 +44,6 @@ class rosee extends eqLogic {
             }
         }
     }
-
-    /*     * *********************Methode d'instance************************* */
-    public function refresh() {
-        foreach ($this->getCmd() as $cmd) {
-            $s = print_r($cmd, 1);
-            log::add('rosee', 'debug', 'refresh  cmd: '.$s);
-            $cmd->execute();
-        }
-    }
-
     public static function templateWidget(){
 	$return = array('info' => array('string' => array()));
 	$return['info']['string']['Tendance'] = array(
@@ -64,6 +54,16 @@ class rosee extends eqLogic {
 			array('operation' => '#value# > 3 || #value# < 2','state' => '<i class="fa fa-home"></i>')
 		)
 	);
+
+    /*     * *********************Methode d'instance************************* */
+    public function refresh() {
+        foreach ($this->getCmd() as $cmd) {
+            $s = print_r($cmd, 1);
+            log::add('rosee', 'debug', 'refresh  cmd: '.$s);
+            $cmd->execute();
+        }
+    }
+
 	return $return;
 }
     public function preUpdate() {
