@@ -46,13 +46,13 @@ class rosee extends eqLogic {
     }
     // TEST Template
     public static function templateWidget(){
-        $return = array('info' => array('string' => array()));
+        $return = array('info' => array('numeric' => array()));
         $return['info']['numeric']['tendance'] = array(
             'template' => 'tmplmultistate',
             'test' => array(
-                array('operation' => '#value# == 2','state' => '<i class="icon maison-vacuum6"></i>'),
-                array('operation' => '#value# == 3','state' => '<i class="fa fa-pause"></i>'),
-                array('operation' => '#value# > 3 || #value# < 2','state' => '<i class="fa fa-home"></i>')
+                array('operation' => '#value# == 2','tendance' => '<i class="icon maison-vacuum6"></i>'),
+                array('operation' => '#value# == 3','tendance' => '<i class="fa fa-pause"></i>'),
+                array('operation' => '#value# > 3 || #value# < 2','tendance' => '<i class="fa fa-home"></i>')
             )
         );
         return $return;
