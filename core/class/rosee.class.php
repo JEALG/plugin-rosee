@@ -44,6 +44,20 @@ class rosee extends eqLogic {
             }
         }
     }
+    // TEST Template
+    public static function templateWidget(){
+        $return = array('info' => array('string' => array()));
+        $return['info']['string']['tendance'] = array(
+            'template' => 'tmplmultistate',
+            'test' => array(
+                array('operation' => '#value# == 2','state' => '<i class="icon maison-vacuum6"></i>'),
+                array('operation' => '#value# == 3','state' => '<i class="fa fa-pause"></i>'),
+                array('operation' => '#value# > 3 || #value# < 2','state' => '<i class="fa fa-home"></i>')
+            )
+        );
+        return $return;
+    }
+
 
 
     /*     * *********************Methode d'instance************************* */
@@ -225,11 +239,15 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible($td_num_visible);
                 $roseeCmd->setDisplay('generic_type','GENERIC_INFO');
+                $roseeCmd->setTemplate('dashboard','rosee::tendance');
+                $roseeCmd->setTemplate('mobile','rosee::tendance');
                 $roseeCmd->setOrder($order);
                 $order ++;
             }
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('');
+            $roseeCmd->setTemplate('dashboard','rosee::tendance');
+            $roseeCmd->setTemplate('mobile','rosee::tendance');
             $roseeCmd->setConfiguration('minValue', 0);
             $roseeCmd->setConfiguration('maxValue', $td_num_max);
             $roseeCmd->save();
