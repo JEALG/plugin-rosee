@@ -15,6 +15,10 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 <br />
                 <span>{{Ajouter}}</span>
             </div>
+            <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
+                <i class="fas fa-wrench"></i><br>
+                <span>{{Configuration}}</span>
+            </div>
         </div>
         <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
         <legend><i class="fas fa-umbrella"></i> <i class="icon jeedomapp-weather"></i> {{Mes Points de Rosée, de Givre}}</legend>
