@@ -154,8 +154,6 @@ class rosee extends eqLogic {
             $roseeCmd->setLogicalId('humidityabs');
             $roseeCmd->setType('info');
             $roseeCmd->setSubType('numeric');
-            $roseeCmd->setTemplate('dashboard','core::line');
-            $roseeCmd->setTemplate('mobile','core::line');
             $roseeCmd->save();
         }
 
@@ -178,8 +176,6 @@ class rosee extends eqLogic {
                 $order ++;
             }
             $roseeCmd->setEqLogic_id($this->getId());
-            $roseeCmd->setTemplate('dashboard','core::line');
-            $roseeCmd->setTemplate('mobile','core::line');
             $roseeCmd->setUnite('');
             $roseeCmd->save();
         }
@@ -202,8 +198,6 @@ class rosee extends eqLogic {
             }
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('°C');
-            $roseeCmd->setTemplate('dashboard','core::line');
-            $roseeCmd->setTemplate('mobile','core::line');
             $roseeCmd->save();
         }
 
@@ -227,8 +221,6 @@ class rosee extends eqLogic {
             }
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('');
-            $roseeCmd->setTemplate('dashboard','core::line');
-            $roseeCmd->setTemplate('mobile','core::line');
             $roseeCmd->save();
 
             $roseeCmd  = $this->getCmd(null, 'givrage');
@@ -250,8 +242,6 @@ class rosee extends eqLogic {
             }
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('°C');
-            $roseeCmd->setTemplate('dashboard','core::line');
-            $roseeCmd->setTemplate('mobile','core::line');
             $roseeCmd->save();
         }
         if ($calcul == 'tendance'|| $calcul=='rosee_givre'|| $calcul=='givre') {
@@ -274,8 +264,6 @@ class rosee extends eqLogic {
             }
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('');
-            $roseeCmd->setTemplate('dashboard','core::multiline');
-            $roseeCmd->setTemplate('mobile','core::multiline');
             $roseeCmd->save();
 
             $roseeCmd = $this->getCmd(null, 'td_num');
@@ -299,10 +287,6 @@ class rosee extends eqLogic {
             }
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('');
-            if ($calcul=='tendance') {
-                $roseeCmd->setTemplate('dashboard','rosee::tendance');
-                $roseeCmd->setTemplate('mobile','rosee::tendance');
-            }
             $roseeCmd->setConfiguration('minValue', 0);
             $roseeCmd->setConfiguration('maxValue', $td_num_max);
             $roseeCmd->save();
