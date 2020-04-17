@@ -22,6 +22,7 @@ function rosee_install() {
     jeedom::getApiKey('rosee');
 
     config::save('functionality::cron5::enable', 0, 'rosee');
+    config::save('functionality::cron10::enable', 0, 'rosee');
     config::save('functionality::cron15::enable', 0, 'rosee');
     config::save('functionality::cron30::enable', 1, 'rosee');
     config::save('functionality::cronHourly::enable', 0, 'rosee');
