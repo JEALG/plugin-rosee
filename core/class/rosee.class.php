@@ -55,8 +55,6 @@ class rosee extends eqLogic {
         }
     }
 
-	return $return;
-}
     public function preUpdate() {
         if (!$this->getIsEnable()) return;
 
