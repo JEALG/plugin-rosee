@@ -241,8 +241,8 @@ class rosee extends eqLogic {
             }
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('');
-            $roseeCmd->setTemplate('dashboard','neato::tendance');
-            $roseeCmd->setTemplate('mobile','neato::tendance');
+            $roseeCmd->setTemplate('dashboard','rosee::tendance');
+            $roseeCmd->setTemplate('mobile','rosee::tendance');
             $roseeCmd->setConfiguration('minValue', 0);
             $roseeCmd->setConfiguration('maxValue', $td_num_max);
             $roseeCmd->save();
