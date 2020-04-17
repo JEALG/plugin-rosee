@@ -23,7 +23,7 @@ function rosee_install() {
 
     config::save('functionality::cron5::enable', 1, 'rosee');
     config::save('functionality::cron30::enable', 0, 'rosee');
-    config::save('functionality::cron1::enable', 0, 'rosee');
+    config::save('functionality::cronHourly::enable', 0, 'rosee');
 
     $cron = cron::byClassAndFunction('rosee', 'pull');
     if (is_object($cron)) {
@@ -49,8 +49,8 @@ function rosee_update() {
         config::save('functionality::cron30::enable', 0, 'rosee');
     }
 
-    if (config::byKey('functionality::cron1::enable', 'rosee', -1) == -1) {
-        config::save('functionality::cron1::enable', 0, 'rosee');
+    if (config::byKey('functionality::cronHourly::enable', 'rosee', -1) == -1) {
+        config::save('functionality::cronHourly::enable', 0, 'rosee');
     }
 
     $plugin = plugin::byId('rosee');
