@@ -47,7 +47,7 @@ class rosee extends eqLogic {
     // TEST Template
     public static function templateWidget(){
         $return = array('info' => array('string' => array()));
-        $return['info']['string']['tendance'] = array(
+        $return['info']['numeric']['tendance'] = array(
             'template' => 'tmplmultistate',
             'test' => array(
                 array('operation' => '#value# == 2','state' => '<i class="icon maison-vacuum6"></i>'),
