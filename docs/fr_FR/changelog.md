@@ -13,7 +13,8 @@ description: Ce plugin permet d'obtenir le point de rosée pour savoir si l'herb
 - Corrections bugs
 - Corrections bug sur le choix d'équipement obligatoire
 - Ajout Cron 10/15/Heures
-- Remplacement Cron5 par Cron30 (les calculs se feront par défaut toute les 30 minutes)
+- Remplacement Cron5 par Cron30 (les calculs se feront par défaut toutes les 30 minutes)
+>*Info : Penser à vérifier que le cron 30 est actif si non il faut l'activer
 - Ajout widget core pour les commandes sauf pour tendance (uniquement pour les nouveaux équipements)
 - Ajout widget pour la tendance (uniquement pour le Core V4 et les nouveaux équipements)
 
