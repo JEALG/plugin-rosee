@@ -51,11 +51,11 @@ class rosee extends eqLogic {
             'template' => 'tmplmultistate',
             'test' => array(
                 array('operation' => '#value# == 0','tendance' => '<i class="icon maison-vacuum6"></i>'),
-                array('operation' => '#value# == 1','tendance' => '<i class="fa fa-pause"></i>'),
-                array('operation' => '#value# == 2','tendance' => '<i class="fa fa-home"></i>'),
-                array('operation' => '#value# == 3','tendance' => '<i class="fa fa-home"></i>'),
-                array('operation' => '#value# == 4','tendance' => '<i class="fa fa-home"></i>'),
-                array('operation' => '#value# == 5','tendance' => '<i class="fa fa-home"></i>')
+                array('operation' => '#value# == 1','tendance' => '<i class="fas fa-pause"></i>'),
+                array('operation' => '#value# == 2','tendance' => '<i class="fas fa-home"></i>'),
+                array('operation' => '#value# == 3','tendance' => '<i class="fas fa-home"></i>'),
+                array('operation' => '#value# == 4','tendance' => '<i class="fas fa-home"></i>'),
+                array('operation' => '#value# == 5','tendance' => '<i class="fas fa-home"></i>')
             )
         );
         return $return;
