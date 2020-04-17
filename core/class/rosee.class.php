@@ -144,10 +144,14 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible(1);
                 $roseeCmd->setDisplay('generic_type','SIREN_STATE');
+                $roseeCmd->setTemplate('dashboard','core::line');
+                $roseeCmd->setTemplate('mobile','core::line');
                 $roseeCmd->setOrder($order);
                 $order ++;
             }
             $roseeCmd->setEqLogic_id($this->getId());
+            $roseeCmd->setTemplate('dashboard','core::line');
+            $roseeCmd->setTemplate('mobile','core::line');
             $roseeCmd->setUnite('');
             $roseeCmd->save();
         }
@@ -188,6 +192,8 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible(1);
                 $roseeCmd->setDisplay('generic_type','SIREN_STATE');
+                $roseeCmd->setTemplate('dashboard','core::line');
+                $roseeCmd->setTemplate('mobile','core::line');
                 $roseeCmd->setOrder($order);
                 $order ++;
             }
@@ -231,13 +237,15 @@ class rosee extends eqLogic {
                 $roseeCmd->setIsHistorized(0);
                 $roseeCmd->setIsVisible(0);
                 $roseeCmd->setDisplay('generic_type','WEATHER_CONDITION');
+                $roseeCmd->setTemplate('dashboard','core::multiline');
+                $roseeCmd->setTemplate('mobile','core::multiline');
                 $roseeCmd->setOrder($order);
                 $order ++;
             }
             $roseeCmd->setEqLogic_id($this->getId());
             $roseeCmd->setUnite('');
-            $roseeCmd->setTemplate('dashboard','core::line');
-            $roseeCmd->setTemplate('mobile','core::line');
+            $roseeCmd->setTemplate('dashboard','core::multiline');
+            $roseeCmd->setTemplate('mobile','core::multiline');
             $roseeCmd->save();
 
             $roseeCmd = $this->getCmd(null, 'td_num');
