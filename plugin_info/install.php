@@ -47,6 +47,10 @@ function rosee_update() {
         config::save('functionality::cron5::enable', 0, 'rosee');
     }
 
+    if (config::byKey('functionality::cron10::enable', 'rosee', -1) == -1) {
+       config::save('functionality::cron10::enable', 0, 'rosee');
+    }
+
     if (config::byKey('functionality::cron15::enable', 'rosee', -1) == -1) {
        config::save('functionality::cron15::enable', 0, 'rosee');
     }
