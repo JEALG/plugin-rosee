@@ -31,12 +31,17 @@ class rosee extends eqLogic {
             }
         }
     }
-    public static function cron30($_eqlogic_id = null) {
-        //no both cron5 and cron30 enabled:
-        if (config::byKey('functionality::cron5::enable', 'rosee', 0) == 1) {
-            config::save('functionality::cron30::enable', 0, 'rosee');
-            return;
+    
+    public static function cron15($_eqlogic_id = null) {
+        foreach (eqLogic::byType('rosee') as $rosee) {
+            if ($rosee->getIsEnable()) {
+                log::add('rosee', 'debug', '================= CRON 15 =================');
+                $rosee->getInformations();
+            }
         }
+    }
+    
+    public static function cron30($_eqlogic_id = null) {
         foreach (eqLogic::byType('rosee') as $rosee) {
             if ($rosee->getIsEnable()) {
                 log::add('rosee', 'debug', '================= CRON 30 =================');
@@ -47,7 +52,7 @@ class rosee extends eqLogic {
 
     public static function cronHourly($_eqlogic_id = null) {
         //no both cron5 and cron30 enabled:
-        if (config::byKey('functionality::cron5::enable', 'rosee', 0) == 1) {
+        if (config::byKey('functionality::cron30::enable', 'rosee', 0) == 1) {
             config::save('functionality::cronHourly::enable', 0, 'rosee');
             return;
         }
