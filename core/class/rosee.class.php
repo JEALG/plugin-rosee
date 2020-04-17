@@ -23,7 +23,7 @@ class rosee extends eqLogic {
     /*     * *************************Attributs****************************** */
 
     /*     * ***********************Methode static*************************** */
-    public static function cron5() {
+    public static function cron5($_eqlogic_id = null) {
         foreach (eqLogic::byType('rosee') as $rosee) {
             if ($rosee->getIsEnable()) {
                 log::add('rosee', 'debug', '================= CRON 5 ==================');
@@ -50,7 +50,7 @@ class rosee extends eqLogic {
         }
     }
 
-    public static function cron30($_eqlogic_id = null) {
+    public static function cron30() {
         foreach (eqLogic::byType('rosee') as $rosee) {
             if ($rosee->getIsEnable()) {
                 log::add('rosee', 'debug', '================= CRON 30 =================');
