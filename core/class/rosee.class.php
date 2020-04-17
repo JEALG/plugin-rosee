@@ -44,6 +44,20 @@ class rosee extends eqLogic {
             }
         }
     }
+
+    public static function cronHourly($_eqlogic_id = null) {
+        //no both cron5 and cron30 enabled:
+        if (config::byKey('functionality::cron5::enable', 'rosee', 0) == 1) {
+            config::save('functionality::cronHourly::enable', 0, 'rosee');
+            return;
+        }
+        foreach (eqLogic::byType('rosee') as $rosee) {
+            if ($rosee->getIsEnable()) {
+                log::add('rosee', 'debug', '================= CRON heure =================');
+                $rosee->getInformations();
+            }
+        }
+    }
     // Template pour la tendance
     public static function templateWidget(){
         $return = array('info' => array('numeric' => array()));
