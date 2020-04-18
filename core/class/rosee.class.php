@@ -341,14 +341,16 @@ class rosee extends eqLogic {
         }
 
         /*  ********************** Offset Température *************************** */
-        $OffsetT=$this->getConfiguration('OffsetT');
-        if ($OffsetT== '') {
-            $OffsetT=0;
-            log::add('rosee', 'debug', '│ Aucun Offset Température : ' . $OffsetT.'');
-        } else {
-            log::add('rosee', 'debug', '│ Offset Température : ' . $OffsetT.'');
-            $temperature = $temperature + $OffsetT;
-            log::add('rosee', 'debug', '│ Température avec Offset : ' .$temperature.' °C');
+        if ($calcul != 'tendance') {
+            $OffsetT=$this->getConfiguration('OffsetT');
+            if ($OffsetT== '') {
+                $OffsetT=0;
+                log::add('rosee', 'debug', '│ Aucun Offset Température : ' . $OffsetT.'');
+            } else {
+                log::add('rosee', 'debug', '│ Offset Température : ' . $OffsetT.'');
+                $temperature = $temperature + $OffsetT;
+                log::add('rosee', 'debug', '│ Température avec Offset : ' .$temperature.' °C');
+            }
         }
 
         /*  ********************** PRESSION *************************** */
