@@ -193,7 +193,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </label>
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="pression" placeholder="1013.25 hPa">
+                                    <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="pressure" placeholder="1013.25 hPa">
                                     <span class="input-group-btn">
                                         <a class="btn btn-default listCmdActionOther roundedRight" id="bt_selectPresCmd"><i class="fas fa-list-alt"></i></a>
                                     </span>

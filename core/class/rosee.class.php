@@ -352,19 +352,19 @@ class rosee extends eqLogic {
         }
 
         /*  ********************** PRESSION *************************** */
-        $pressure = $this->getConfiguration('pression');
+        $pressure = $this->getConfiguration('pressure');
         if ($pressure == '' && $calcul !='tendance') {//valeur par défaut de la pression atmosphérique : 1013.25 hPa
             $pressure=1013.25;
             log::add('rosee', 'debug', '│ Pression Atmosphérique aucun équipement sélectionné, valeur par défaut : '. $pressure. ' hPa');
         } else {
-            $pressureID = str_replace("#","",$this->getConfiguration('pression'));
+            $pressureID = str_replace("#","",$this->getConfiguration('pressure'));
             $cmdvirt = cmd::byId($pressureID);
             if (is_object($cmdvirt)) {
                 $pressure = $cmdvirt->execCmd();
                 log::add('rosee', 'debug', '│ Pression Atmosphérique : ' . $pressure.' hPa');
             } else {
                 throw new Exception(__('Le champ "Pression Atmosphérique" ne peut être vide',__FILE__));
-                log::add('rosee', 'error', '│ Configuration : Pression Atmosphérique inexistante : ' . $this->getConfiguration('pression'));
+                log::add('rosee', 'error', '│ Configuration : Pression Atmosphérique inexistante : ' . $this->getConfiguration('pressure'));
             }
         }
 
