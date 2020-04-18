@@ -692,9 +692,10 @@ class rosee extends eqLogic {
         // mesure barométrique -2h
         $h2 = $histo->lastBetween($pressureID, $startDate, $endDate);
         log::add('rosee', 'debug', '│ │ Pression Atmosphérique : ' .$h2 . ' hPa' );
-        // calculs de tendance
-        $tendance2h = ($h1 - $h2) / 2;
-        log::add('rosee', 'debug', '│ │ Tendance : ' . $tendance2h . ' hPa/h' );
+
+        // calculs de tendance 15min/2h
+        $td2h = ($h1 - $h2) / 2;
+        log::add('rosee', 'debug', '│ │ Tendance : ' . $td2h . ' hPa/h' );
         log::add('rosee', 'debug', '│ └───────');
 
         // calcul du timestamp - 4h
@@ -705,12 +706,14 @@ class rosee extends eqLogic {
         $startDate = $_date1 -> format('Y-m-d H:i:s');
         log::add('rosee', 'debug', '│ │ Start Date : ' .$startDate );
         log::add('rosee', 'debug', '│ │ End Date : ' .$endDate );
+
         // mesure barométrique -4h
         $h4 = $histo->lastBetween($pressureID, $startDate, $endDate);
         log::add('rosee', 'debug', '│ │ Pression Atmosphérique : ' .$h4 . ' hPa' );
-        // calculs de tendance
-        $tendance4h = ($h1 - $h4) / 4;
-        log::add('rosee', 'debug', '│ │ Tendance : ' . $tendance4h . ' hPa/h' );
+
+        // calculs de tendance 2h/4h
+        $td4h = ($h1 - $h4) / 4;
+        log::add('rosee', 'debug', '│ │ Tendance : ' . $td4h . ' hPa/h' );
         log::add('rosee', 'debug', '│ └───────');
 
 
@@ -720,23 +723,23 @@ class rosee extends eqLogic {
         // et : https://www.parallax.com/sites/default/files/downloads/29124-Altimeter-Application-Note-501.pdf
 
         // moyennation de la tendance à -2h (50%) et -4h (50%)
-        $tendance = (0.5 * $tendance2h + 0.5 * $tendance4h);
-        $tendance_format = number_format($tendance, 3, '.', '');
-        log::add('rosee', 'debug', '│ │ Tendance Moyenne : ' . $tendance_format . ' hPa/h' );
+        $td_moy = (0.5 * $td2h + 0.5 * $td4h);
+        $dPdT = number_format($td_moy, 3, '.', '');
+        log::add('rosee', 'debug', '│ │ Tendance Moyenne (dPdT): ' . $dPdT . ' hPa/h' );
 
-        if ($tendance > 2.5) { // Quickly rising High Pressure System, not stable
+        if ($td_moy > 2.5) { // Quickly rising High Pressure System, not stable
             $td = 'Forte embellie, instable';
             $td_num=5;
-        } elseif ($tendance > 0.5 && $tendance <= 2.5) { // Slowly rising High Pressure System, stable good weather
+        } elseif ($td_moy > 0.5 && $td_moy <= 2.5) { // Slowly rising High Pressure System, stable good weather
             $td='Amélioration, beau temps durable';
             $td_num=4;
-        } elseif ($tendance> 0.0 && $tendance <= 0.5) { // Stable weather condition
+        } elseif ($td_moy > 0.0 && $td_moy <= 0.5) { // Stable weather condition
             $td='Lente amélioration, temps stable';
             $td_num=3;
-        } elseif ($tendance> -0.5 && $tendance <= 0) { // Stable weather condition
+        } elseif ($td_moy > -0.5 && $td_moy <= 0) { // Stable weather condition
             $td='Lente dégradation, temps stable';
             $td_num=2;
-        } elseif ($tendance> -2.5 && $tendance <= -0.5) { // Slowly falling Low Pressure System, stable rainy weather
+        } elseif ($td_moy > -2.5 && $td_moy <= -0.5) { // Slowly falling Low Pressure System, stable rainy weather
             $td='Dégradation, mauvais temps durable';
             $td_num=1;
         } else { // Quickly falling Low Pressure, Thunderstorm, not stable
