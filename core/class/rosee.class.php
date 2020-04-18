@@ -357,7 +357,7 @@ class rosee extends eqLogic {
             $pressure=1013.25;
             log::add('rosee', 'debug', '│ Pression Atmosphérique aucun équipement sélectionné, valeur par défaut : '. $pressure. ' hPa');
         } else {
-            $pressureID = str_replace("#","",$this->getConfiguration('pressure'));
+            $pressureID = str_replace("#","",$this->getConfiguration('pression'));
             $cmdvirt = cmd::byId($pressureID);
             if (is_object($cmdvirt)) {
                 $pressure = $cmdvirt->execCmd();
