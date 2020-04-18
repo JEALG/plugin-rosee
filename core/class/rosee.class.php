@@ -60,14 +60,14 @@ class rosee extends eqLogic {
     }
 
     public static function cronHourly($_eqlogic_id = null) {
-        //no both cron5 and cron30 enabled:
+        //no both cron30 and cronHourly enabled:
         if (config::byKey('functionality::cron30::enable', 'rosee', 0) == 1) {
             config::save('functionality::cronHourly::enable', 0, 'rosee');
             return;
         }
         foreach (eqLogic::byType('rosee') as $rosee) {
             if ($rosee->getIsEnable()) {
-                log::add('rosee', 'debug', '================= CRON heure =================');
+                log::add('rosee', 'debug', '================= CRON HEURE =================');
                 $rosee->getInformations();
             }
         }
