@@ -2,24 +2,25 @@
 
 Ce plugin permet d'obtenir le point de rosée pour savoir si l'herbe sera mouillée le matin, ou bien en hiver savoir s'il va falloir gratter le pare-brise.
 Pour fonctionner, on doit indiquer un équipement température et un équipement humidité (extérieures, bien-sûr…).
+Il est aussi possible de calculer la tendance Météo à venir en se basant de l'évolution de la météo.
 
 # Configuration
 
-Le plugin ne comporte pas de configuration générale, il faut ajouter :
+Le plugin ne comporte pas de configuration générale, il faut :
 
->- Choisir la méthode de calcul :
+>- Choisir une méthode de calcul :
     - Humidité absolue
     - Point de Givre
     - Point de Rosée
     - Point de Rosée et Point de Givre
     - Tendance Météo
 
->- Renseigner les champs obligatoire suivant la méthode de calcul:
+>- Renseigner les champs obligatoire suivant la méthode de calcul :
     - Equipement "Température" (°C)
     - Equipement "Humidité Relative" (%)
-    - Equipement "Pression Atmosphérique" (hPa) : Ce champs est obligatoire pour la méthode de calcul "Tendance Météo". Pour les autres calculs, la valeur est fixé à 1013.25 hPa si non renseignée
+    - Equipement "Pression Atmosphérique" (hPa) : Ce champs est obligatoire pour la méthode de calcul "Tendance Météo" et il doit être avoir l'historique d'activé. Pour les autres calculs, la valeur est fixé à 1013.25 hPa si non renseignée
 
-En option
+<b>En option</b>
 > - Seuil de l'Alerte Rosée (°C) : Seuil de déclenchement de l'alerte rosée, 2°C par défaut (dépression du point de rosée T°-Tr°) A ajuster en fonction des observations locales.
 > - Seuil d'hunidité absolue : Seuil humidité absolue en dessous duquel il est peu probable qu'il givre, 2.8 par défaut.
 > - Offset Température : A ajuster en fonction des observations locales et de la position de la sonde, 0 par défaut.
@@ -81,7 +82,7 @@ Le plugin calcule 6 niveaux d'information :
 
 Le plugin affecte par défaut un widget (uniquement pour le core V4) :
 ![Visu Tendance](../images/visu_tendance.png)
-    
+
 # FAQ
 
 -   Est-ce que le plugin s'appuie sur des API tiers ?
@@ -136,7 +137,7 @@ Le plugin affecte par défaut un widget (uniquement pour le core V4) :
 
 - Je n'ai pas d'informations qui remontent
 
->Il faut bien indiquer un équipement température et un équipement humidité pour que le calcul du point de rosée puisse se faire.
+>Il faut bien indiquer les équipements necessaires pour les différents calculs
 >
 >On peut rechercher les équipements grace au bouton de recherche de l’équipement.
 
@@ -147,4 +148,5 @@ Le plugin affecte par défaut un widget (uniquement pour le core V4) :
 
 - Le calcul de la tendance ne se fait pas
 
+>Il faut attendre 4h pour avoir des résultats corrects lors de la création de l'équipement
 >L'équipement doit être aussi historisé pour pouvoir fonctionner
