@@ -385,21 +385,25 @@ class rosee extends eqLogic {
 
 
         /*  ********************** SEUIL D'ALERTE ROSEE *************************** */
-        $dpr=$this->getConfiguration('DPR');
-        if ($dpr == '') {
-            $dpr=2.0;
-            log::add('rosee', 'debug', '│ Seuil DPR : Aucune valeur de saisie => Valeur par défaut : '. $dpr.' °C');
-        } else {
-            log::add('rosee', 'debug', '│ Seuil DPR : ' . $dpr.' °C');
+        if ($calcul == 'rosee' || $calcul == 'rosee_givre'  ) {
+            $dpr=$this->getConfiguration('DPR');
+            if ($dpr == '') {
+                $dpr=2.0;
+                log::add('rosee', 'debug', '│ Seuil DPR : Aucune valeur de saisie => Valeur par défaut : '. $dpr.' °C');
+            } else {
+                log::add('rosee', 'debug', '│ Seuil DPR : ' . $dpr.' °C');
+            }
         }
 
         /*  ********************** SEUIL D'HUMIDITE ABSOLUE ***************************  */
-        $SHA=$this->getConfiguration('SHA');
-        if ($SHA == '') {
-            $SHA=2.8;
-            log::add('rosee', 'debug', '│ Seuil d\'Humidité Absolue : Aucune valeur de saisie => Valeur par défaut : ' . $SHA.'');
-        } else {
-            log::add('rosee', 'debug', '│ Seuil d\'Humidité Absolue : ' . $SHA.'');
+        if ($calcul == 'givre' || $calcul == 'rosee_givre'  ) {
+            $SHA=$this->getConfiguration('SHA');
+            if ($SHA == '') {
+                $SHA=2.8;
+                log::add('rosee', 'debug', '│ Seuil d\'Humidité Absolue : Aucune valeur de saisie => Valeur par défaut : ' . $SHA.'');
+            } else {
+                log::add('rosee', 'debug', '│ Seuil d\'Humidité Absolue : ' . $SHA.'');
+            }
         }
         log::add('rosee', 'debug', '└─────────');
 
