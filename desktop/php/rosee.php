@@ -24,12 +24,9 @@ $eqLogics = eqLogic::byType($plugin->getId());
         <legend><i class="fas fa-umbrella"></i> <i class="icon jeedomapp-weather"></i> {{Mes Points de Rosée, de Givre}}</legend>
         <div class="eqLogicThumbnailContainer">
             <?php
-            $status = 0;
 			foreach ($eqLogics as $eqLogic) {
-				if ($eqLogic->getConfiguration('type_calcul') != 'tendance'){
-                    if ($status == 0) {echo '<div class="eqLogicThumbnailContainer">';}
-                    $status = 1;
-                    $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+                if ($eqLogic->getConfiguration('type_calcul') != 'tendance'){
                     echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '" >';
                     if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
                         echo '<img src="' . $eqLogic->getImage() . '"/>';
@@ -41,23 +38,14 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     echo '</div>';
                 }
 			}
-            if ($status == 1) {
-                echo '</div>';
-            } else {
-                echo '</div>';
-                echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'><i class='fas fa-umbrella'></i> <i class='icon jeedomapp-weather'></i></i> {{Aucun équipement Point de rosée, Point de Givre, Humidité absolue. Ajoutez-en un.}}</span></center>";
-            }
 			?>
         </div>
         <legend><i class="fas fa-chart-bar"></i> {{Mes Tendances}}</legend>
         <div class="eqLogicThumbnailContainer">
             <?php
-            $status = 0;
 			foreach ($eqLogics as $eqLogic) {
                 $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
                 if ($eqLogic->getConfiguration('type_calcul') == 'tendance'){
-                    if ($status == 0) {echo '<div class="eqLogicThumbnailContainer">';}
-                    $status = 1;
                     echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '" >';
                     if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
                         echo '<img src="' . $eqLogic->getImage() . '"/>';
@@ -69,13 +57,6 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     echo '</div>';
                 }
 			}
-            if ($status == 1) {
-                echo '</div>';
-            } else {
-                echo '</div>';
-                echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'><i class='fas fa-chart-bar'></i> {{Aucun équipement Tendance. Ajoutez-en un.}}</span></center>";
-
-            }
 			?>
         </div>
     </div>
