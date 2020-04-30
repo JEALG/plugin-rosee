@@ -12,4 +12,4 @@ Plugin permetant de calculer le point de rosée, le point de givrage et l'humidi
 
 Documentation de l'ensemble de mes widgets
 
-*[Documentation](https://jealg.github.io/JEEDOM-Widget_JAG-doc/fr_FR/)*
+*[Documentation](https://jealg.github.io/JEEDOM-Widget_JAG-doc/#language#/)*
