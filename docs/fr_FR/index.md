@@ -151,7 +151,7 @@ Le plugin affecte par défaut un widget (uniquement pour le Core V4) :<br/>
 - Le point de givrage est égal 5°C
 
 >La température dépasse 5°C donc le point de givrage n'est plus calculé et sa valeur est fixé à 5.
->
+
 
 - Le calcul de la tendance ne se fait pas
 
