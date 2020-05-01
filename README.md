@@ -6,7 +6,7 @@ Plugin permetant de calculer le point de rosée, le point de givrage et l'humidi
 
 *[Documentation](https://jealg.github.io/plugin-rosee/#language#/)*
 
-*[changelog](https://jealg.github.io/plugin-rosee/#language#/changelog)*
+*[changelog](https://jealg.github.io/plugin-rosee/fr_FR/changelog)*
 *[changelog](https://jealg.github.io/plugin-rosee/#language#/changelog.html)*
 # Jeedom - Mes Widgets
 
