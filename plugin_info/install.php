@@ -93,7 +93,7 @@ function rosee_update() {
     //message::add('Plugin Rosée - Givre - Tendance', 'Merci pour la mise à jour de ce plugin, consultez le changelog.');
 
     foreach (eqLogic::byType('rosee') as $rosee) {
-        $baro->getInformations();
+        $rosee->getInformations();
     }
 
 }
