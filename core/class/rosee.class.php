@@ -316,9 +316,7 @@ class rosee extends eqLogic {
 
     /*  **********************Getteur Setteur*************************** */
     public function postUpdate() {
-        foreach (eqLogic::byType('rosee') as $rosee) {
-            $rosee->getInformations();
-        }
+        $this->getInformations();
     }
 
     public function getInformations() {

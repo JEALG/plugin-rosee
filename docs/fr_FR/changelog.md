@@ -13,6 +13,9 @@ Ce plugin permet d'obtenir le point de rosée pour savoir si l'herbe sera mouill
 ## Info sur les mises à jour
 >*Important : en cas de mise à jour disponible pour laquelle il n’y a pas d’information dans cette section, c’est qu’elle n’intègre aucune nouveauté majeure. Cela peut être un ajout de documentation, une correction de documentation, des traductions ou bien de la correction de bugs mineurs.*
 
+# Version 20200512
+- Déplacement documentation
+
 # Version 20200430
 - Correction ajout widget core par défaut sur les nouveaux équipements
 
