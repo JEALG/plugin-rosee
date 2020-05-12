@@ -77,6 +77,7 @@ class rosee extends eqLogic {
         $return = array('info' => array('numeric' => array()));
         $return['info']['numeric']['tendance'] = array(
             'template' => 'tmplmultistate',
+            'replace' => array('#_desktop_width_#' => '60'),
             'test' => array(
                 array('operation' => '#value# == 0','state_light' => '<img src=plugins/rosee/core/template/img/tendance_0.png>'),
                 array('operation' => '#value# == 1','state_light' => '<img src=plugins/rosee/core/template/img/tendance_1.png>'),
@@ -124,8 +125,10 @@ class rosee extends eqLogic {
     }
 
     public function postSave(){
-        log::add('rosee', 'debug', 'postSave()');
+        $_eqName = $this->getName();
+        log::add('rosee', 'debug', 'postSave() =>'.$_eqName);
         $order = 1;
+
         /*  ********************** Calcul *************************** */
         $calcul=$this->getConfiguration('type_calcul');
         if ($calcul=='tendance') {
