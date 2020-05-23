@@ -88,7 +88,6 @@ class rosee extends eqLogic {
             )
         );
 
-        $return = array('info' => array('numeric' => array()));
         $return['info']['numeric']['tendance_80x80'] = array(
             'template' => 'tmplmultistate',
             'replace' => array('#_desktop_width_#' => '80'),
