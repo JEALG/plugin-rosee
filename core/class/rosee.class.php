@@ -88,6 +88,21 @@ class rosee extends eqLogic {
             )
         );
         return $return;
+        $return = array('info' => array('numeric' => array()));
+        $return['info']['numeric']['tendance 80x80'] = array(
+            'template' => 'tmplmultistate',
+            'replace' => array('#_desktop_width_#' => '80'),
+            'test' => array(
+                array('operation' => '#value# == 0','state_light' => '<img src=plugins/rosee/core/template/img/tendance_0.png>'),
+                array('operation' => '#value# == 1','state_light' => '<img src=plugins/rosee/core/template/img/tendance_1.png>'),
+                array('operation' => '#value# == 2','state_light' => '<img src=plugins/rosee/core/template/img/tendance_2.png>'),
+                array('operation' => '#value# == 3','state_light' => '<img src=plugins/rosee/core/template/img/tendance_3.png>'),
+                array('operation' => '#value# == 4','state_light' => '<img src=plugins/rosee/core/template/img/tendance_4.png>'),
+                array('operation' => '#value# == 5','state_light' => '<img src=plugins/rosee/core/template/img/tendance_5.png>')
+            )
+        );
+        return $return;
+
     }
 
 
