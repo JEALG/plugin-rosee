@@ -87,7 +87,7 @@ class rosee extends eqLogic {
                 array('operation' => '#value# == 5','state_light' => '<img src=plugins/rosee/core/template/img/tendance_5.png>')
             )
         );
-        return $return;
+
         $return = array('info' => array('numeric' => array()));
         $return['info']['numeric']['tendance 80x80'] = array(
             'template' => 'tmplmultistate',
