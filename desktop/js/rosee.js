@@ -96,10 +96,6 @@ $('#bt_autoDEL_eq').on('click', function () {
                                 },
                                 success: function (data) {
                                     /*if (data.state != 'ok') {
-                                        $('#div_alert').showAlert({
-                                            message: data.result,
-                                            level: 'danger'
-                                        });
                                         return;
                                     } */
                                     $('.eqLogicDisplayCard[data-eqLogic_id=' + $('.eqLogicAttr[data-l1key=id]').value() + ']').click();
