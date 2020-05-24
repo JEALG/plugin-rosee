@@ -114,54 +114,54 @@ $('#bt_autoDEL_eq').on('click', function () {
 });
 
 $('#type_calcul').change(function () {
-    var text = $("#type_calcul").val();
-    if ((text == '')) {
-        $('#temperature').hide();
-        $('#temperature_offset').hide();
-        $('#humidite').hide();
-        $('#pressure').hide();
-        $('#DPR').hide();
-        $('#SHA').hide();
-    }
-    if ((text == 'rosee_givre')) {
-        $('#temperature').show();
-        $('#temperature_offset').show();
-        $('#humidite').show();
-        $('#pressure').show();
-        $('#DPR').show();
-        $('#SHA').show();
-    }
-    if ((text == 'rosee')) {
-        $('#temperature').show();
-        $('#temperature_offset').show();
-        $('#humidite').show();
-        $('#pressure').show();
-        $('#DPR').show();
-        $('#SHA').hide();
-    }
-    if ((text == 'humidityabs')) {
-        $('#temperature').show();
-        $('#temperature_offset').show();
-        $('#humidite').show();
-        $('#pressure').show();
-        $('#DPR').hide();
-        $('#SHA').hide();
-    }
-    if ((text == 'givre')) {
-        $('#temperature').show();
-        $('#temperature_offset').show();
-        $('#humidite').show();
-        $('#pressure').show();
-        $('#DPR').hide();
-        $('#SHA').show();
-    }
-    if ((text == 'tendance')) {
-        $('#temperature').hide();
-        $('#temperature_offset').hide();
-        $('#humidite').hide();
-        $('#pressure').show();
-        $('#DPR').hide();
-        $('#SHA').hide();
+    switch ($("#type_calcul").val()) {
+        case 'rosee_givre':
+            $('#temperature').show();
+            $('#temperature_offset').show();
+            $('#humidite').show();
+            $('#pressure').show();
+            $('#DPR').show();
+            $('#SHA').show();
+            break;
+        case 'rosee':
+            $('#temperature').show();
+            $('#temperature_offset').show();
+            $('#humidite').show();
+            $('#pressure').show();
+            $('#DPR').show();
+            $('#SHA').hide();
+            break;
+        case 'humidityabs':
+            $('#temperature').show();
+            $('#temperature_offset').show();
+            $('#humidite').show();
+            $('#pressure').show();
+            $('#DPR').hide();
+            $('#SHA').hide();
+            break;
+        case 'givre':
+            $('#temperature').show();
+            $('#temperature_offset').show();
+            $('#humidite').show();
+            $('#pressure').show();
+            $('#DPR').hide();
+            $('#SHA').show();
+            break;
+        case 'tendance':
+            $('#temperature').hide();
+            $('#temperature_offset').hide();
+            $('#humidite').hide();
+            $('#pressure').show();
+            $('#DPR').hide();
+            $('#SHA').hide();
+            break;
+        default:
+            $('#temperature').hide();
+            $('#temperature_offset').hide();
+            $('#humidite').hide();
+            $('#pressure').hide();
+            $('#DPR').hide();
+            $('#SHA').hide();
     }
 });
 
