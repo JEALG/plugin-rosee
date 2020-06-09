@@ -46,13 +46,8 @@ $('#bt_selectPresCmd').on('click', function () {
 	});
 });
 
-$("#table_cmd").sortable({
-	axis: "y",
-	cursor: "move",
-	items: ".cmd",
-	placeholder: "ui-state-highlight",
-	tolerance: "intersect",
-	forcePlaceholderSize: true
+$('#table_cmd tbody').delegate('tr .remove', 'click', function (event) {
+	$(this).closest('tr').remove();
 });
 
 $('.eqLogicAttr[data-l1key=configuration][data-l2key=type_calcul]').on('change', function () {
@@ -61,6 +56,15 @@ $('.eqLogicAttr[data-l1key=configuration][data-l2key=type_calcul]').on('change',
 	} else {
 		$('#img_device').attr("src", 'plugins/rosee/plugin_info/rosee_icon.png');
 	}
+});
+
+$("#table_cmd").sortable({
+	axis: "y",
+	cursor: "move",
+	items: ".cmd",
+	placeholder: "ui-state-highlight",
+	tolerance: "intersect",
+	forcePlaceholderSize: true
 });
 
 $('#bt_autoDEL_eq').on('click', function () {
@@ -225,6 +229,9 @@ function addCmdToTable(_cmd) {
 		tr += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i></td>';
 		tr += '</tr>';
 		$('#table_cmd tbody').append(tr);
-		$('#table_cmd tbody tr:last').setValues(_cmd, '.cmdAttr');
+		$('#table_cmd tbody tr').last().setValues(_cmd, '.cmdAttr');
+		if (isset(_cmd.type)) {
+			$('#table_cmd tbody tr:last .cmdAttr[data-l1key=type]').value(init(_cmd.type));
+		}
+		jeedom.cmd.changeType($('#table_cmd tbody tr').last(), init(_cmd.subType));
 	}
-}
