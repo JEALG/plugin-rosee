@@ -695,8 +695,8 @@ class rosee extends eqLogic {
             };
         } else {
             $frost_point = 5;
-            $msg_givre2 ='│ Info supplémentaire : Il fait trop chaud pas de calcul de l\'alerte givre (' .$temperature .' °C > 5 °C)';
-            $msg_givre3 ='│ Info supplémentaire : Point de givre fixé est : ' .$frost_point .' °C';
+            $msg_givre2 ='Info supplémentaire : Il fait trop chaud pas de calcul de l\'alerte givre (' .$temperature .' °C > 5 °C)';
+            $msg_givre3 ='Info supplémentaire : Point de givre fixé est : ' .$frost_point .' °C';
         };
         return array ($td_num, $td, $alert_2, $frost_point,$msg_givre2 ,$msg_givre3);
     }
