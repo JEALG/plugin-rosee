@@ -26,7 +26,7 @@ class rosee extends eqLogic {
     public static function cron5($_eqlogic_id = null) {
         foreach (eqLogic::byType('rosee') as $rosee) {
             if ($rosee->getIsEnable()) {
-                log::add('rosee', 'debug', '================= CRON 5 ==================');
+                log::add(__CLASS__,'debug','================= CRON 5 ==================');
                 $rosee->getInformations();
             }
         }
@@ -35,7 +35,7 @@ class rosee extends eqLogic {
     public static function cron10($_eqlogic_id = null) {
         foreach (eqLogic::byType('rosee') as $rosee) {
             if ($rosee->getIsEnable()) {
-                log::add('rosee', 'debug', '================= CRON 10 =================');
+                log::add(__CLASS__,'debug','================= CRON 10 =================');
                 $rosee->getInformations();
             }
         }
@@ -44,7 +44,7 @@ class rosee extends eqLogic {
     public static function cron15($_eqlogic_id = null) {
         foreach (eqLogic::byType('rosee') as $rosee) {
             if ($rosee->getIsEnable()) {
-                log::add('rosee', 'debug', '================= CRON 15 =================');
+                log::add(__CLASS__,'debug','================= CRON 15 =================');
                 $rosee->getInformations();
             }
         }
@@ -53,7 +53,7 @@ class rosee extends eqLogic {
     public static function cron30() {
         foreach (eqLogic::byType('rosee') as $rosee) {
             if ($rosee->getIsEnable()) {
-                log::add('rosee', 'debug', '================= CRON 30 =================');
+                log::add(__CLASS__,'debug','================= CRON 30 =================');
                 $rosee->getInformations();
             }
         }
@@ -67,7 +67,7 @@ class rosee extends eqLogic {
         }
         foreach (eqLogic::byType('rosee') as $rosee) {
             if ($rosee->getIsEnable()) {
-                log::add('rosee', 'debug', '================= CRON HEURE =================');
+                log::add(__CLASS__,'debug','================= CRON HEURE =================');
                 $rosee->getInformations();
             }
         }
@@ -109,7 +109,7 @@ class rosee extends eqLogic {
     public function refresh() {
         foreach ($this->getCmd() as $cmd) {
             $s = print_r($cmd, 1);
-            log::add('rosee', 'debug', 'refresh  cmd: '.$s);
+            log::add(__CLASS__,'debug','refresh  cmd: '.$s);
             $cmd->execute();
         }
     }
@@ -128,7 +128,7 @@ class rosee extends eqLogic {
 
     public function postSave(){
         $_eqName = $this->getName();
-        log::add('rosee', 'debug', 'postSave() =>'.$_eqName);
+        log::add(__CLASS__,'debug','postSave() =>'.$_eqName);
         $order = 1;
 
         /*  ********************** Calcul *************************** */
@@ -324,7 +324,7 @@ class rosee extends eqLogic {
 
         if ($this->getConfiguration('type_calcul') == '') {
             throw new Exception(__('Le champ "Calcul" ne peut être vide',__FILE__));
-            log::add('rosee', 'error', '│ Configuration : Méthode de Calcul inexistant : ' . $this->getConfiguration('type_calcul'));
+            log::add(__CLASS__,'error','│ Configuration : Méthode de Calcul inexistant : ' . $this->getConfiguration('type_calcul'));
         }
     }
 
@@ -355,26 +355,26 @@ class rosee extends eqLogic {
         if (!$this->getIsEnable()) return;
 
         $_eqName = $this->getName();
-        log::add('rosee', 'debug', '┌───────── CONFIGURATION EQUIPEMENT : '.$_eqName );
+        log::add(__CLASS__,'debug','┌───────── CONFIGURATION EQUIPEMENT : '.$_eqName );
 
         /*  ********************** Calcul *************************** */
         $calcul=$this->getConfiguration('type_calcul');
         if ($calcul== '') {
             throw new Exception(__('Le champ "Calcul" ne peut être vide',__FILE__));
-            log::add('rosee', 'error', '│ Configuration : Méthode de Calcul inexistant : ' . $this->getConfiguration('type_calcul'));
+            log::add(__CLASS__,'error','│ Configuration : Méthode de Calcul inexistant : ' . $this->getConfiguration('type_calcul'));
         }
-        log::add('rosee', 'debug', '│ Méthode de calcul : ' . $calcul);
+        log::add(__CLASS__,'debug','│ Méthode de calcul : ' . $calcul);
 
         /*  ********************** TEMPERATURE *************************** */
         $idvirt = str_replace("#","",$this->getConfiguration('temperature'));
         $cmdvirt = cmd::byId($idvirt);
         if (is_object($cmdvirt)) {
             $temperature = $cmdvirt->execCmd();
-            log::add('rosee', 'debug', '│ Température : ' . $temperature.' °C');
+            log::add(__CLASS__,'debug','│ Température : ' . $temperature.' °C');
         } else {
             if ($calcul != 'tendance') {
                 throw new Exception(__('Le champ "Température" ne peut être vide',__FILE__));
-                log::add('rosee', 'error', '│ Configuration : Température inexistante : ' . $this->getConfiguration('temperature'));
+                log::add(__CLASS__,'error','│ Configuration : Température inexistante : ' . $this->getConfiguration('temperature'));
             }
         }
 
@@ -383,11 +383,11 @@ class rosee extends eqLogic {
             $OffsetT=$this->getConfiguration('OffsetT');
             if ($OffsetT== '') {
                 $OffsetT=0;
-                log::add('rosee', 'debug', '│ Aucun Offset Température : ' . $OffsetT.'');
+                log::add(__CLASS__,'debug','│ Aucun Offset Température : ' . $OffsetT.'');
             } else {
-                log::add('rosee', 'debug', '│ Offset Température : ' . $OffsetT.'');
+                log::add(__CLASS__,'debug','│ Offset Température : ' . $OffsetT.'');
                 $temperature = $temperature + $OffsetT;
-                log::add('rosee', 'debug', '│ Température avec Offset : ' .$temperature.' °C');
+                log::add(__CLASS__,'debug','│ Température avec Offset : ' .$temperature.' °C');
             }
         }
 
@@ -395,16 +395,16 @@ class rosee extends eqLogic {
         $pressure = $this->getConfiguration('pression');
         if ($pressure == '' && $calcul !='tendance') {//valeur par défaut de la pression atmosphérique : 1013.25 hPa
             $pressure=1013.25;
-            log::add('rosee', 'debug', '│ Pression Atmosphérique aucun équipement sélectionné, valeur par défaut : '. $pressure. ' hPa');
+            log::add(__CLASS__,'debug','│ Pression Atmosphérique aucun équipement sélectionné, valeur par défaut : '. $pressure. ' hPa');
         } else {
             $pressureID = str_replace("#","",$this->getConfiguration('pression'));
             $cmdvirt = cmd::byId($pressureID);
             if (is_object($cmdvirt)) {
                 $pressure = $cmdvirt->execCmd();
-                log::add('rosee', 'debug', '│ Pression Atmosphérique : ' . $pressure.' hPa');
+                log::add(__CLASS__,'debug','│ Pression Atmosphérique : ' . $pressure.' hPa');
             } else {
                 throw new Exception(__('Le champ "Pression Atmosphérique" ne peut être vide',__FILE__));
-                log::add('rosee', 'error', '│ Configuration : Pression Atmosphérique inexistante : ' . $this->getConfiguration('pression'));
+                log::add(__CLASS__,'error','│ Configuration : Pression Atmosphérique inexistante : ' . $this->getConfiguration('pression'));
             }
         }
 
@@ -413,11 +413,11 @@ class rosee extends eqLogic {
         $cmdvirt = cmd::byId($idvirt);
         if (is_object($cmdvirt)) {
             $humidity = $cmdvirt->execCmd();
-            log::add('rosee', 'debug', '│ Humidité Relative : ' . $humidity.' %');
+            log::add(__CLASS__,'debug','│ Humidité Relative : ' . $humidity.' %');
         } else {
             if ($calcul != 'tendance') {
                 throw new Exception(__('Le champ "Humidité Relative" ne peut être vide',__FILE__));
-                log::add('rosee', 'error', '│ Configuration : Humidité Relative  inexistante : ' . $this->getConfiguration('humidite'));
+                log::add(__CLASS__,'error','│ Configuration : Humidité Relative  inexistante : ' . $this->getConfiguration('humidite'));
             }
         }
 
@@ -427,9 +427,9 @@ class rosee extends eqLogic {
             $dpr=$this->getConfiguration('DPR');
             if ($dpr == '') {
                 $dpr=2.0;
-                log::add('rosee', 'debug', '│ Seuil DPR : Aucune valeur de saisie => Valeur par défaut : '. $dpr.' °C');
+                log::add(__CLASS__,'debug','│ Seuil DPR : Aucune valeur de saisie => Valeur par défaut : '. $dpr.' °C');
             } else {
-                log::add('rosee', 'debug', '│ Seuil DPR : ' . $dpr.' °C');
+                log::add(__CLASS__,'debug','│ Seuil DPR : ' . $dpr.' °C');
             }
         }
 
@@ -438,33 +438,33 @@ class rosee extends eqLogic {
             $SHA=$this->getConfiguration('SHA');
             if ($SHA == '') {
                 $SHA=2.8;
-                log::add('rosee', 'debug', '│ Seuil d\'Humidité Absolue : Aucune valeur de saisie => Valeur par défaut : ' . $SHA.'');
+                log::add(__CLASS__,'debug','│ Seuil d\'Humidité Absolue : Aucune valeur de saisie => Valeur par défaut : ' . $SHA.'');
             } else {
-                log::add('rosee', 'debug', '│ Seuil d\'Humidité Absolue : ' . $SHA.'');
+                log::add(__CLASS__,'debug','│ Seuil d\'Humidité Absolue : ' . $SHA.'');
             }
         }
-        log::add('rosee', 'debug', '└─────────');
+        log::add(__CLASS__,'debug','└─────────');
 
         /*  ********************** Conversion (si Besoin) *************************** */
 
         /*  ********************** Calcul de l'humidité absolue *************************** */
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
-            log::add('rosee', 'debug', '┌───────── CALCUL DE L\'HUMIDITE ABSOLUE : '.$_eqName);
+            log::add(__CLASS__,'debug','┌───────── CALCUL DE L\'HUMIDITE ABSOLUE : '.$_eqName);
             $humidityabs_m3 = rosee::getHumidity($temperature, $humidity,$pressure);
-            log::add('rosee', 'debug', '│ Humidité Absolue : ' . $humidityabs_m3.' g/m3');
-            log::add('rosee', 'debug', '└─────────');
+            log::add(__CLASS__,'debug','│ Humidité Absolue : ' . $humidityabs_m3.' g/m3');
+            log::add(__CLASS__,'debug','└─────────');
         }
 
         /*  ********************** Calcul de la tendance *************************** */
         if ($calcul=='tendance') {
-            log::add('rosee', 'debug', '┌───────── CALCUL DE LA TENDANCE : '.$_eqName);
+            log::add(__CLASS__,'debug','┌───────── CALCUL DE LA TENDANCE : '.$_eqName);
             $va_result_T = rosee::getTendance($pressureID);
             // Partage des données du tableau
             $td_num = $va_result_T [0];
             $td = $va_result_T [1];
             //log::add('rosee', 'debug' , '│ Tendance : ' . $td . '' );
             //log::add('rosee', 'debug' , '│ Tendance numérique : ' . $td_num . '');
-            log::add('rosee', 'debug' , '└─────────');
+            log::add(__CLASS__,'debug','└─────────');
         }
 
         /*  ********************** Calcul du Point de rosée *************************** */
@@ -478,17 +478,17 @@ class rosee extends eqLogic {
             $rosee = $va_result_R [2];
 
             if ($calcul=='rosee_givre'|| $calcul=='rosee') {
-                log::add('rosee', 'debug', '│ Etat alerte rosée : ' . $alert_1);
-                log::add('rosee', 'debug', '│ Point de Rosée : ' . $rosee_point .' °C');
+                log::add(__CLASS__,'debug','│ Etat alerte rosée : ' . $alert_1);
+                log::add(__CLASS__,'debug','│ Point de Rosée : ' . $rosee_point .' °C');
             } else {
-                log::add('rosee', 'debug', '│ Pas de mise à jour du point de  l\'alerte rosée car le calcul est désactivé');
+                log::add(__CLASS__,'debug','│ Pas de mise à jour du point de  l\'alerte rosée car le calcul est désactivé');
             }
-            log::add('rosee', 'debug', '└─────────');
+            log::add(__CLASS__,'debug','└─────────');
         }
 
         /*  ********************** Calcul du Point de givrage *************************** */
         if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
-            log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE GIVRAGE : '.$_eqName);
+            log::add(__CLASS__,'debug','┌───────── CALCUL DU POINT DE GIVRAGE : '.$_eqName);
             $va_result_G = rosee::getGivre($temperature, $SHA, $humidityabs_m3, $rosee);
             // Partage des données du tableau
             $td_num = $va_result_G [0];
@@ -498,27 +498,27 @@ class rosee extends eqLogic {
             $msg_givre2 = $va_result_G [4];
             $msg_givre3 = $va_result_G [5];
 
-            log::add('rosee', 'debug', '│ Cas Actuel N°' .$td_num );
-            log::add('rosee', 'debug', '│ Alerte givre : ' .$alert_2);
-            log::add('rosee', 'debug', '│ Message : ' .$td );
-            log::add('rosee', 'debug', '│ Point de Givrage : ' . $frost_point.' °C');
+            log::add(__CLASS__,'debug','│ Cas Actuel N°' .$td_num );
+            log::add(__CLASS__,'debug','│ Alerte givre : ' .$alert_2);
+            log::add(__CLASS__,'debug','│ Message : ' .$td );
+            log::add(__CLASS__,'debug','│ Point de Givrage : ' . $frost_point.' °C');
             if ($msg_givre2 != '' && $msg_givre3 != ''){
-                log::add('rosee', 'debug', $msg_givre2 );
-                log::add('rosee', 'debug', $msg_givre3 );
+                log::add(__CLASS__,'debug','│ '.$msg_givre2 );
+                log::add(__CLASS__,'debug','│ '.$msg_givre3 );
             };
             if ($alert_2 == 1 && $alert_1 == 1) {
                 $alert_1 = 0;
-                log::add('rosee', 'debug', '│ Annulation alerte rosée : ' .$alert_1 );
+                log::add(__CLASS__,'debug','│ Annulation alerte rosée : ' .$alert_1 );
             };
-            log::add('rosee', 'debug', '└───────');
+            log::add(__CLASS__,'debug','└───────');
         } else {
             $alert_2 = 0;
             $frost_point = 5;
-            //log::add('rosee', 'debug', '│ Pas de calcul du point de givrage et de l\'alerte');
+
         };
 
         /*  ********************** Mise à Jour des équipements *************************** */
-        log::add('rosee', 'debug', '┌───────── MISE A JOUR : '.$_eqName);
+        log::add(__CLASS__,'debug','┌───────── MISE A JOUR : '.$_eqName);
 
         if ($calcul=='rosee_givre'|| $calcul=='givre' || $calcul=='humidityabs') {
             $cmd = $this->getCmd('info', 'humidityabs');//Mise à jour de l'équipement Humidité absolue
@@ -526,9 +526,9 @@ class rosee extends eqLogic {
                 $cmd->setConfiguration('value', $humidityabs_m3);
                 $cmd->save();
                 $cmd->event($humidityabs_m3);
-                log::add('rosee', 'debug', '│ ┌───────── HUMIDITE ABSOLUE');
-                log::add('rosee', 'debug', '│ │ Humidité Absolue : ' . $humidityabs_m3.' g/m3');
-                log::add('rosee', 'debug', '│ └─────────');
+                log::add(__CLASS__,'debug','│ ┌───────── HUMIDITE ABSOLUE');
+                log::add(__CLASS__,'debug','│ │ Humidité Absolue : ' . $humidityabs_m3.' g/m3');
+                log::add(__CLASS__,'debug','│ └─────────');
             };
         };
 
@@ -539,8 +539,8 @@ class rosee extends eqLogic {
                 $cmd->save();
                 $cmd->setCollectDate('');
                 $cmd->event($alert_1);
-                log::add('rosee', 'debug', '│ ┌───────── ROSEE');
-                log::add('rosee', 'debug', '│ │ Etat Alerte Rosée : ' . $alert_1);
+                log::add(__CLASS__,'debug','│ ┌───────── ROSEE');
+                log::add(__CLASS__,'debug','│ │ Etat Alerte Rosée : ' . $alert_1);
             };
         };
 
@@ -551,11 +551,11 @@ class rosee extends eqLogic {
                 $cmd->save();
                 $cmd->event($rosee_point);
                 if ( $calcul=='givre') {
-                    log::add('rosee', 'debug', '│ ┌───────── ROSEE');
+                    log::add(__CLASS__,'debug','│ ┌───────── ROSEE');
                 };
-                log::add('rosee', 'debug', '│ │ Point de Rosée : ' . $rosee_point.' °C');
+                log::add(__CLASS__,'debug','│ │ Point de Rosée : ' . $rosee_point.' °C');
             };
-            log::add('rosee', 'debug', '│ └─────────');
+            log::add(__CLASS__,'debug','│ └─────────');
         };
 
         if ($calcul=='rosee_givre'|| $calcul=='givre' ) {
@@ -565,8 +565,8 @@ class rosee extends eqLogic {
                 $cmd->save();
                 $cmd->setCollectDate('');
                 $cmd->event($alert_2);
-                log::add('rosee', 'debug', '│ ┌───────── GIVRE');
-                log::add('rosee', 'debug', '│ │ Etat Alerte Givre : ' . $alert_2);
+                log::add(__CLASS__,'debug','│ ┌───────── GIVRE');
+                log::add(__CLASS__,'debug','│ │ Etat Alerte Givre : ' . $alert_2);
             };
 
             $cmd = $this->getCmd('info', 'givrage');//Mise à jour de l'équipement Givrage
@@ -574,14 +574,14 @@ class rosee extends eqLogic {
                 $cmd->setConfiguration('value', $frost_point);
                 $cmd->save();
                 $cmd->event($frost_point);
-                log::add('rosee', 'debug', '│ │ Point de givrage : ' . $frost_point.' °C');
+                log::add(__CLASS__,'debug','│ │ Point de givrage : ' . $frost_point.' °C');
             }
         }
 
         if ($calcul=='tendance') {
             $start_log_td =' │ Tendance : ';
             $start_log_td_num =' │ Tendance numérique : ';
-            log::add('rosee', 'debug', '│ ┌───────── MESSAGE');
+            log::add(__CLASS__,'debug','│ ┌───────── MESSAGE');
         }else{
             $start_log_td =' │ Message Alerte givre : ';
             $start_log_td_num =' │ Message Alerte givre numérique : ';
@@ -594,7 +594,7 @@ class rosee extends eqLogic {
                 $cmd->save();
                 $cmd->setCollectDate('');
                 $cmd->event($td);
-                log::add('rosee', 'debug', '│'.$start_log_td . $td);
+                log::add(__CLASS__,'debug','│'.$start_log_td . $td);
             }
 
             $cmd = $this->getCmd('info', 'td_num'); //Mise à jour de l'équipement message
@@ -603,36 +603,31 @@ class rosee extends eqLogic {
                 $cmd->save();
                 $cmd->setCollectDate('');
                 $cmd->event($td_num);
-                log::add('rosee', 'debug', '│'.$start_log_td_num . $td_num);
+                log::add(__CLASS__,'debug','│'.$start_log_td_num . $td_num);
             };
-            log::add('rosee', 'debug','│ └─────────');
+            log::add(__CLASS__,'debug','│ └─────────');
         } else{
-            // $cmd = $this->getCmd('info', 'alert_2');
-            //if (is_object($cmd)) {
-            //  $cmd->setConfiguration('value', $alert_2);
-            //$cmd->remove();
-            //$cmd->save();
-            // };
+
         };
 
-        log::add('rosee', 'debug', '└─────────');
-        log::add('rosee', 'debug', '================ FIN CRON =================');
+        log::add(__CLASS__,'debug','└─────────');
+        log::add(__CLASS__,'debug','================ FIN CRON =================');
         return;
     }
     /*  ********************** Calcul de l'humidité absolue *************************** */
     public function getHumidity($temperature, $humidity, $pressure) {
         $terme_pvs1 = 2.7877 + (7.625 * $temperature) / (241.6 + $temperature);
-        log::add('rosee', 'debug', '│ terme_pvs1 : ' . $terme_pvs1);
+        log::add(__CLASS__,'debug','│ terme_pvs1 : ' . $terme_pvs1);
         $pvs = pow(10,$terme_pvs1);
-        log::add('rosee', 'debug', '│ Pression de saturation de la vapeur d\'eau (pvs) : ' . $pvs);
+        log::add(__CLASS__,'debug','│ Pression de saturation de la vapeur d\'eau (pvs) : ' . $pvs);
         $pv = ($humidity * $pvs) / 100.0;
-        log::add('rosee', 'debug', '│ Pression partielle de vapeur d\'eau (pv) : ' . $pv);
+        log::add(__CLASS__,'debug','│ Pression partielle de vapeur d\'eau (pv) : ' . $pv);
         $humi_a = 0.622 * ($pv / (($pressure * 100.0) - $pv));
-        log::add('rosee', 'debug', '│ Humidité absolue en kg d\'eau par kg d\'air : ' . $humi_a .' kg');
+        log::add(__CLASS__,'debug','│ Humidité absolue en kg d\'eau par kg d\'air : ' . $humi_a .' kg');
         $v = (461.24 * (0.622 + $humi_a) * ($temperature +273.15)) / ($pressure * 100.0);
-        log::add('rosee', 'debug', '│ Volume specifique (v) : ' . $v .' m3/kg');
+        log::add(__CLASS__,'debug','│ Volume specifique (v) : ' . $v .' m3/kg');
         $p = 1.0 / $v;
-        log::add('rosee', 'debug', '│ Poids spécifique (p) : ' . $p.' m3/kg');
+        log::add(__CLASS__,'debug','│ Poids spécifique (p) : ' . $p.' m3/kg');
         $humidityabs_m3 = 1000.0 * $humi_a * $p;
         $humidityabs_m3 = round(($humidityabs_m3), 1);
         return $humidityabs_m3;
@@ -644,23 +639,23 @@ class rosee extends eqLogic {
         $alpha = 6.112;
         $beta = 17.62;
         $lambda = 243.12;
-        log::add('rosee', 'debug', '│ Paramètres de MAGNUS pour l\'air saturé (entre -45°C et +60°C) : Lambda = ' . $lambda .' °C // alpha = ' . $alpha .' hPa // beta = ' . $beta );
+        log::add(__CLASS__,'debug','│ Paramètres de MAGNUS pour l\'air saturé (entre -45°C et +60°C) : Lambda = ' . $lambda .' °C // alpha = ' . $alpha .' hPa // beta = ' . $beta );
 
         $Terme1 = log($humidity/100);
         $Terme2 = ($beta * $temperature) / ($lambda + $temperature);
-        log::add('rosee', 'debug', '│ Terme1 = ' . $Terme1 .' // Terme2 = ' . $Terme2 );
+        log::add(__CLASS__,'debug','│ Terme1 = ' . $Terme1 .' // Terme2 = ' . $Terme2 );
         $rosee = $lambda * ($Terme1 + $Terme2) / ($beta - $Terme1 - $Terme2);
         $rosee_point = round(($rosee), 1);
         $alert_1 = 0;
 
         /*  ********************** Calcul de l'alerte rosée en fonction du seuil d'alerte *************************** */
         $frost_alert_rosee = $temperature - $rosee_point;
-        log::add('rosee', 'debug', '│ Calcul point de rosée : (Température - point de Rosée) : (' .$temperature .' - '.$rosee_point .' )= ' . $frost_alert_rosee .' °C');
+        log::add(__CLASS__,'debug','│ Calcul point de rosée : (Température - point de Rosée) : (' .$temperature .' - '.$rosee_point .' )= ' . $frost_alert_rosee .' °C');
         if ($frost_alert_rosee <= $dpr) {
             $alert_1 = 1;
-            log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' <= ' .$dpr .') = Alerte active');
+            log::add(__CLASS__,'debug','│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' <= ' .$dpr .') = Alerte active');
         } else {
-            log::add('rosee', 'debug', '│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' > ' .$dpr .') = Alerte désactivée');
+            log::add(__CLASS__,'debug','│ Résultat : Calcul Alerte point de rosée = (' .$frost_alert_rosee .' > ' .$dpr .') = Alerte désactivée');
         }
 
         return array($rosee_point, $alert_1,$rosee);
@@ -678,7 +673,7 @@ class rosee extends eqLogic {
             $frost_K = $frost_K - 13.3448;
             $frost_K = 2671.02 / $frost_K;
             $frost_K = $frost_K + ($rosee + 273.15) - ($temperature + 273.15);
-            log::add('rosee', 'debug', '│ Point de givrage : ' . $frost_K.' K');
+            log::add(__CLASS__,'debug','│ Point de givrage : ' . $frost_K.' K');
             $frost = $frost_K -273.15;
             $frost_point = round(($frost), 1);
 
@@ -716,31 +711,31 @@ class rosee extends eqLogic {
         $_date2 = new DateTime("$endDate");
         $startDate = $_date1 -> modify('-15 minute');
         $startDate = $_date1 -> format('Y-m-d H:i:s');
-        log::add('rosee', 'debug', '│ │ Start Date : ' .$startDate );
-        log::add('rosee', 'debug', '│ │ End Date : ' .$endDate );
+        log::add(__CLASS__,'debug','│ │ Start Date : ' .$startDate );
+        log::add(__CLASS__,'debug','│ │ End Date : ' .$endDate );
 
         // dernière mesure barométrique
         $h1 = $histo->lastBetween($pressureID, $startDate, $endDate);
-        log::add('rosee', 'debug', '│ │ Pression Atmosphérique : ' .$h1 . ' hPa' );
-        log::add('rosee', 'debug', '│ └───────');
+        log::add(__CLASS__,'debug','│ │ Pression Atmosphérique : ' .$h1 . ' hPa' );
+        log::add(__CLASS__,'debug','│ └───────');
 
         // calcul du timestamp - 2h
-        log::add('rosee', 'debug', '│ ┌─────── Timestamp -2h');
+        log::add(__CLASS__,'debug','│ ┌─────── Timestamp -2h');
         $endDate = $_date2 -> modify('-2 hour');
         $endDate = $_date2 -> format('Y-m-d H:i:s');
         $startDate = $_date1 -> modify('-2 hour');
         $startDate = $_date1 -> format('Y-m-d H:i:s');
-        log::add('rosee', 'debug', '│ │ Start Date : ' .$startDate );
-        log::add('rosee', 'debug', '│ │ End Date : ' .$endDate );
+        log::add(__CLASS__,'debug','│ │ Start Date : ' .$startDate );
+        log::add(__CLASS__,'debug','│ │ End Date : ' .$endDate );
 
         // mesure barométrique -2h
         $h2 = $histo->lastBetween($pressureID, $startDate, $endDate);
-        log::add('rosee', 'debug', '│ │ Pression Atmosphérique : ' .$h2 . ' hPa' );
+        log::add(__CLASS__,'debug','│ │ Pression Atmosphérique : ' .$h2 . ' hPa' );
 
         // calculs de tendance 15min/2h
         $td2h = ($h1 - $h2) / 2;
-        log::add('rosee', 'debug', '│ │ Tendance : ' . $td2h . ' hPa/h' );
-        log::add('rosee', 'debug', '│ └───────');
+        log::add(__CLASS__,'debug','│ │ Tendance : ' . $td2h . ' hPa/h' );
+        log::add(__CLASS__,'debug','│ └───────');
 
         // calcul du timestamp - 4h
         log::add('rosee', 'debug', '│ ┌─────── Timestamp -4h');
@@ -748,8 +743,8 @@ class rosee extends eqLogic {
         $endDate = $_date2 -> format('Y-m-d H:i:s');
         $startDate = $_date1 -> modify('-2 hour');
         $startDate = $_date1 -> format('Y-m-d H:i:s');
-        log::add('rosee', 'debug', '│ │ Start Date : ' .$startDate );
-        log::add('rosee', 'debug', '│ │ End Date : ' .$endDate );
+        log::add(__CLASS__,'debug','│ │ Start Date : ' .$startDate );
+        log::add(__CLASS__,'debug','│ │ End Date : ' .$endDate );
 
         // mesure barométrique -4h
         $h4 = $histo->lastBetween($pressureID, $startDate, $endDate);
@@ -757,19 +752,19 @@ class rosee extends eqLogic {
 
         // calculs de tendance 2h/4h
         $td4h = ($h1 - $h4) / 4;
-        log::add('rosee', 'debug', '│ │ Tendance : ' . $td4h . ' hPa/h' );
-        log::add('rosee', 'debug', '│ └───────');
+        log::add(__CLASS__,'debug','│ │ Tendance : ' . $td4h . ' hPa/h' );
+        log::add(__CLASS__,'debug','│ └───────');
 
 
         // calculs de tendance
-        log::add('rosee', 'debug', '│ ┌───────── Calcul Tendance Moyenne');
+        log::add(__CLASS__,'debug','│ ┌───────── Calcul Tendance Moyenne');
         // sources : http://www.freescale.com/files/sensors/doc/app_note/AN3914.pdf
         // et : https://www.parallax.com/sites/default/files/downloads/29124-Altimeter-Application-Note-501.pdf
 
         // moyennation de la tendance à -2h (50%) et -4h (50%)
         $td_moy = (0.5 * $td2h + 0.5 * $td4h);
         $dPdT = number_format($td_moy, 3, '.', '');
-        log::add('rosee', 'debug', '│ │ Tendance Moyenne (dPdT): ' . $dPdT . ' hPa/h' );
+        log::add(__CLASS__,'debug','│ │ Tendance Moyenne (dPdT): ' . $dPdT . ' hPa/h' );
 
         if ($td_moy > 2.5) { // Quickly rising High Pressure System, not stable
             $td = 'Forte embellie, instable';
@@ -790,7 +785,7 @@ class rosee extends eqLogic {
             $td='Forte dégradation, instable';
             $td_num=0;
         };
-        log::add('rosee', 'debug', '│ └─────────');
+        log::add(__CLASS__,'debug','│ └─────────');
         return array ($td_num, $td);
     }
 }
