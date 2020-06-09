@@ -233,6 +233,6 @@ function addCmdToTable(_cmd) {
 		if (isset(_cmd.type)) {
 			$('#table_infos tbody tr:last .cmdAttr[data-l1key=type]').value(init(_cmd.type));
 		}
-		jeedom.cmd.changeType($('#table_infos tbody tr:last'), init(_cmd.subType));
+		jeedom.cmd.changeType($('#table_cmd tbody tr:last'), init(_cmd.subType));
 	}
 }
