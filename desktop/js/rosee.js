@@ -183,8 +183,6 @@ function addCmdToTable(_cmd) {
 		return;
 	}
 
-	if (init(_cmd.type) == 'info') {
-		var disabled = (init(_cmd.configuration.virtualAction) == '1') ? 'readonly' : '';
 		var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
 		tr += '<td>';
 		tr += '<span class="cmdAttr" data-l1key="id"></span>';
@@ -203,7 +201,7 @@ function addCmdToTable(_cmd) {
 		tr += '</div>';
 		tr += '</td>';
 		tr += '<td>';
-		tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="value" ' + disabled + ' readonly=true>';
+		tr += '<input class="cmdAttr form-control input-sm disable" data-l1key="configuration" data-l2key="value" ' + ' readonly=true>';
 		tr += '</td>';
 		if (_cmd.subType == "numeric") {
 			tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="unite" style="width : 90px;" placeholder="{{Unité}}"></td>';
@@ -234,5 +232,5 @@ function addCmdToTable(_cmd) {
 			$('#table_cmd tbody tr:last .cmdAttr[data-l1key=type]').value(init(_cmd.type));
 		}
 		jeedom.cmd.changeType($('#table_cmd tbody tr:last'), init(_cmd.subType));
-	}
+
 }
