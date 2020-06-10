@@ -615,7 +615,7 @@ class rosee extends eqLogic {
         return;
     }
     /*  ********************** Calcul de l'humidité absolue *************************** */
-    public function getHumidity($temperature, $humidity, $pressure) {
+    public static function getHumidity($temperature, $humidity, $pressure) {
         $terme_pvs1 = 2.7877 + (7.625 * $temperature) / (241.6 + $temperature);
         log::add(__CLASS__,'debug','│ terme_pvs1 : ' . $terme_pvs1);
         $pvs = pow(10,$terme_pvs1);
@@ -634,7 +634,7 @@ class rosee extends eqLogic {
     }
 
     /*  ********************** Calcul du Point de rosée *************************** */
-    public function getRosee($temperature, $humidity, $dpr) {
+    public static function getRosee($temperature, $humidity, $dpr) {
         /* Paramètres de MAGNUS pour l'air saturé (entre -45°C et +60°C) : */
         $alpha = 6.112;
         $beta = 17.62;
@@ -661,7 +661,7 @@ class rosee extends eqLogic {
         return array($rosee_point, $alert_1,$rosee);
     }
     /*  ********************** Calcul du Point de givrage *************************** */
-    public function getGivre($temperature, $SHA, $humidityabs_m3, $rosee) {
+    public static function getGivre($temperature, $SHA, $humidityabs_m3, $rosee) {
         $td = 'Aucun risque de Givre';
         $td_num = 0;
         $alert_2  = 0;
@@ -701,7 +701,7 @@ class rosee extends eqLogic {
         return array ($td_num, $td, $alert_2, $frost_point,$msg_givre2 ,$msg_givre3);
     }
     /*  ********************** Calcul de la tendance *************************** */
-    public function getTendance($pressureID) {
+    public static function getTendance($pressureID) {
         $histo = new scenarioExpression();
         $endDate = $histo -> collectDate($pressureID);
 
