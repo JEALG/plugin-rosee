@@ -46,10 +46,6 @@ $('#bt_selectPresCmd').on('click', function () {
 	});
 });
 
-$('#table_cmd tbody').delegate('tr .remove', 'click', function (event) {
-	$(this).closest('tr').remove();
-});
-
 $('.eqLogicAttr[data-l1key=configuration][data-l2key=type_calcul]').on('change', function () {
 	if ($(this).value() == 'tendance') {
 		$('#img_device').attr("src", 'plugins/rosee/core/config/img/' + $(this).value() + '.png');
