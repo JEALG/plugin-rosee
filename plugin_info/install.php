@@ -113,4 +113,3 @@ function rosee_remove() {
         $cron->remove();
     }
 }
-?>
