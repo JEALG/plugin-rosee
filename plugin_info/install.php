@@ -85,7 +85,7 @@ function rosee_update()
         }
     } catch (Exception $e) {
         $e = print_r($e, 1);
-        log::add('rosee', 'error', 'rosee_update ERROR: ' . $e);
+        log::add('rosee', 'error', 'rosee update ERROR : ' . $e);
     }
 
     //message::add('Plugin Rosée - Givre - Tendance', 'Merci pour la mise à jour de ce plugin, consultez le changelog.');
