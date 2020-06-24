@@ -1,6 +1,6 @@
 <?php
 if (!isConnect('admin')) {
-	throw new Exception('{{401 - Accès non autorisé}}');
+    throw new Exception('{{401 - Accès non autorisé}}');
 }
 $plugin = plugin::byId('rosee'); // Obtenir l'identifiant du plugin
 sendVarToJS('eqType', $plugin->getId());
@@ -20,14 +20,19 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 <span>{{Configuration}}</span>
             </div>
         </div>
-        <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
+        <div class="input-group" style="margin:5px;">
+            <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
+            <div class="input-group-btn">
+                <a id="bt_resetSearch" class="btn" style="width:30px"><i class="fas fa-times"></i> </a>
+            </div>
+        </div>
         <legend><i class="fas fa-umbrella"></i> <i class="icon jeedomapp-weather"></i> {{Mes Points de Rosée, de Givre}}</legend>
         <div class="eqLogicThumbnailContainer">
             <?php
-			foreach ($eqLogics as $eqLogic) {
-				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-                if ($eqLogic->getConfiguration('type_calcul') != 'tendance'){
-                    echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '" >';
+            foreach ($eqLogics as $eqLogic) {
+                $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+                if ($eqLogic->getConfiguration('type_calcul') != 'tendance') {
+                    echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
                     if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
                         echo '<img src="' . $eqLogic->getImage() . '"/>';
                     } else {
@@ -37,16 +42,16 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
                     echo '</div>';
                 }
-			}
-			?>
+            }
+            ?>
         </div>
         <legend><i class="fas fa-chart-bar"></i> {{Mes Tendances}}</legend>
         <div class="eqLogicThumbnailContainer">
             <?php
-			foreach ($eqLogics as $eqLogic) {
+            foreach ($eqLogics as $eqLogic) {
                 $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-                if ($eqLogic->getConfiguration('type_calcul') == 'tendance'){
-                    echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '" >';
+                if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
+                    echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
                     if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
                         echo '<img src="' . $eqLogic->getImage() . '"/>';
                     } else {
@@ -56,8 +61,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
                     echo '</div>';
                 }
-			}
-			?>
+            }
+            ?>
         </div>
     </div>
 
@@ -92,10 +97,10 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
                                     <option value="">{{Aucun}}</option>
                                     <?php
-									foreach (jeeObject::all() as $object) {
+                                    foreach (jeeObject::all() as $object) {
                                         echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
-									}
-									?>
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
@@ -103,12 +108,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <label class="col-sm-2 control-label">{{Catégorie}}</label>
                             <div class="col-sm-10">
                                 <?php
-									foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
-										echo '<label class="checkbox-inline">';
-										echo '<input type="checkbox" class="eqLogicAttr" data-l1key="category" data-l2key="' . $key . '" />' . $value['name'];
-										echo '</label>';
-									}
-								?>
+                                foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
+                                    echo '<label class="checkbox-inline">';
+                                    echo '<input type="checkbox" class="eqLogicAttr" data-l1key="category" data-l2key="' . $key . '" />' . $value['name'];
+                                    echo '</label>';
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="form-group">
@@ -244,6 +249,6 @@ $eqLogics = eqLogic::byType($plugin->getId());
 </div>
 
 <?php
-	include_file('desktop', 'rosee', 'js', 'rosee');
-	include_file('core', 'plugin.template', 'js');
+include_file('desktop', 'rosee', 'js', 'rosee');
+include_file('core', 'plugin.template', 'js');
 ?>

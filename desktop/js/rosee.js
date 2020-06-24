@@ -23,7 +23,10 @@ $('#bt_selectTempCmd').on('click', function () {
 		$('.eqLogicAttr[data-l2key=temperature]').atCaret('insert', result.human);
 	});
 });
-
+$('#bt_resetSearch').off('click').on('click', function () {
+	$('#in_searchEqlogic').val('')
+	$('#in_searchEqlogic').keyup();
+})
 $('#bt_selectHumiCmd').on('click', function () {
 	jeedom.cmd.getSelectModal({
 		cmd: {
