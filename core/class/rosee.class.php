@@ -367,7 +367,7 @@ class rosee extends eqLogic
         if (!$this->getIsEnable()) return;
 
         $_eqName = $this->getName();
-        log::add(__CLASS__, 'debug', '┌───────── CONFIGURATION EQUIPEMENT : ' . $_eqName . '/' . $_eqNameID);
+        log::add(__CLASS__, 'debug', '┌───────── CONFIGURATION EQUIPEMENT : ' . $_eqName);
 
         /*  ********************** Calcul *************************** */
         $calcul = $this->getConfiguration('type_calcul');
