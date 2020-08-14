@@ -29,9 +29,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
         <legend><i class="fas fa-umbrella"></i> <i class="icon jeedomapp-weather"></i> {{Mes Points de Rosée, de Givre}}</legend>
         <div class="eqLogicThumbnailContainer">
             <?php
+            $status_r = 0;
             foreach ($eqLogics as $eqLogic) {
                 $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
                 if ($eqLogic->getConfiguration('type_calcul') != 'tendance') {
+                    $status_r = 1;
                     echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
                     if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
                         echo '<img src="' . $eqLogic->getImage() . '"/>';
@@ -43,14 +45,21 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     echo '</div>';
                 }
             }
+            if ($status_r == 1) {
+                //echo '</div>';
+            } else {
+                echo "<br/><br/><br/><center><span style='color:#767676;font-size:1em;font-weight: bold;margin-left: 10px'>{{Aucun équipement de type Points de Rosée ou de Givre a été créé.}}</span></center>";
+            }
             ?>
         </div>
         <legend><i class="fas fa-chart-bar"></i> {{Mes Tendances}}</legend>
         <div class="eqLogicThumbnailContainer">
             <?php
+            $status = 0;
             foreach ($eqLogics as $eqLogic) {
                 $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
                 if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
+                    $status = 1;
                     echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
                     if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
                         echo '<img src="' . $eqLogic->getImage() . '"/>';
@@ -61,6 +70,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
                     echo '</div>';
                 }
+            }
+            if ($status == 1) {
+                echo '</div>';
+            } else {
+                echo "<br/><br/><br/><center><span style='color:#767676;font-size:1em;font-weight: bold;margin-left: 10px'>{{Aucun équipement de type Tendance a été créé.}}</span></center>";
             }
             ?>
         </div>
