@@ -248,7 +248,6 @@ class rosee extends eqLogic
             $Equipement->AddCommand('Message', 'td', 'info', 'string', $templatecore_V4 . 'multiline', null, 'WEATHER_CONDITION', $td_num_visible, 'null', 'default', 'default', 'default', $order, '0', true, null, null, null, null);
             $order++;
             $Equipement->AddCommand('Message numérique', 'td_num', 'info', 'numeric', 'rosee::tendance', null, 'line', $td_num_visible, 'null', 'default', '0', $td_num_max, $order, '0', true, null, null, null, null);
-            $order++;
         }
     }
 
@@ -449,37 +448,37 @@ class rosee extends eqLogic
             foreach ($Equipement->getCmd('info') as $Command) {
                 if (is_object($Command)) {
                     switch ($Command->getLogicalId()) {
-                        case "alert_1": //Mise à jour de l'équipement Alerte rosée
+                        case "alert_1":
                             log::add(__CLASS__, 'debug', '│ ┌───────── ROSEE : Alerte');
                             log::add(__CLASS__, 'debug', '│ │ Etat Alerte Rosée : ' . $alert_1);
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_1);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
-                        case "alert_2": //Mise à jour de l'équipement Alerte givre
+                        case "alert_2":
                             log::add(__CLASS__, 'debug', '│ ┌───────── GIVRE : Alerte');
                             log::add(__CLASS__, 'debug', '│ │ Etat Alerte Rosée : ' . $alert_2);
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_2);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
-                        case "givrage": //Mise à jour de l'équipement point de rosée
+                        case "givrage":
                             log::add(__CLASS__, 'debug', '│ ┌───────── GIVRE : Point de Givre');
                             log::add(__CLASS__, 'debug', '│ │ Point de givrage : ' . $frost_point . ' °C');
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $frost_point);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
-                        case "humidityabs": //Mise à jour de l'équipement Humidité absolue
+                        case "humidityabs":
                             log::add(__CLASS__, 'debug', '│ ┌───────── HUMIDITE ABSOLUE');
                             log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $humidityabs_m3 . ' g/m3');
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidityabs_m3);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
-                        case "rosee": //Mise à jour de l'équipement point de rosée
+                        case "rosee":
                             log::add(__CLASS__, 'debug', '│ ┌───────── ROSEE : Point de rosée');
                             log::add(__CLASS__, 'debug', '│ │ Point de Rosée : ' . $rosee_point . ' °C');
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $rosee_point);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
-                        case "td": //Mise à jour de l'équipement message
+                        case "td":
                             log::add(__CLASS__, 'debug', '│ ┌───────── MESSAGE : Alerte format texte');
                             if ($calcul == 'tendance') {
                                 $start_log_td = ' │ Tendance : ';
@@ -490,7 +489,7 @@ class rosee extends eqLogic
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
-                        case "td_num": //Mise à jour de l'équipement message numérique
+                        case "td_num":
                             log::add(__CLASS__, 'debug', '│ ┌───────── MESSAGE : Alerte format numérique');
                             if ($calcul == 'tendance') {
                                 $start_log_td = ' │ Tendance numérique : ';
