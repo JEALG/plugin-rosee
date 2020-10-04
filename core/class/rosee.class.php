@@ -84,6 +84,99 @@ class rosee extends eqLogic
     {
         return rosee_Template::getTemplate();
     }
+    public function AddCommand($Name, $_logicalId, $Type = 'info', $SubType = 'binary', $Template = null, $unite = null, $generic_type = null, $IsVisible = 1, $icon, $forceLineB = '0', $valuemin = 'default', $valuemax = 'default', $_order = null, $IsHistorized = '0', $repeatevent = false, $_iconname = null, $_calculValueOffset = null, $_historizeRound = null, $_noiconname = null)
+    {
+
+        $Command = $this->getCmd(null, $_logicalId);
+        if (!is_object($Command)) {
+            log::add(__CLASS__, 'debug', '│ Name : ' . $Name . ' -- Type : ' . $Type . ' -- LogicalID : ' . $_logicalId . ' -- Template Widget / Ligne : ' . $Template . '/' . $forceLineB . '-- Type de générique : ' . $generic_type . ' -- Icône : ' . $icon . ' -- Min/Max : ' . $valuemin . '/' . $valuemax . ' -- Calcul/Arrondi: ' . $_calculValueOffset . '/' . $_historizeRound);
+            $Command = new roseeCmd();
+            $Command->setId(null);
+            $Command->setLogicalId($_logicalId);
+            $Command->setEqLogic_id($this->getId());
+            $Command->setName($Name);
+
+            $Command->setType($Type);
+            $Command->setSubType($SubType);
+
+            if ($Template != null) {
+                $Command->setTemplate('dashboard', $Template);
+                $Command->setTemplate('mobile', $Template);
+            }
+
+            if ($unite != null && $SubType == 'numeric') {
+                $Command->setUnite($unite);
+            }
+
+            $Command->setIsVisible($IsVisible);
+            $Command->setIsHistorized($IsHistorized);
+
+            if ($icon != null) {
+                $Command->setdisplay('icon', '<i class="' . $icon . '"></i>');
+            }
+            if ($forceLineB != null) {
+                $Command->setdisplay('forceReturnLineBefore', 1);
+            }
+            if ($_iconname != null) {
+                $Command->setdisplay('showIconAndNamedashboard', 1);
+            }
+            if ($_noiconname != null) {
+                $Command->setdisplay('showNameOndashboard', 0);
+            }
+
+            if ($_calculValueOffset != null) {
+                $Command->setConfiguration('calculValueOffset', $_calculValueOffset);
+            }
+
+            if ($_historizeRound != null) {
+                $Command->setConfiguration('historizeRound', $_historizeRound);
+            }
+            if ($generic_type != null) {
+                $Command->setGeneric_type($generic_type);
+            }
+
+            if ($repeatevent == true && $Type == 'info') {
+                $Command->setconfiguration('repeatEventManagement', 'never');
+                log::add(__CLASS__, 'debug', '│ No Repeat pour l\'info avec le nom : ' . $Name);
+            }
+            if ($valuemin != 'default') {
+                $Command->setconfiguration('minValue', $valuemin);
+            }
+            if ($valuemax != 'default') {
+                $Command->setconfiguration('maxValue', $valuemax);
+            }
+
+            $Command->save();
+        }
+
+        if ($_order != null) {
+            $Command->setOrder($_order);
+        }
+
+        $Command->save();
+
+        $createRefreshCmd = true;
+        $refresh = $this->getCmd(null, 'refresh');
+        if (!is_object($refresh)) {
+            $refresh = cmd::byEqLogicIdCmdName($this->getId(), __('Rafraichir', __FILE__));
+            if (is_object($refresh)) {
+                $createRefreshCmd = false;
+            }
+        }
+        if ($createRefreshCmd) {
+            if (!is_object($refresh)) {
+                $refresh = new roseeCmd();
+                $refresh->setLogicalId('refresh');
+                $refresh->setIsVisible(1);
+                $refresh->setName(__('Rafraichir', __FILE__));
+            }
+            $refresh->setType('action');
+            $refresh->setSubType('other');
+            $refresh->setEqLogic_id($this->getId());
+            $refresh->save();
+        }
+        return $Command;
+    }
 
     /*     * *********************Methode d'instance************************* */
     public function refresh()
@@ -122,190 +215,40 @@ class rosee extends eqLogic
             $td_num_max = 3;
             $td_num_visible = 0;
         }
+        if (version_compare(jeedom::version(), "4", "<")) {
+            $templatecore_V4 = null;
+        } else {
+            $templatecore_V4  = 'core::';
+        };
+
+        $Equipement = eqlogic::byId($this->getId());
 
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs') {
-            $roseeCmd = $this->getCmd(null, 'humidityabs');
-            if (!is_object($roseeCmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Humidité absolue', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('humidityabs');
-                $roseeCmd->setConfiguration('data', 'humidityabs');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(1);
-                $roseeCmd->setDisplay('generic_type', 'WEATHER_HUMIDITY');
-                $roseeCmd->setTemplate('dashboard', 'core::line');
-                $roseeCmd->setTemplate('mobile', 'core::line');
-                $roseeCmd->setOrder($order);
-                $order++;
-            }
-            $roseeCmd->setEqLogic_id($this->getId());
-            $roseeCmd->setUnite('g/m3');
-            $roseeCmd->setLogicalId('humidityabs');
-            $roseeCmd->setType('info');
-            $roseeCmd->setSubType('numeric');
-            $roseeCmd->save();
+            $Equipement->AddCommand('Humidité absolue', 'humidityabs', 'info', 'numeric', $templatecore_V4 . 'line', 'g/m3', 'WEATHER_HUMIDITY', 1, 'null', 'default', 'default', 'default', $order, '0', true, null, null, 1, null);
+            $order++;
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'rosee') {
-            $roseeCmd = $this->getCmd(null, 'alert_1');
-            if (!is_object($roseeCmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Alerte rosée', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('alert_1');
-                $roseeCmd->setConfiguration('data', 'alert_1');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('binary');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(1);
-                $roseeCmd->setDisplay('generic_type', 'SIREN_STATE');
-                $roseeCmd->setTemplate('dashboard', 'core::line');
-                $roseeCmd->setTemplate('mobile', 'core::line');
-                $roseeCmd->setOrder($order);
-                $order++;
-            }
-            $roseeCmd->setEqLogic_id($this->getId());
-            $roseeCmd->setUnite('');
-            $roseeCmd->save();
+            $Equipement->AddCommand('Alerte rosée', 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'null', 'default', 'default', 'default', $order, '0', true, null, null, null, null);
+            $order++;
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'givre') {
-            $roseeCmd = $this->getCmd(null, 'rosee');
-            if (!is_object($roseeCmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Point de rosée', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('rosee');
-                $roseeCmd->setConfiguration('data', 'rosee_point');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('numeric');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(1);
-                $roseeCmd->setDisplay('generic_type', 'GENERIC_INFO');
-                $roseeCmd->setTemplate('dashboard', 'core::line');
-                $roseeCmd->setTemplate('mobile', 'core::line');
-                $roseeCmd->setOrder($order);
-                $order++;
-            }
-            $roseeCmd->setEqLogic_id($this->getId());
-            $roseeCmd->setUnite('°C');
-            $roseeCmd->save();
+            $Equipement->AddCommand('Point de rosée', 'rosee', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'null', 'default', 'default', 'default', $order, '0', true, null, null, 2, null);
+            $order++;
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'givre') {
-            $roseeCmd = $this->getCmd(null, 'alert_2');
-            if (!is_object($roseeCmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Alerte givre', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('alert_2');
-                $roseeCmd->setConfiguration('data', 'alert_2');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('binary');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(1);
-                $roseeCmd->setDisplay('generic_type', 'SIREN_STATE');
-                $roseeCmd->setTemplate('dashboard', 'core::line');
-                $roseeCmd->setTemplate('mobile', 'core::line');
-                $roseeCmd->setOrder($order);
-                $order++;
-            }
-            $roseeCmd->setEqLogic_id($this->getId());
-            $roseeCmd->setUnite('');
-            $roseeCmd->save();
-
-            $roseeCmd  = $this->getCmd(null, 'givrage');
-            if (!is_object($roseeCmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Point de givrage', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('givrage');
-                $roseeCmd->setConfiguration('data', 'frost_point');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('numeric');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible(1);
-                $roseeCmd->setDisplay('generic_type', 'GENERIC_INFO');
-                $roseeCmd->setTemplate('dashboard', 'core::line');
-                $roseeCmd->setTemplate('mobile', 'core::line');
-                $roseeCmd->setOrder($order);
-                $order++;
-            }
-            $roseeCmd->setEqLogic_id($this->getId());
-            $roseeCmd->setUnite('°C');
-            $roseeCmd->save();
+            $Equipement->AddCommand('Alerte givre', 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'null', 'default', 'default', 'default', $order, '0', true, null, null, null, null);
+            $order++;
+            $Equipement->AddCommand('Point de givrage', 'givrage', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'null', 'default', 'default', 'default', $order, '0', true, null, null, 2, null);
+            $order++;
         }
-        if ($calcul == 'tendance' || $calcul == 'rosee_givre' || $calcul == 'givre') {
-            $roseeCmd = $this->getCmd(null, 'td');
-            if (!is_object($roseeCmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Message', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('td');
-                $roseeCmd->setConfiguration('data', 'td');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('string');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible($td_num_visible);
-                $roseeCmd->setDisplay('generic_type', 'WEATHER_CONDITION');
-                $roseeCmd->setTemplate('dashboard', 'core::multiline');
-                $roseeCmd->setTemplate('mobile', 'core::multiline');
-                $roseeCmd->setOrder($order);
-                $order++;
-            }
-            $roseeCmd->setEqLogic_id($this->getId());
-            $roseeCmd->setUnite('');
-            $roseeCmd->save();
-
-            $roseeCmd = $this->getCmd(null, 'td_num');
-            if (!is_object($roseeCmd)) {
-                $roseeCmd = new roseeCmd();
-                $roseeCmd->setName(__('Message numérique', __FILE__));
-                $roseeCmd->setEqLogic_id($this->id);
-                $roseeCmd->setLogicalId('td_num');
-                $roseeCmd->setConfiguration('data', 'td_num');
-                $roseeCmd->setType('info');
-                $roseeCmd->setSubType('numeric');
-                $roseeCmd->setIsHistorized(0);
-                $roseeCmd->setIsVisible($td_num_visible);
-                $roseeCmd->setDisplay('generic_type', 'GENERIC_INFO');
-                if ($calcul == 'tendance') {
-                    $roseeCmd->setTemplate('dashboard', 'rosee::tendance');
-                    $roseeCmd->setTemplate('mobile', 'rosee::tendance');
-                } else {
-                    $roseeCmd->setTemplate('dashboard', 'core::line');
-                    $roseeCmd->setTemplate('mobile', 'core::line');
-                }
-                $roseeCmd->setOrder($order);
-                $order++;
-            }
-            $roseeCmd->setEqLogic_id($this->getId());
-            $roseeCmd->setUnite('');
-            $roseeCmd->setConfiguration('minValue', 0);
-            $roseeCmd->setConfiguration('maxValue', $td_num_max);
-            $roseeCmd->save();
-        }
-
-        $createRefreshCmd = true;
-        $refresh = $this->getCmd(null, 'refresh');
-        if (!is_object($refresh)) {
-            $refresh = cmd::byEqLogicIdCmdName($this->getId(), __('Rafraichir', __FILE__));
-            if (is_object($refresh)) {
-                $createRefreshCmd = false;
-            }
-        }
-        if ($createRefreshCmd) {
-            if (!is_object($refresh)) {
-                $refresh = new roseeCmd();
-                $refresh->setLogicalId('refresh');
-                $refresh->setIsVisible(1);
-                $refresh->setName(__('Rafraichir', __FILE__));
-            }
-            $refresh->setType('action');
-            $refresh->setSubType('other');
-            $refresh->setEqLogic_id($this->getId());
-            $refresh->save();
+        if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'givre') {
+            $Equipement->AddCommand('Message', 'td', 'info', 'string', $templatecore_V4 . 'multiline', null, 'WEATHER_CONDITION', $td_num_visible, 'null', 'default', 'default', 'default', $order, '0', true, null, null, null, null);
+            $order++;
+            $Equipement->AddCommand('Message numérique', 'td_num', 'info', 'numeric', 'rosee::tendance', null, 'line', $td_num_visible, 'null', 'default', '0', $td_num_max, $order, '0', true, null, null, null, null);
+            $order++;
         }
     }
 
@@ -377,12 +320,10 @@ class rosee extends eqLogic
             $OffsetT = $this->getConfiguration('OffsetT');
             if ($OffsetT == '') {
                 $OffsetT = 0;
-                log::add(__CLASS__, 'debug', '│ Aucun Offset Température : ' . $OffsetT . '');
             } else {
-                log::add(__CLASS__, 'debug', '│ Offset Température : ' . $OffsetT . '');
                 $temperature = $temperature + $OffsetT;
-                log::add(__CLASS__, 'debug', '│ Température avec Offset : ' . $temperature . ' °C');
             }
+            log::add(__CLASS__, 'debug', '│ Température avec Offset : ' . $temperature . ' °C' . ' - Offset Température : ' . $OffsetT . ' °C');
         }
 
         /*  ********************** PRESSION *************************** */
@@ -421,10 +362,8 @@ class rosee extends eqLogic
             $dpr = $this->getConfiguration('DPR');
             if ($dpr == '') {
                 $dpr = 2.0;
-                log::add(__CLASS__, 'debug', '│ Seuil DPR : Aucune valeur de saisie => Valeur par défaut : ' . $dpr . ' °C');
-            } else {
-                log::add(__CLASS__, 'debug', '│ Seuil DPR : ' . $dpr . ' °C');
             }
+            log::add(__CLASS__, 'debug', '│ Seuil DPR : ' . $dpr . ' °C');
         }
 
         /*  ********************** SEUIL D'HUMIDITE ABSOLUE ***************************  */
@@ -432,11 +371,9 @@ class rosee extends eqLogic
             $SHA = $this->getConfiguration('SHA');
             if ($SHA == '') {
                 $SHA = 2.8;
-                log::add(__CLASS__, 'debug', '│ Seuil d\'Humidité Absolue : Aucune valeur de saisie => Valeur par défaut : ' . $SHA . '');
-            } else {
-                log::add(__CLASS__, 'debug', '│ Seuil d\'Humidité Absolue : ' . $SHA . '');
             }
         }
+        log::add(__CLASS__, 'debug', '│ Seuil d\'Humidité Absolue : ' . $SHA . '');
         log::add(__CLASS__, 'debug', '└─────────');
 
         /*  ********************** Conversion (si Besoin) *************************** */
@@ -456,8 +393,6 @@ class rosee extends eqLogic
             // Partage des données du tableau
             $td_num = $va_result_T[0];
             $td = $va_result_T[1];
-            //log::add('rosee', 'debug' , '│ Tendance : ' . $td . '' );
-            //log::add('rosee', 'debug' , '│ Tendance numérique : ' . $td_num . '');
             log::add(__CLASS__, 'debug', '└─────────');
         }
 
@@ -470,10 +405,8 @@ class rosee extends eqLogic
             $rosee_point = $va_result_R[0];
             $alert_1 = $va_result_R[1];
             $rosee = $va_result_R[2];
-
             if ($calcul == 'rosee_givre' || $calcul == 'rosee') {
-                log::add(__CLASS__, 'debug', '│ Etat alerte rosée : ' . $alert_1);
-                log::add(__CLASS__, 'debug', '│ Point de Rosée : ' . $rosee_point . ' °C');
+                log::add(__CLASS__, 'debug', '│ Etat alerte rosée : ' . $alert_1 . ' - Point de Rosée : ' . $rosee_point . ' °C');
             } else {
                 log::add(__CLASS__, 'debug', '│ Pas de mise à jour du point de  l\'alerte rosée car le calcul est désactivé');
             }
@@ -492,13 +425,10 @@ class rosee extends eqLogic
             $msg_givre2 = $va_result_G[4];
             $msg_givre3 = $va_result_G[5];
 
-            log::add(__CLASS__, 'debug', '│ Cas Actuel N°' . $td_num);
-            log::add(__CLASS__, 'debug', '│ Alerte givre : ' . $alert_2);
-            log::add(__CLASS__, 'debug', '│ Message : ' . $td);
+            log::add(__CLASS__, 'debug', '│ Cas Actuel N°' . $td_num . ' - Alerte givre : ' . $alert_2 . ' - Message : ' . $td);
             log::add(__CLASS__, 'debug', '│ Point de Givrage : ' . $frost_point . ' °C');
             if ($msg_givre2 != '' && $msg_givre3 != '') {
-                log::add(__CLASS__, 'debug', '│ ' . $msg_givre2);
-                log::add(__CLASS__, 'debug', '│ ' . $msg_givre3);
+                log::add(__CLASS__, 'debug', '│ ' . $msg_givre2 . ' - ' . $msg_givre3);
             };
             if ($alert_2 == 1 && $alert_1 == 1) {
                 $alert_1 = 0;
@@ -513,95 +443,68 @@ class rosee extends eqLogic
         /*  ********************** Mise à Jour des équipements *************************** */
         log::add(__CLASS__, 'debug', '┌───────── MISE A JOUR : ' . $_eqName);
 
-        if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs') {
-            $cmd = $this->getCmd('info', 'humidityabs'); //Mise à jour de l'équipement Humidité absolue
-            if (is_object($cmd)) {
-                $cmd->setConfiguration('value', $humidityabs_m3);
-                $cmd->save();
-                $cmd->event($humidityabs_m3);
-                log::add(__CLASS__, 'debug', '│ ┌───────── HUMIDITE ABSOLUE');
-                log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $humidityabs_m3 . ' g/m3');
-                log::add(__CLASS__, 'debug', '│ └─────────');
-            };
-        };
+        $Equipement = eqlogic::byId($this->getId());
+        if (is_object($Equipement) && $Equipement->getIsEnable()) {
 
-        if ($calcul == 'rosee_givre' || $calcul == 'rosee') {
-            $cmd = $this->getCmd('info', 'alert_1'); //Mise à jour de l'équipement Alerte rosée
-            if (is_object($cmd)) {
-                $cmd->setConfiguration('value', $alert_1);
-                $cmd->save();
-                $cmd->setCollectDate('');
-                $cmd->event($alert_1);
-                log::add(__CLASS__, 'debug', '│ ┌───────── ROSEE');
-                log::add(__CLASS__, 'debug', '│ │ Etat Alerte Rosée : ' . $alert_1);
-            };
-        };
-
-        if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'givre') {
-            $cmd = $this->getCmd('info', 'rosee'); //Mise à jour de l'équipement point de rosée
-            if (is_object($cmd)) {
-                $cmd->setConfiguration('value', $rosee_point);
-                $cmd->save();
-                $cmd->event($rosee_point);
-                if ($calcul == 'givre') {
-                    log::add(__CLASS__, 'debug', '│ ┌───────── ROSEE');
-                };
-                log::add(__CLASS__, 'debug', '│ │ Point de Rosée : ' . $rosee_point . ' °C');
-            };
-            log::add(__CLASS__, 'debug', '│ └─────────');
-        };
-
-        if ($calcul == 'rosee_givre' || $calcul == 'givre') {
-            $cmd = $this->getCmd('info', 'alert_2'); //Mise à jour de l'équipement Alerte givre
-            if (is_object($cmd)) {
-                $cmd->setConfiguration('value', $alert_2);
-                $cmd->save();
-                $cmd->setCollectDate('');
-                $cmd->event($alert_2);
-                log::add(__CLASS__, 'debug', '│ ┌───────── GIVRE');
-                log::add(__CLASS__, 'debug', '│ │ Etat Alerte Givre : ' . $alert_2);
-            };
-
-            $cmd = $this->getCmd('info', 'givrage'); //Mise à jour de l'équipement Givrage
-            if (is_object($cmd)) {
-                $cmd->setConfiguration('value', $frost_point);
-                $cmd->save();
-                $cmd->event($frost_point);
-                log::add(__CLASS__, 'debug', '│ │ Point de givrage : ' . $frost_point . ' °C');
+            foreach ($Equipement->getCmd('info') as $Command) {
+                if (is_object($Command)) {
+                    switch ($Command->getLogicalId()) {
+                        case "alert_1": //Mise à jour de l'équipement Alerte rosée
+                            log::add(__CLASS__, 'debug', '│ ┌───────── ROSEE : Alerte');
+                            log::add(__CLASS__, 'debug', '│ │ Etat Alerte Rosée : ' . $alert_1);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_1);
+                            log::add(__CLASS__, 'debug', '│ └─────────');
+                            break;
+                        case "alert_2": //Mise à jour de l'équipement Alerte givre
+                            log::add(__CLASS__, 'debug', '│ ┌───────── GIVRE : Alerte');
+                            log::add(__CLASS__, 'debug', '│ │ Etat Alerte Rosée : ' . $alert_2);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_2);
+                            log::add(__CLASS__, 'debug', '│ └─────────');
+                            break;
+                        case "givrage": //Mise à jour de l'équipement point de rosée
+                            log::add(__CLASS__, 'debug', '│ ┌───────── GIVRE : Point de Givre');
+                            log::add(__CLASS__, 'debug', '│ │ Point de givrage : ' . $frost_point . ' °C');
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $frost_point);
+                            log::add(__CLASS__, 'debug', '│ └─────────');
+                            break;
+                        case "humidityabs": //Mise à jour de l'équipement Humidité absolue
+                            log::add(__CLASS__, 'debug', '│ ┌───────── HUMIDITE ABSOLUE');
+                            log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $humidityabs_m3 . ' g/m3');
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidityabs_m3);
+                            log::add(__CLASS__, 'debug', '│ └─────────');
+                            break;
+                        case "rosee": //Mise à jour de l'équipement point de rosée
+                            log::add(__CLASS__, 'debug', '│ ┌───────── ROSEE : Point de rosée');
+                            log::add(__CLASS__, 'debug', '│ │ Point de Rosée : ' . $rosee_point . ' °C');
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $rosee_point);
+                            log::add(__CLASS__, 'debug', '│ └─────────');
+                            break;
+                        case "td": //Mise à jour de l'équipement message
+                            log::add(__CLASS__, 'debug', '│ ┌───────── MESSAGE : Alerte format texte');
+                            if ($calcul == 'tendance') {
+                                $start_log_td = ' │ Tendance : ';
+                            } else {
+                                $start_log_td = ' │ Message Alerte givre : ';
+                            }
+                            log::add(__CLASS__, 'debug', '│' . $start_log_td . $td);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td);
+                            log::add(__CLASS__, 'debug', '│ └─────────');
+                            break;
+                        case "td_num": //Mise à jour de l'équipement message numérique
+                            log::add(__CLASS__, 'debug', '│ ┌───────── MESSAGE : Alerte format numérique');
+                            if ($calcul == 'tendance') {
+                                $start_log_td = ' │ Tendance numérique : ';
+                            } else {
+                                $start_log_td = ' │ Message Alerte givre numérique : ';
+                            }
+                            log::add(__CLASS__, 'debug', '│' . $start_log_td . $td_num);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td_num);
+                            log::add(__CLASS__, 'debug', '│ └─────────');
+                            break;
+                    }
+                }
             }
         }
-
-        if ($calcul == 'tendance') {
-            $start_log_td = ' │ Tendance : ';
-            $start_log_td_num = ' │ Tendance numérique : ';
-            log::add(__CLASS__, 'debug', '│ ┌───────── MESSAGE');
-        } else {
-            $start_log_td = ' │ Message Alerte givre : ';
-            $start_log_td_num = ' │ Message Alerte givre numérique : ';
-        }
-
-        if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'tendance') {
-            $cmd = $this->getCmd('info', 'td'); //Mise à jour de l'équipement message
-            if (is_object($cmd)) {
-                $cmd->setConfiguration('value', $td);
-                $cmd->save();
-                $cmd->setCollectDate('');
-                $cmd->event($td);
-                log::add(__CLASS__, 'debug', '│' . $start_log_td . $td);
-            }
-
-            $cmd = $this->getCmd('info', 'td_num'); //Mise à jour de l'équipement message
-            if (is_object($cmd)) {
-                $cmd->setConfiguration('value', $td_num);
-                $cmd->save();
-                $cmd->setCollectDate('');
-                $cmd->event($td_num);
-                log::add(__CLASS__, 'debug', '│' . $start_log_td_num . $td_num);
-            };
-            log::add(__CLASS__, 'debug', '│ └─────────');
-        } else {
-        };
-
         log::add(__CLASS__, 'debug', '└─────────');
         log::add(__CLASS__, 'debug', '================ FIN CRON =================');
         return;
@@ -622,7 +525,6 @@ class rosee extends eqLogic
         $p = 1.0 / $v;
         log::add(__CLASS__, 'debug', '│ Poids spécifique (p) : ' . $p . ' m3/kg');
         $humidityabs_m3 = 1000.0 * $humi_a * $p;
-        $humidityabs_m3 = round(($humidityabs_m3), 1);
         return $humidityabs_m3;
     }
 
@@ -639,7 +541,7 @@ class rosee extends eqLogic
         $Terme2 = ($beta * $temperature) / ($lambda + $temperature);
         log::add(__CLASS__, 'debug', '│ Terme1 = ' . $Terme1 . ' // Terme2 = ' . $Terme2);
         $rosee = $lambda * ($Terme1 + $Terme2) / ($beta - $Terme1 - $Terme2);
-        $rosee_point = round(($rosee), 1);
+        $rosee_point = $rosee;
         $alert_1 = 0;
 
         /*  ********************** Calcul de l'alerte rosée en fonction du seuil d'alerte *************************** */
@@ -670,7 +572,7 @@ class rosee extends eqLogic
             $frost_K = $frost_K + ($rosee + 273.15) - ($temperature + 273.15);
             log::add(__CLASS__, 'debug', '│ Point de givrage : ' . $frost_K . ' K');
             $frost = $frost_K - 273.15;
-            $frost_point = round(($frost), 1);
+            $frost_point = $frost;
 
             if ($temperature <= 1 && $frost_point <= 0) {
                 $alert_2  = 1;

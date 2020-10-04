@@ -100,14 +100,14 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     <fieldset>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">{{Nom de l'équipement}}</label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l\'équipement}}" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">{{Objet parent}}</label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
                                     <option value="">{{Aucun}}</option>
                                     <?php
@@ -161,7 +161,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <label class="col-sm-2 control-label">{{Type de Calcul}}
                                 <sup><i class="fas fa-question-circle" title="{{Il est possible de se limiter à un seul calcul, Point de Rosée et Point de Givre fait tous les calculs}}"></i></sup>
                             </label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <select id="type_calcul" class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="type_calcul">
                                     <option value=''>{{Aucun}}</option>
                                     <option value='humidityabs'>{{Humidité absolue}}</option>
@@ -176,7 +176,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <label class="col-md-2 control-label">{{Température}}
                                 <sup><i class="fas fa-question-circle" title="{{(°C) Commande température}}"></i></sup>
                             </label>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="input-group">
                                     <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="temperature" placeholder="{{Température °C}}">
                                     <span class="input-group-btn">
@@ -197,7 +197,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <label class="col-sm-2 control-label">{{Humidité Relative}}
                                 <sup><i class="fas fa-question-circle" title="{{(%) Commande humidité}}"></i></sup>
                             </label>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="input-group">
                                     <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="humidite" placeholder="{{Humidité Relative %}}">
                                     <span class="input-group-btn">
@@ -210,7 +210,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <label class="col-sm-2 control-label">{{Pression Atmosphérique}}
                                 <sup><i class="fas fa-question-circle" title="{{(hPa) Pression atmosphérique réelle sur le site. 1013.25 hPa par défaut si non renseignée.}}"></i></sup>
                             </label>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="input-group">
                                     <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="pression" placeholder="1013.25 hPa">
                                     <span class="input-group-btn">
@@ -244,17 +244,15 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 <table id="table_cmd" class="table table-bordered table-condensed">
                     <thead>
                         <tr>
-                            <th width="50px"> ID</th>
-                            <th width="450px">{{Nom}}</th>
-                            <th>{{Valeur}}</th>
-                            <th>{{Unité}}</th>
+                            <th style="width: 50px;"> ID</th>
+                            <th style="width: 550px;">{{Nom}}</th>
+                            <th style="width: 250px;">{{Sous-Type}}</th>
+                            <th style="width: 350px;">{{Min/Max - Unité}}</th>
                             <th>{{Paramètres}}</th>
-                            <th width="120px;">{{Options}}</th>
-                            <th style="width: 40px;"></th>
+                            <th style="width: 250px;">{{Options}}</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
 

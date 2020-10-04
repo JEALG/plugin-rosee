@@ -68,13 +68,9 @@ function rosee_update()
     $plugin = plugin::byId('rosee');
     $eqLogics = eqLogic::byType($plugin->getId());
     foreach ($eqLogics as $eqLogic) {
-        updateLogicalId($eqLogic, 'message_givre', 'td');
-        updateLogicalId($eqLogic, 'message_givre_num', 'td_num');
-        updateLogicalId($eqLogic, 'alert_r', 'alert_1');
-        updateLogicalId($eqLogic, 'alert_g', 'alert_2');
-        updateLogicalId($eqLogic, 'alerte_rosee', 'alert_1');
-        updateLogicalId($eqLogic, 'alerte_givre', 'alert_2');
-        updateLogicalId($eqLogic, 'humidite_absolue', 'humidityabs');
+        updateLogicalId($eqLogic, 'humidityabs', null, '1');
+        updateLogicalId($eqLogic, 'rosee', null, '2');
+        updateLogicalId($eqLogic, 'givrage', null, '2');
     }
 
     //resave eqLogics for new cmd:
@@ -95,12 +91,17 @@ function rosee_update()
     }
 }
 
-function updateLogicalId($eqLogic, $from, $to)
+function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null)
 {
     //  Fonction pour renommer une commande
     $command = $eqLogic->getCmd(null, $from);
     if (is_object($command)) {
-        $command->setLogicalId($to);
+        if ($to != null) {
+            $command->setLogicalId($to);
+        }
+        if ($_historizeRound != null) {
+            $Command->setConfiguration('historizeRound', $_historizeRound);
+        }
         $command->save();
     }
 }
