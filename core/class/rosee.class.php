@@ -649,7 +649,8 @@ class rosee extends eqLogic
         log::add('rosee', 'debug', '│ │ Pression Atmosphérique : ' . $h4 . ' hPa');
 
         // calculs de tendance 2h/4h
-        $td4h = ($h1 - $h4) / 4;
+        $td4h = number_format((($h1 - $h4) / 4), 2, '.', '');
+        //$td4h = ($h1 - $h4) / 4;
         log::add(__CLASS__, 'debug', '│ │ Tendance : ' . $td4h . ' hPa/h');
         log::add(__CLASS__, 'debug', '│ └───────');
 

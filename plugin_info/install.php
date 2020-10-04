@@ -93,14 +93,13 @@ function rosee_update()
 
 function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null)
 {
-    //  Fonction pour renommer une commande
     $command = $eqLogic->getCmd(null, $from);
     if (is_object($command)) {
         if ($to != null) {
             $command->setLogicalId($to);
         }
         if ($_historizeRound != null) {
-            $Command->setConfiguration('historizeRound', $_historizeRound);
+            $command->setConfiguration('historizeRound', $_historizeRound);
         }
         $command->save();
     }
