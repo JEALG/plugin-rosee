@@ -357,7 +357,7 @@ class rosee extends eqLogic
 
 
         /*  ********************** SEUIL D'ALERTE ROSEE *************************** */
-        if ($calcul == 'rosee' || $calcul == 'rosee_givre') {
+        if ($calcul == 'rosee' || $calcul == 'rosee_givre' || $calcul == 'givre') {
             $dpr = $this->getConfiguration('DPR');
             if ($dpr == '') {
                 $dpr = 2.0;
@@ -371,8 +371,8 @@ class rosee extends eqLogic
             if ($SHA == '') {
                 $SHA = 2.8;
             }
+            log::add(__CLASS__, 'debug', '│ Seuil d\'Humidité Absolue : ' . $SHA . '');
         }
-        log::add(__CLASS__, 'debug', '│ Seuil d\'Humidité Absolue : ' . $SHA . '');
         log::add(__CLASS__, 'debug', '└─────────');
 
         /*  ********************** Conversion (si Besoin) *************************** */
@@ -480,24 +480,32 @@ class rosee extends eqLogic
                             break;
                         case "td":
                             log::add(__CLASS__, 'debug', '│ ┌───────── MESSAGE : Alerte format texte');
-                            if ($calcul == 'tendance') {
-                                $start_log_td = ' │ Tendance : ';
+                            if (isset($td)) {
+                                if ($calcul == 'tendance') {
+                                    $start_log_td = ' │ Tendance : ';
+                                } else {
+                                    $start_log_td = ' │ Message Alerte givre : ';
+                                }
+                                log::add(__CLASS__, 'debug', '│' . $start_log_td . $td);
+                                $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td);
                             } else {
-                                $start_log_td = ' │ Message Alerte givre : ';
+                                log::add(__CLASS__, 'debug', '│ Problème avec la variable td non déclaré ');
                             }
-                            log::add(__CLASS__, 'debug', '│' . $start_log_td . $td);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "td_num":
                             log::add(__CLASS__, 'debug', '│ ┌───────── MESSAGE : Alerte format numérique');
-                            if ($calcul == 'tendance') {
-                                $start_log_td = ' │ Tendance numérique : ';
+                            if (isset($td_num)) {
+                                if ($calcul == 'tendance') {
+                                    $start_log_td = ' │ Tendance numérique : ';
+                                } else {
+                                    $start_log_td = ' │ Message Alerte givre numérique : ';
+                                }
+                                log::add(__CLASS__, 'debug', '│' . $start_log_td . $td_num);
+                                $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td_num);
                             } else {
-                                $start_log_td = ' │ Message Alerte givre numérique : ';
+                                log::add(__CLASS__, 'debug', '│ Problème avec la variable td_num non déclaré ');
                             }
-                            log::add(__CLASS__, 'debug', '│' . $start_log_td . $td_num);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td_num);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                     }
@@ -559,7 +567,7 @@ class rosee extends eqLogic
     public static function getGivre($temperature, $SHA, $humidityabs_m3, $rosee)
     {
         $td = 'Aucun risque de Givre';
-        $td_num = 0;
+        $td_num = number_format(0);
         $alert_2  = 0;
         if ($temperature <= 5) {
             $msg_givre2 = '';
@@ -577,15 +585,15 @@ class rosee extends eqLogic
                 $alert_2  = 1;
                 if ($humidityabs_m3 > $SHA) { // Cas N°3
                     $td = 'Givre, Présence de givre';
-                    $td_num = 3;
+                    $td_num = number_format(3);
                 };
                 if ($humidityabs_m3 < $SHA) { // Cas N°1
                     $td = 'Givre peu probable malgré la température';
-                    $td_num = 1;
+                    $td_num = number_format(1);
                 };
             } elseif ($temperature <= 4 && $frost_point <= 0.5) { // Cas N°2
                 $td = 'Risque de givre';
-                $td_num = 2;
+                $td_num = number_format(2);
                 $alert_2  = 1;
                 //} else {// Cas N°0
             };
@@ -666,22 +674,22 @@ class rosee extends eqLogic
 
         if ($td_moy > 2.5) { // Quickly rising High Pressure System, not stable
             $td = 'Forte embellie, instable';
-            $td_num = 5;
+            $td_num = number_format(5);
         } elseif ($td_moy > 0.5 && $td_moy <= 2.5) { // Slowly rising High Pressure System, stable good weather
             $td = 'Amélioration, beau temps durable';
-            $td_num = 4;
+            $td_num = number_format(4);
         } elseif ($td_moy > 0.0 && $td_moy <= 0.5) { // Stable weather condition
             $td = 'Lente amélioration, temps stable';
-            $td_num = 3;
+            $td_num = number_format(3);
         } elseif ($td_moy > -0.5 && $td_moy <= 0) { // Stable weather condition
             $td = 'Lente dégradation, temps stable';
-            $td_num = 2;
+            $td_num = number_format(2);
         } elseif ($td_moy > -2.5 && $td_moy <= -0.5) { // Slowly falling Low Pressure System, stable rainy weather
             $td = 'Dégradation, mauvais temps durable';
-            $td_num = 1;
+            $td_num = number_format(1);
         } else { // Quickly falling Low Pressure, Thunderstorm, not stable
             $td = 'Forte dégradation, instable';
-            $td_num = 0;
+            $td_num = number_format(0);
         };
         log::add(__CLASS__, 'debug', '│ └─────────');
         return array($td_num, $td);
