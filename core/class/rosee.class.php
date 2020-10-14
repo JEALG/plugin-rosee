@@ -643,7 +643,7 @@ class rosee extends eqLogic
             log::add(__CLASS__, 'debug', '│ │ Tendance -2h : ' . $td2h . ' hPa/h');
         } else {
             $td2h = 0;
-            log::add(__CLASS__, 'error', '│ │ Pression Atmosphérique -2h nulle (historique) : ' . $h2 . ' hPa');
+            log::add(__CLASS__, 'debug', '│ │ Pression Atmosphérique -2h nulle (historique) : ' . $h2 . ' hPa');
         }
         log::add(__CLASS__, 'debug', '│ └───────');
 
@@ -666,7 +666,7 @@ class rosee extends eqLogic
             log::add(__CLASS__, 'debug', '│ │ Tendance -4h : ' . $td4h . ' hPa/h');
         } else {
             $td4h = 0;
-            log::add(__CLASS__, 'error', '│ │ Pression Atmosphérique -4h nulle (historique) : ' . $h4 . ' hPa');
+            log::add(__CLASS__, 'debug', '│ │ Pression Atmosphérique -4h nulle (historique) : ' . $h4 . ' hPa');
         }
         log::add(__CLASS__, 'debug', '│ └───────');
 
