@@ -84,12 +84,12 @@ class rosee extends eqLogic
     {
         return rosee_Template::getTemplate();
     }
-    public function AddCommand($Name, $_logicalId, $Type = 'info', $SubType = 'binary', $Template = null, $unite = null, $generic_type = null, $IsVisible = 1, $icon, $forceLineB = 'default', $valuemin = 'default', $valuemax = 'default', $_order = null, $IsHistorized = '0', $repeatevent = false, $_iconname = null, $_calculValueOffset = null, $_historizeRound = null, $_noiconname = null)
+    public function AddCommand($Name, $_logicalId, $Type = 'info', $SubType = 'binary', $Template = null, $unite = null, $generic_type = null, $IsVisible = 1, $icon = 'default', $forceLineB = 'default', $valuemin = 'default', $valuemax = 'default', $_order = null, $IsHistorized = '0', $repeatevent = false, $_iconname = null, $_calculValueOffset = null, $_historizeRound = null, $_noiconname = null)
     {
 
         $Command = $this->getCmd(null, $_logicalId);
         if (!is_object($Command)) {
-            log::add(__CLASS__, 'debug', '│ Name : ' . $Name . ' -- Type : ' . $Type . ' -- LogicalID : ' . $_logicalId . ' -- Template Widget / Ligne : ' . $Template . '/' . $forceLineB . '-- Type de générique : ' . $generic_type . ' -- Icône : ' . $icon . ' -- Min/Max : ' . $valuemin . '/' . $valuemax . ' -- Calcul/Arrondi: ' . $_calculValueOffset . '/' . $_historizeRound);
+            log::add(__CLASS__, 'debug', '│ Name : ' . $Name . ' -- Type : ' . $Type . ' -- LogicalID : ' . $_logicalId . ' -- Template Widget / Ligne : ' . $Template . '/' . $forceLineB . '-- Type de générique : ' . $generic_type . ' -- Icône : ' . $icon . ' -- Min/Max : ' . $valuemin . '/' . $valuemax . ' -- Calcul/Arrondi : ' . $_calculValueOffset . '/' . $_historizeRound . ' -- Ordre : ' . $_order);
             $Command = new roseeCmd();
             $Command->setId(null);
             $Command->setLogicalId($_logicalId);
@@ -111,13 +111,13 @@ class rosee extends eqLogic
             $Command->setIsVisible($IsVisible);
             $Command->setIsHistorized($IsHistorized);
 
-            if ($icon != null) {
+            if ($icon != 'default') {
                 $Command->setdisplay('icon', '<i class="' . $icon . '"></i>');
             }
             if ($forceLineB != 'default') {
                 $Command->setdisplay('forceReturnLineBefore', 1);
             }
-            if ($_iconname != null) {
+            if ($_iconname != 'default') {
                 $Command->setdisplay('showIconAndNamedashboard', 1);
             }
             if ($_noiconname != null) {
@@ -216,6 +216,7 @@ class rosee extends eqLogic
         if ($calcul == 'tendance') {
             $td_num_max = 5;
             $td_num_visible = 1;
+            $td_num = 1;
             $template_td = $templatecore_V4 . 'tile';
             $template_td_num = 'rosee::tendance';
             $_iconname_td = 1;
@@ -223,37 +224,38 @@ class rosee extends eqLogic
         } else {
             $td_num_max = 3;
             $td_num_visible = 0;
-            $template_td = $templatecore_V4 . 'multiline';
+            $td_num = 1;
+            $template_td = $templatecore_V4 . 'tile';
             $template_td_num = $templatecore_V4 . 'line';
-            $_iconname_td = null;
+            $_iconname_td = 1;
             $_iconname_td_num = null;
         }
 
         $Equipement = eqlogic::byId($this->getId());
 
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs') {
-            $Equipement->AddCommand('Humidité absolue', 'humidityabs', 'info', 'numeric', $templatecore_V4 . 'line', 'g/m3', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order, '0', true, 1, null, 1, null);
+            $Equipement->AddCommand('Humidité absolue', 'humidityabs', 'info', 'numeric', $templatecore_V4 . 'line', 'g/m3', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
             $order++;
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'rosee') {
-            $Equipement->AddCommand('Alerte rosée', 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 1, null, null, null);
+            $Equipement->AddCommand('Alerte rosée', 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
             $order++;
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'givre') {
-            $Equipement->AddCommand('Point de rosée', 'rosee', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, 1, null, 2, null);
+            $Equipement->AddCommand('Point de rosée', 'rosee', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
             $order++;
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'givre') {
-            $Equipement->AddCommand('Alerte givre', 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 1, null, null, null);
+            $Equipement->AddCommand('Alerte givre', 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
             $order++;
-            $Equipement->AddCommand('Point de givrage', 'givrage', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, 1, null, 2, null);
+            $Equipement->AddCommand('Point de givrage', 'givrage', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
             $order++;
         }
         if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'givre' || $calcul == 'tendance') {
-            $Equipement->AddCommand('Message', 'td', 'info', 'string', $template_td, null, 'WEATHER_CONDITION', $td_num_visible, 'default', 'default', 'default', 'default', $order, '0', true, $_iconname_td, null, null, null);
+            $Equipement->AddCommand('Message', 'td', 'info', 'string', $template_td, null, 'WEATHER_CONDITION', $td_num, 'default', 'default', 'default', 'default', $order, '0', true, $_iconname_td, null, null, null);
             $order++;
             $Equipement->AddCommand('Message numérique', 'td_num', 'info', 'numeric', $template_td_num, null, 'GENERIC_INFO', $td_num_visible, 'default', 'default', '0', $td_num_max, $order, '0', true, $_iconname_td_num, null, null, null);
         }
