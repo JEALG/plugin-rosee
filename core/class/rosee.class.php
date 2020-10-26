@@ -208,18 +208,26 @@ class rosee extends eqLogic
 
         /*  ********************** Calcul *************************** */
         $calcul = $this->getConfiguration('type_calcul');
-        if ($calcul == 'tendance') {
-            $td_num_max = 5;
-            $td_num_visible = 1;
-        } else {
-            $td_num_max = 3;
-            $td_num_visible = 0;
-        }
         if (version_compare(jeedom::version(), "4", "<")) {
             $templatecore_V4 = null;
         } else {
             $templatecore_V4  = 'core::';
         };
+        if ($calcul == 'tendance') {
+            $td_num_max = 5;
+            $td_num_visible = 1;
+            $template_td = $templatecore_V4 . 'tile';
+            $template_td_num = 'rosee::tendance';
+            $_iconname_td = 1;
+            $_iconname_td_num = 1;
+        } else {
+            $td_num_max = 3;
+            $td_num_visible = 0;
+            $template_td = $templatecore_V4 . 'multiline';
+            $template_td_num = $templatecore_V4 . 'line';
+            $_iconname_td = null;
+            $_iconname_td_num = null;
+        }
 
         $Equipement = eqlogic::byId($this->getId());
 
@@ -244,10 +252,10 @@ class rosee extends eqLogic
             $Equipement->AddCommand('Point de givrage', 'givrage', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'null', 'default', 'default', 'default', $order, '0', true, null, null, 2, null);
             $order++;
         }
-        if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'givre') {
-            $Equipement->AddCommand('Message', 'td', 'info', 'string', $templatecore_V4 . 'multiline', null, 'WEATHER_CONDITION', $td_num_visible, 'null', 'default', 'default', 'default', $order, '0', true, null, null, null, null);
+        if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'givre' || $calcul == 'tendance') {
+            $Equipement->AddCommand('Message', 'td', 'info', 'string', $template_td, null, 'WEATHER_CONDITION', $td_num_visible, 'null', 'default', 'default', 'default', $order, '0', true, $_iconname_td, null, null, null);
             $order++;
-            $Equipement->AddCommand('Message numérique', 'td_num', 'info', 'numeric', 'rosee::tendance', null, 'line', $td_num_visible, 'null', 'default', '0', $td_num_max, $order, '0', true, null, null, null, null);
+            $Equipement->AddCommand('Message numérique', 'td_num', 'info', 'numeric', $template_td_num, null, 'GENERIC_INFO', $td_num_visible, 'null', 'default', '0', $td_num_max, $order, '0', true, $_iconname_td_num, null, null, null);
         }
     }
 
