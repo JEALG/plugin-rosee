@@ -217,7 +217,7 @@ class rosee extends eqLogic
             $td_num_max = 5;
             $td_num_visible = 1;
             $td_num = 1;
-            $template_td = $templatecore_V4 . 'tile';
+            $template_td = $templatecore_V4 . 'line';
             $template_td_num = 'rosee::tendance';
             $_iconname_td = 1;
             $_iconname_td_num = 1;
@@ -225,7 +225,7 @@ class rosee extends eqLogic
             $td_num_max = 3;
             $td_num_visible = 0;
             $td_num = 1;
-            $template_td = $templatecore_V4 . 'tile';
+            $template_td = $templatecore_V4 . 'line';
             $template_td_num = $templatecore_V4 . 'line';
             $_iconname_td = 1;
             $_iconname_td_num = null;
