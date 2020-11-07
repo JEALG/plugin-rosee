@@ -485,20 +485,20 @@ class rosee extends eqLogic
                             break;
                         case "humidityrel":
                             log::add(__CLASS__, 'debug', '│ ┌───────── HUMIDITE RELATIVE');
-                            //log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $humidityabs_m3 . ' %');
-                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidityabs_m3);
+                            //log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $humidity . ' %');
+                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidity);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "pressure":
                             log::add(__CLASS__, 'debug', '│ ┌───────── PRESSION ATMOSPHERIQUE');
-                            //log::add(__CLASS__, 'debug', '│ │ Pression Atmosphérique : ' . $frost_point . ' hPa');
-                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $frost_point);
+                            //log::add(__CLASS__, 'debug', '│ │ Pression Atmosphérique : ' . $pressure . ' hPa');
+                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $pressure);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "temperature":
                             log::add(__CLASS__, 'debug', '│ ┌───────── Temperature');
-                            //log::add(__CLASS__, 'debug', '│ │ Température : ' . $frost_point . ' °C');
-                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $frost_point);
+                            //log::add(__CLASS__, 'debug', '│ │ Température : ' . $temperature . ' °C');
+                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $temperature);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "rosee":
