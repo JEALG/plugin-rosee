@@ -409,7 +409,6 @@ class rosee extends eqLogic
         if ($calcul == 'tendance') {
             log::add(__CLASS__, 'debug', '┌───────── CALCUL DE LA TENDANCE : ' . $_eqName);
             $va_result_T = rosee::getTendance($pressureID);
-            // Partage des données du tableau
             $td_num = $va_result_T[0];
             $td = $va_result_T[1];
             log::add(__CLASS__, 'debug', '└─────────');
@@ -420,7 +419,6 @@ class rosee extends eqLogic
         if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'givre') {
             log::add('rosee', 'debug', '┌───────── CALCUL DU POINT DE ROSEE : ' . $_eqName);
             $va_result_R = rosee::getRosee($temperature, $humidity, $dpr);
-            // Partage des données du tableau
             $rosee_point = $va_result_R[0];
             $alert_1 = $va_result_R[1];
             $rosee = $va_result_R[2];
@@ -436,7 +434,6 @@ class rosee extends eqLogic
         if ($calcul == 'rosee_givre' || $calcul == 'givre') {
             log::add(__CLASS__, 'debug', '┌───────── CALCUL DU POINT DE GIVRAGE : ' . $_eqName);
             $va_result_G = rosee::getGivre($temperature, $SHA, $humidityabs_m3, $rosee);
-            // Partage des données du tableau
             $td_num = $va_result_G[0];
             $td = $va_result_G[1];
             $alert_2  = $va_result_G[2];
