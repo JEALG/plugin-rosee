@@ -269,6 +269,10 @@ class rosee extends eqLogic
             $order++;
             $Equipement->AddCommand($name_td_num, 'td_num', 'info', 'numeric', $template_td_num, null, 'GENERIC_INFO', $td_num_visible, 'default', 'default', '0', $td_num_max, $order, '0', true, $_iconname_td_num, null, null, null);
         }
+        if ($calcul == 'tendance') {
+            $Equipement->AddCommand('dPdT', 'dPdT', 'info', 'numeric', $templatecore_V4 . 'line', 'hPa/h', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+            $order++;
+        }
     }
 
     public function preUpdate()
@@ -411,6 +415,7 @@ class rosee extends eqLogic
             $va_result_T = rosee::getTendance($pressureID);
             $td_num = $va_result_T[0];
             $td = $va_result_T[1];
+            $dPdT = $va_result_T[2];
             log::add(__CLASS__, 'debug', '└─────────');
         }
 
@@ -526,6 +531,12 @@ class rosee extends eqLogic
                             } else {
                                 log::add(__CLASS__, 'debug', '│ Problème avec la variable td non déclaré ');
                             }
+                            log::add(__CLASS__, 'debug', '│ └─────────');
+                            break;
+                        case "dPdT":
+                            log::add(__CLASS__, 'debug', '│ ┌───────── Tendance : dPdT');
+                            log::add(__CLASS__, 'debug', '│ │ dPdT : ' . $dPdT . ' hPa/h');
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $dPdT);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "td_num":
@@ -735,7 +746,7 @@ class rosee extends eqLogic
             $td_num = 0;
         };
         log::add(__CLASS__, 'debug', '│ └─────────');
-        return array($td_num, $td);
+        return array($td_num, $td, $dPdT);
     }
 }
 
