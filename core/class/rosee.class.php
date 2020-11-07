@@ -471,88 +471,66 @@ class rosee extends eqLogic
                 if (is_object($Command)) {
                     switch ($Command->getLogicalId()) {
                         case "alert_1":
-                            log::add(__CLASS__, 'debug', '│ ┌───────── ROSEE : Alerte');
-                            log::add(__CLASS__, 'debug', '│ │ Etat Alerte Rosée : ' . $alert_1);
+                            log::add(__CLASS__, 'debug', '│ Etat Alerte Rosée : ' . $alert_1);
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_1);
-                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "alert_2":
-                            log::add(__CLASS__, 'debug', '│ ┌───────── GIVRE : Alerte');
-                            log::add(__CLASS__, 'debug', '│ │ Etat Alerte Rosée : ' . $alert_2);
+                            log::add(__CLASS__, 'debug', '│ Etat Alerte Givre : ' . $alert_2);
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_2);
-                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "givrage":
-                            log::add(__CLASS__, 'debug', '│ ┌───────── GIVRE : Point de Givre');
-                            log::add(__CLASS__, 'debug', '│ │ Point de givrage : ' . $frost_point . ' °C');
+                            log::add(__CLASS__, 'debug', '│ Point de givrage : ' . $frost_point . ' °C');
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $frost_point);
-                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "humidityabs":
-                            log::add(__CLASS__, 'debug', '│ ┌───────── HUMIDITE ABSOLUE');
-                            log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $humidityabs_m3 . ' g/m3');
+                            log::add(__CLASS__, 'debug', '│ Humidité Absolue : ' . $humidityabs_m3 . ' g/m3');
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidityabs_m3);
-                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "humidityrel":
-                            log::add(__CLASS__, 'debug', '│ ┌───────── HUMIDITE RELATIVE');
-                            log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $humidity . ' %');
+                            log::add(__CLASS__, 'debug', '│ Humidité Relative : ' . $humidity . ' %');
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidity);
-                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "pressure":
-                            log::add(__CLASS__, 'debug', '│ ┌───────── PRESSION ATMOSPHERIQUE');
-                            log::add(__CLASS__, 'debug', '│ │ Pression Atmosphérique : ' . $pressure . ' hPa');
+                            log::add(__CLASS__, 'debug', '│ Pression Atmosphérique : ' . $pressure . ' hPa');
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $pressure);
-                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "temperature":
-                            log::add(__CLASS__, 'debug', '│ ┌───────── Temperature');
-                            log::add(__CLASS__, 'debug', '│ │ Température : ' . $temperature . ' °C');
+                            log::add(__CLASS__, 'debug', '│ Température : ' . $temperature . ' °C');
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $temperature);
-                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "rosee":
-                            log::add(__CLASS__, 'debug', '│ ┌───────── ROSEE : Point de rosée');
-                            log::add(__CLASS__, 'debug', '│ │ Point de Rosée : ' . $rosee_point . ' °C');
+                            log::add(__CLASS__, 'debug', '│ Point de Rosée : ' . $rosee_point . ' °C');
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $rosee_point);
-                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "td":
-                            log::add(__CLASS__, 'debug', '│ ┌───────── MESSAGE : Alerte format texte');
                             if (isset($td)) {
                                 if ($calcul == 'tendance') {
-                                    $start_log_td = ' │ Tendance : ';
+                                    $start_log_td = ' Tendance (format texte) : ';
                                 } else {
-                                    $start_log_td = ' │ Message Alerte givre : ';
+                                    $start_log_td = ' Message Alerte givre (format texte) : ';
                                 }
                                 log::add(__CLASS__, 'debug', '│' . $start_log_td . $td);
                                 $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td);
                             } else {
                                 log::add(__CLASS__, 'debug', '│ Problème avec la variable td non déclaré ');
                             }
-                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "dPdT":
-                            log::add(__CLASS__, 'debug', '│ ┌───────── Tendance : dPdT');
-                            log::add(__CLASS__, 'debug', '│ │ dPdT : ' . $dPdT . ' hPa/h');
+                            log::add(__CLASS__, 'debug', '│ Tendance dPdT : ' . $dPdT . ' hPa/h');
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $dPdT);
-                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "td_num":
-                            log::add(__CLASS__, 'debug', '│ ┌───────── MESSAGE : Alerte format numérique');
                             if (isset($td_num)) {
                                 if ($calcul == 'tendance') {
-                                    $start_log_td = ' │ Tendance numérique : ';
+                                    $start_log_td = ' Tendance numérique (format numérique) : ';
                                 } else {
-                                    $start_log_td = ' │ Message Alerte givre numérique : ';
+                                    $start_log_td = ' Message Alerte givre numérique (format numérique) : ';
                                 }
                                 log::add(__CLASS__, 'debug', '│' . $start_log_td . $td_num);
                                 $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td_num);
                             } else {
                                 log::add(__CLASS__, 'debug', '│ Problème avec la variable td_num non déclaré ');
                             }
-                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                     }
                 }
