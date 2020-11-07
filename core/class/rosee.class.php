@@ -657,12 +657,12 @@ class rosee extends eqLogic
         $endDate = $histo->collectDate($pressureID);
 
         // calcul du timestamp actuel
-        log::add('rosee', 'debug', '│ ┌─────── Timestamp -15min');
+        log::add(__CLASS__, 'debug', '│ ┌─────── Timestamp -15min');
         $_date1 = new DateTime("$endDate");
         $_date2 = new DateTime("$endDate");
         $startDate = $_date1->modify('-15 minute');
         $startDate = $_date1->format('Y-m-d H:i:s');
-        log::add(__CLASS__, 'debug', '│ │ Start/End Date : ' . $startDate . ' / ' . $endDate);
+        log::add(__CLASS__, 'debug', '│ │ Start / End Date : ' . $startDate . ' / ' . $endDate);
 
         // dernière mesure barométrique
         $h1 = $histo->lastBetween($pressureID, $startDate, $endDate);
@@ -675,7 +675,7 @@ class rosee extends eqLogic
         $endDate = $_date2->format('Y-m-d H:i:s');
         $startDate = $_date1->modify('-2 hour');
         $startDate = $_date1->format('Y-m-d H:i:s');
-        log::add(__CLASS__, 'debug', '│ │ Start/End Date : ' . $startDate . ' / ' . $endDate);
+        log::add(__CLASS__, 'debug', '│ │ Start / End Date : ' . $startDate . ' / ' . $endDate);
 
         // mesure barométrique -2h
         $h2 = $histo->lastBetween($pressureID, $startDate, $endDate);
@@ -692,16 +692,16 @@ class rosee extends eqLogic
         log::add(__CLASS__, 'debug', '│ └───────');
 
         // calcul du timestamp - 4h
-        log::add('rosee', 'debug', '│ ┌─────── Timestamp -4h');
+        log::add(__CLASS__, 'debug', '│ ┌─────── Timestamp -4h');
         $endDate = $_date2->modify('-2 hour');
         $endDate = $_date2->format('Y-m-d H:i:s');
         $startDate = $_date1->modify('-2 hour');
         $startDate = $_date1->format('Y-m-d H:i:s');
-        log::add(__CLASS__, 'debug', '│ │ Start/End Date : ' . $startDate . ' / ' . $endDate);
+        log::add(__CLASS__, 'debug', '│ │ Start / End Date : ' . $startDate . ' / ' . $endDate);
 
         // mesure barométrique -4h
         $h4 = $histo->lastBetween($pressureID, $startDate, $endDate);
-        log::add('rosee', 'debug', '│ │ Pression Atmosphérique : ' . $h4 . ' hPa');
+        log::add(__CLASS__, 'debug', '│ │ Pression Atmosphérique : ' . $h4 . ' hPa');
 
         // calculs de tendance 2h/4h
         if ($h4 != null) {
