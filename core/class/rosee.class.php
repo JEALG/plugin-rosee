@@ -234,8 +234,17 @@ class rosee extends eqLogic
 
         $Equipement = eqlogic::byId($this->getId());
 
+        if ($calcul != 'tendance') {
+            $Equipement->AddCommand('Température', 'temperature', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+            $order++;
+        }
+        $Equipement->AddCommand('Pression Atmosphérique', 'pressure', 'info', 'numeric', $templatecore_V4 . 'line', 'hPa', 'WEATHER_PRESSURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+        $order++;
+
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs') {
             $Equipement->AddCommand('Humidité absolue', 'humidityabs', 'info', 'numeric', $templatecore_V4 . 'line', 'g/m3', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+            $order++;
+            $Equipement->AddCommand('Humidité Relative', 'humidityrel', 'info', 'numeric', $templatecore_V4 . 'line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
             $order++;
         }
 
@@ -485,20 +494,20 @@ class rosee extends eqLogic
                             break;
                         case "humidityrel":
                             log::add(__CLASS__, 'debug', '│ ┌───────── HUMIDITE RELATIVE');
-                            //log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $humidity . ' %');
-                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidity);
+                            log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $humidity . ' %');
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidity);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "pressure":
                             log::add(__CLASS__, 'debug', '│ ┌───────── PRESSION ATMOSPHERIQUE');
-                            //log::add(__CLASS__, 'debug', '│ │ Pression Atmosphérique : ' . $pressure . ' hPa');
-                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $pressure);
+                            log::add(__CLASS__, 'debug', '│ │ Pression Atmosphérique : ' . $pressure . ' hPa');
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $pressure);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "temperature":
                             log::add(__CLASS__, 'debug', '│ ┌───────── Temperature');
-                            //log::add(__CLASS__, 'debug', '│ │ Température : ' . $temperature . ' °C');
-                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $temperature);
+                            log::add(__CLASS__, 'debug', '│ │ Température : ' . $temperature . ' °C');
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $temperature);
                             log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "rosee":
