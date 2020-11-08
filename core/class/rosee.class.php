@@ -200,7 +200,7 @@ class rosee extends eqLogic
     public function postSave()
     {
         $_eqName = $this->getName();
-        log::add(__CLASS__, 'debug', 'postSave() =>' . $_eqName);
+        log::add(__CLASS__, 'debug', 'Sauvegarde de l\'équipement [postSave()] : ' . $_eqName);
         $order = 1;
 
         /*  ********************** Calcul *************************** */
