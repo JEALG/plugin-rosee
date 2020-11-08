@@ -48,9 +48,19 @@ $('#bt_selectPresCmd').on('click', function () {
 		$('.eqLogicAttr[data-l2key=pression]').atCaret('insert', result.human);
 	});
 });
+$('#bt_selectWindCmd').on('click', function () {
+	jeedom.cmd.getSelectModal({
+		cmd: {
+			type: 'info',
+			subType: 'numeric'
+		}
+	}, function (result) {
+		$('.eqLogicAttr[data-l2key=wind]').atCaret('insert', result.human);
+	});
+});
 
 $('.eqLogicAttr[data-l1key=configuration][data-l2key=type_calcul]').on('change', function () {
-	if ($(this).value() == 'tendance') {
+	if ($(this).value() == 'tendance' || $(this).value() == 'temperature') {
 		$('#img_device').attr("src", 'plugins/rosee/core/config/img/' + $(this).value() + '.png');
 	} else {
 		$('#img_device').attr("src", 'plugins/rosee/plugin_info/rosee_icon.png');
@@ -119,27 +129,44 @@ $('#bt_autoDEL_eq').on('click', function () {
 $('#type_calcul').change(function () {
 	$('#temperature').show();
 	$('#temperature_offset').show();
-	$('#humidite').show();
-	$('#pressure').show();
-	$('#DPR').show();
-	$('#SHA').show();
+	$('#humidite').hide();
+	$('#DPR').hide();
+	$('#SHA').hide();
+	$('#step1').hide();
+	$('#step2').hide();
+	$('#wind').hide();
 	switch ($("#type_calcul").val()) {
 		case 'rosee':
-			$('#SHA').hide(); //
+			$('#humidite').show();
+			$('#DPR').show();
+			$('#pressure').show();
 			break;
 		case 'humidityabs':
-			$('#DPR').hide(); //
-			$('#SHA').hide(); //
+			$('#humidite').show();
+			$('#pressure').show();
 			break;
 		case 'givre':
-			$('#DPR').hide(); //
+			$('#humidite').show();
+			$('#SHA').show();
+			$('#pressure').show();
 			break;
+		case 'rosee_givre':
+			$('#humidite').show();
+			$('#DPR').show();
+			$('#SHA').show();
+			$('#pressure').show();
+			break;
+		case 'temperature':
+			$('#humidite').show();
+			$('#pressure').hide();
+			$('#wind').show();
+			$('#step1').show();
+			$('#step2').show();
+				break;
 		case 'tendance':
 			$('#temperature').hide();
 			$('#temperature_offset').hide();
-			$('#humidite').hide(); //
-			$('#DPR').hide(); //
-			$('#SHA').hide(); //
+			$('#pressure').show();
 			break;
 	}
 });

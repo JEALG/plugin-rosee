@@ -35,7 +35,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 if ($eqLogic->getConfiguration('type_calcul') != 'tendance') {
                     $status_r = 1;
                     echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
-                    if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
+                    if ($eqLogic->getConfiguration('type_calcul') == 'tendance' or $eqLogic->getConfiguration('type_calcul') == 'temperature') {
                         echo '<img src="' . $eqLogic->getImage() . '"/>';
                     } else {
                         echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
@@ -61,7 +61,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
                     $status = 1;
                     echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
-                    if ($eqLogic->getConfiguration('type_calcul') == 'tendance') {
+                    if ($eqLogic->getConfiguration('type_calcul') == 'tendance' or $eqLogic->getConfiguration('type_calcul') == 'temperature') {
                         echo '<img src="' . $eqLogic->getImage() . '"/>';
                     } else {
                         echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
@@ -72,9 +72,35 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 }
             }
             if ($status == 1) {
-                echo '</div>';
+                //echo '</div>';
             } else {
                 echo "<br/><br/><br/><center><span style='color:#767676;font-size:1em;font-weight: bold;margin-left: 10px'>{{Aucun équipement de type Tendance a été créé.}}</span></center>";
+            }
+            ?>
+        </div>
+        <legend><i class="jeedom-thermo-moyen"></i> {{Mes températures ressenties}}</legend>
+        <div class="eqLogicThumbnailContainer">
+            <?php
+            $status = 0;
+            foreach ($eqLogics as $eqLogic) {
+                $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+                if ($eqLogic->getConfiguration('type_calcul') == 'temperature') {
+                    $status = 1;
+                    echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
+                    if ($eqLogic->getConfiguration('type_calcul') == 'tendance' or $eqLogic->getConfiguration('type_calcul') == 'temperature') {
+                        echo '<img src="' . $eqLogic->getImage() . '"/>';
+                    } else {
+                        echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
+                    }
+                    echo '<br>';
+                    echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+                    echo '</div>';
+                }
+            }
+            if ($status == 1) {
+                // echo '</div>';
+            } else {
+                echo "<br/><br/><br/><center><span style='color:#767676;font-size:1em;font-weight: bold;margin-left: 10px'>{{Aucun équipement de type Température a été créé.}}</span></center>";
             }
             ?>
         </div>
@@ -171,6 +197,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     <option value='givre'>{{Point de Givre}}</option>
                                     <option value='rosee'>{{Point de Rosée}}</option>
                                     <option value='rosee_givre'>{{Point de Rosée et Point de Givre}}</option>
+                                    <option value='temperature'>{{Température ressentie}}</option>
                                     <option value='tendance'>{{Tendance Météo}}</option>
                                 </select>
                             </div>
@@ -222,6 +249,19 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </div>
                             </div>
                         </div>
+                        <div id="wind" class="form-group" style="display:none">
+                            <label class="col-md-2 control-label">{{Vitesse du Vent}}
+                                <sup><i class="fas fa-question-circle" title="{{(km/h) Vitesse du vent}}"></i></sup>
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="wind" placeholder="{{Vitesse du vent}}">
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default listCmdActionOther roundedRight" id="bt_selectWindCmd"><i class="fas fa-list-alt"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                         <div id="DPR" class="form-group" style="display:none">
                             <label class="col-sm-2 control-label">{{Seuil de l'Alerte Rosée}}
                                 <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de l'alerte rosée, 2°C par défaut (dépression du point de rosée T°-Tr°) A ajuster en fonction des observations locales.}}"></i></sup>
@@ -238,6 +278,23 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 <input type="number" step="0.1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="SHA" placeholder="2.8">
                             </div>
                         </div>
+                        <div id="step1" class="form-group" style="display:none">
+                            <label class="col-sm-2 control-label">{{Seuil Pré-alerte Humidex}}
+                                <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de la pré-alerte inconfort de l'indice de température, 30°C par défaut}}"></i></sup>
+                            </label>
+                            <div class="col-md-1">
+                                <input type="number" step="0.1"" class=" eqLogicAttr form-control" data-l1key="configuration" data-l2key="PRE_SEUIL" value="30" placeholder="{{30}}">
+                            </div>
+                        </div>
+                        <div id="step2" class="form-group" style="display:none">
+                            <label class="col-sm-2 control-label">{{Seuil Alerte Haute Humidex}}
+                                <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de l'alerte inconfort de l'indice de température, 40°C par défaut (seuil de danger)}}"></i></sup>
+                            </label>
+                            <div class="col-md-1">
+                                <input type="number" step="0.1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="SEUIL" value="40" placeholder="{{40}}">
+                            </div>
+                        </div>
+
                     </fieldset>
                 </form>
             </div>
