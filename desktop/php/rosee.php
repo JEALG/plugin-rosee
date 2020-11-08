@@ -32,7 +32,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
             $status_r = 0;
             foreach ($eqLogics as $eqLogic) {
                 $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-                if ($eqLogic->getConfiguration('type_calcul') != 'tendance') {
+                if ($eqLogic->getConfiguration('type_calcul') != 'tendance' && $eqLogic->getConfiguration('type_calcul') != 'temperature') {
                     $status_r = 1;
                     echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
                     if ($eqLogic->getConfiguration('type_calcul') == 'tendance' or $eqLogic->getConfiguration('type_calcul') == 'temperature') {
@@ -78,7 +78,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
             }
             ?>
         </div>
-        <legend><i class="jeedom-thermo-moyen"></i> {{Mes températures ressenties}}</legend>
+        <legend><i class="jeedom-thermo-moyen"></i> {{Mes Températures ressenties}}</legend>
         <div class="eqLogicThumbnailContainer">
             <?php
             $status = 0;

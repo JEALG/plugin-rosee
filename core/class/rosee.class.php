@@ -301,6 +301,18 @@ class rosee extends eqLogic
             $Equipement->AddCommand('Humidité Relative', 'humidityrel', 'info', 'numeric', $templatecore_V4 . 'line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
             $order++;
         }
+        if ($calcul == 'temperature') {
+            $idvirt = str_replace("#", "", $this->getConfiguration('wind'));
+            $cmdvirt = cmd::byId($idvirt);
+            if (is_object($cmdvirt)) {
+                $wind_unite = $cmdvirt->getUnite();
+            }
+            if ($wind_unite == 'm/s') {
+                $wind_unite = ' km/h';
+            }
+            $Equipement->AddCommand('Vitesse du Vent', 'wind', 'info', 'numeric', $templatecore_V4 . 'line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+            $order++;
+        }
     }
 
     public function preUpdate()
@@ -418,22 +430,23 @@ class rosee extends eqLogic
         }
 
         /*  ********************** PRESSION *************************** */
-        $pressure = $this->getConfiguration('pression');
-        if ($pressure == '' && $calcul != 'tendance') { //valeur par défaut de la pression atmosphérique : 1013.25 hPa
-            $pressure = 1013.25;
-            log::add(__CLASS__, 'debug', '│ Pression Atmosphérique aucun équipement sélectionné, valeur par défaut : ' . $pressure . ' hPa');
-        } else {
-            $pressureID = str_replace("#", "", $this->getConfiguration('pression'));
-            $cmdvirt = cmd::byId($pressureID);
-            if (is_object($cmdvirt)) {
-                $pressure = $cmdvirt->execCmd();
-                log::add(__CLASS__, 'debug', '│ Pression Atmosphérique : ' . $pressure . ' hPa');
+        if ($calcul != 'temperature') {
+            $pressure = $this->getConfiguration('pression');
+            if ($pressure == '' && $calcul != 'tendance') { //valeur par défaut de la pression atmosphérique : 1013.25 hPa
+                $pressure = 1013.25;
+                log::add(__CLASS__, 'debug', '│ Pression Atmosphérique aucun équipement sélectionné, valeur par défaut : ' . $pressure . ' hPa');
             } else {
-                throw new Exception(__('Le champ "Pression Atmosphérique" ne peut être vide', __FILE__));
-                log::add(__CLASS__, 'error', '│ Configuration : Pression Atmosphérique inexistante : ' . $this->getConfiguration('pression'));
+                $pressureID = str_replace("#", "", $this->getConfiguration('pression'));
+                $cmdvirt = cmd::byId($pressureID);
+                if (is_object($cmdvirt)) {
+                    $pressure = $cmdvirt->execCmd();
+                    log::add(__CLASS__, 'debug', '│ Pression Atmosphérique : ' . $pressure . ' hPa');
+                } else {
+                    throw new Exception(__('Le champ "Pression Atmosphérique" ne peut être vide', __FILE__));
+                    log::add(__CLASS__, 'error', '│ Configuration : Pression Atmosphérique inexistante : ' . $this->getConfiguration('pression'));
+                }
             }
         }
-
         /*  ********************** HUMIDITE *************************** */
         $idvirt = str_replace("#", "", $this->getConfiguration('humidite'));
         $cmdvirt = cmd::byId($idvirt);
@@ -631,8 +644,8 @@ class rosee extends eqLogic
                             }
                             break;
                         case "wind":
-                            //log::add(__CLASS__, 'debug', '│ Vitesse du vent : ' . $wind . $wind_unite);
-                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $wind);
+                            log::add(__CLASS__, 'debug', '│ Vitesse du vent : ' . $wind . $wind_unite);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $wind);
                             break;
                         case "windchill":
                             log::add(__CLASS__, 'debug', '│ Windchill : ' . $windchill . ' °C');
