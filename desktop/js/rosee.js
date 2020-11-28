@@ -27,7 +27,7 @@ $('#div_pageContainer').off('click','.listCmdActionOther').on('click','.listCmdA
 	jeedom.cmd.getSelectModal({cmd: {type: 'info',subType : 'numeric'}}, function (result) {
 	  el.closest('.input-group').find('input').value(result.human);
 	});
-  });
+});
 
 $('.eqLogicAttr[data-l1key=configuration][data-l2key=type_calcul]').on('change', function () {
 	if ($(this).value() == 'tendance' || $(this).value() == 'temperature') {
