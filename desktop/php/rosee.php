@@ -211,7 +211,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <div class="input-group">
                                             <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="temperature" placeholder="{{Température °C}}">
                                             <span class="input-group-btn">
-                                                <a class="btn btn-default listCmdActionOther roundedRight" id="bt_selectTempCmd" title="Rechercher une commande"><i class="fas fa-list-alt"></i></a>
+                                                <a class="btn btn-default listCmdActionOther roundedRight" title="Rechercher une commande"><i class="fas fa-list-alt"></i></a>
                                             </span>
                                         </div>
                                     </div>
@@ -232,7 +232,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <div class="input-group">
                                             <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="humidite" placeholder="{{Humidité Relative %}}">
                                             <span class="input-group-btn">
-                                                <a class="btn btn-default listCmdActionOther roundedRight" id="bt_selectHumiCmd" title="Rechercher une commande"><i class="fas fa-list-alt"></i></a>
+                                                <a class="btn btn-default listCmdActionOther roundedRight" title="Rechercher une commande"><i class="fas fa-list-alt"></i></a>
                                             </span>
                                         </div>
                                     </div>
@@ -245,7 +245,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <div class="input-group">
                                             <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="pression" placeholder="1013.25 hPa">
                                             <span class="input-group-btn">
-                                                <a class="btn btn-default listCmdActionOther roundedRight" id="bt_selectPresCmd" title="Rechercher une commande"><i class="fas fa-list-alt"></i></a>
+                                                <a class="btn btn-default listCmdActionOther roundedRight" title="Rechercher une commande"><i class="fas fa-list-alt"></i></a>
                                             </span>
                                         </div>
                                     </div>
@@ -258,7 +258,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <div class="input-group">
                                             <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="wind" placeholder="{{Vitesse du vent}}">
                                             <span class="input-group-btn">
-                                                <a class="btn btn-default listCmdActionOther roundedRight" id="bt_selectWindCmd"><i class="fas fa-list-alt"></i></a>
+                                                <a class="btn btn-default listCmdActionOther roundedRight" title="Rechercher une commande"><i class="fas fa-list-alt"></i></a>
                                             </span>
                                         </div>
                                     </div>
@@ -318,7 +318,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 </div><!-- /.row-->
             </div> <!-- /.tabpanel #eqlogictab-->
             <!-- Onglet des commandes de l'équipement -->
-            <sdiv role="tabpanel" class="tab-pane" id="commandtab">
+            <div role="tabpanel" class="tab-pane" id="commandtab">
                 <!-- <a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Commandes}}</a> -->
                 <br /><br />
                 <div class="table-responsive">
@@ -337,10 +337,10 @@ $eqLogics = eqLogic::byType($plugin->getId());
                         </tbody>
                     </table>
                 </div>
-        </div><!-- /.tabpanel #commandtab-->
+            </div><!-- /.tabpanel #commandtab-->
 
-    </div><!-- /.tab-content -->
-</div><!-- /.eqLogic -->
+        </div><!-- /.tab-content -->
+    </div><!-- /.eqLogic -->
 </div><!-- /.row row-overflow -->
 
 <?php
