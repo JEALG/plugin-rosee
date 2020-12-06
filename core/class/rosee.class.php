@@ -415,7 +415,7 @@ class rosee extends eqLogic
                 log::add(__CLASS__, 'debug', '│ La vitesse du vent sélectionnée est en m/s, le plugin va convertir en km/h');
                 $wind = $wind * 3.6;
                 $wind_unite = ' km/h';
-                log::add(__CLASS__, 'debug', '│ Vent : ' . $wind  . $wind_unite);
+                log::add(__CLASS__, 'debug', '│ Vent : ' . $wind  . ' ' . $wind_unite);
             }
         }
 
