@@ -161,8 +161,6 @@ class rosee extends eqLogic
             $Command->save();
         }
 
-
-
         $createRefreshCmd = true;
         $refresh = $this->getCmd(null, 'refresh');
         if (!is_object($refresh)) {
