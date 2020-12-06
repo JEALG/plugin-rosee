@@ -655,7 +655,7 @@ class rosee extends eqLogic
                             }
                             break;
                         case "wind":
-                            log::add(__CLASS__, 'debug', '│ Vitesse du vent : ' . $wind . $wind_unite);
+                            log::add(__CLASS__, 'debug', '│ Vitesse du vent : ' . $wind . ' ' . $wind_unite);
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $wind);
                             break;
                         case "windchill":
