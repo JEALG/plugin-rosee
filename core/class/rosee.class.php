@@ -236,8 +236,8 @@ class rosee extends eqLogic
             $td_num = 1;
             $template_td = $templatecore_V4 . 'multiline';
             $template_td_num = $templatecore_V4 . 'line';
-            $name_td = 'Degré de confort';
-            $name_td_num = 'Degré de confort numérique';
+            $name_td = 'Message';
+            $name_td_num = 'Message numérique';
             $_iconname_td = 1;
             $_iconname_td_num = null;
             $alert1 = 'Pré Alerte Humidex';
