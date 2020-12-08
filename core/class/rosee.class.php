@@ -887,7 +887,6 @@ class rosee extends eqLogic
         // Partage calcul
         $var1 = (-2937.4 / $temperature_k);
         $eTs = pow(10, ($var1 - 4.9283 * log($temperature_k) / 2.302585092994046 + 23.5471));
-        log::add(__CLASS__, 'debug', '│ │ eTs: ' . $eTs);
         $eTd = $eTs * $humidity / 100;
         //Calcul de l'humidex
         $humidex = round($temperature + (($eTd - 10) * 5 / 9));
