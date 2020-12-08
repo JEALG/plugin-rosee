@@ -880,6 +880,7 @@ class rosee extends eqLogic
 
         /*  ********************** Calcul de l'indice de chaleur *************************** */
         log::add(__CLASS__, 'debug', '│ ┌───────── CALCUL DU FACTEUR HUMIDEX');
+        // sources : http://www.meteo-mussidan.fr/hum.php
         $var1 = null;
         // Calcul pression vapeur eau
         $temperature_k = $temperature + 273.15;
