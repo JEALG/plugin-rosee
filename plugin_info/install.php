@@ -74,7 +74,7 @@ function rosee_update()
         updateLogicalId($eqLogic, 'td', null, null, 'Message'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'td_num', null, null, 'Message numérique'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'windchill', null, null, 'Température ressentie'); // Modification du 7/12/2020
-        updateLogicalId($eqLogic, 'heat_index', 'humidex', null, 'Indice de Chaleur (Humidex)', 'NO_UNIT'); // Modification du 7/12/2020
+        updateLogicalId($eqLogic, 'heat_index', 'humidex', 0, 'Indice de Chaleur (Humidex)', 'DELETE'); // Modification du 7/12/2020
     }
 
     //resave eqLogics for new cmd:
@@ -110,7 +110,7 @@ function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = 
             $command->setName($name);
         }
         if ($unite != null) {
-            if ($unite == 'NO_UNIT') {
+            if ($unite == 'DELETE') {
                 $unite = null;
             }
             $command->setUnite($unite);

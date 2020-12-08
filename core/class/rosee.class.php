@@ -625,7 +625,7 @@ class rosee extends eqLogic
                                 if ($calcul == 'tendance') {
                                     $log = ' Tendance (format texte) : ';
                                 } else if ($calcul == 'temperature') {
-                                    $log = ' Degré de comfort (format texte) : ';
+                                    $log = ' Message (format texte) : ';
                                 } else {
                                     $log = ' Message Alerte givre (format texte) : ';
                                 }
@@ -644,7 +644,7 @@ class rosee extends eqLogic
                                 if ($calcul == 'tendance') {
                                     $log = ' Tendance (format numérique) : ';
                                 } else if ($calcul == 'temperature') {
-                                    $log = ' Degré de comfort (format numérique) : ';
+                                    $log = ' Message (format numérique) : ';
                                 } else {
                                     $log = ' Message Alerte givre (format numérique) : ';
                                 }
@@ -897,28 +897,6 @@ class rosee extends eqLogic
         } else {
             log::add(__CLASS__, 'debug', '│ │ Indice de Chaleur (Humidex) : ' . $humidex);
         }
-
-        /* Ancienne méthode de calcul        
-        $c1 = -42.379;
-        $c2 = 2.04901523;
-        $c3 = 10.14333127;
-        $c4 = -0.22475541;
-        $c5 = -6.83783 * pow(10, -3);
-        $c6 = -5.481717 * pow(10, -2);
-        $c7 = 1.22874 * pow(10, -3);
-        $c8 = 8.5282 * pow(10, -4);
-        $c9 = -1.99 * pow(10, -6);
-        $tempF = 32.0 + 1.8 * $temperature;
-        log::add(__CLASS__, 'debug', '│ │ Température (F) : ' . $tempF . ' F');
-        $terme1 = $c1 + $c2 * $tempF + $c3 * $humidity + $c4 * $tempF * $humidity;
-        $terme2 = $c5 * pow($tempF, 2.0);
-        $terme3 = $c6 * pow($humidity, 2.0);
-        $terme4 = $c7 * $humidity * pow($tempF, 2.0);
-        $terme5 = $c8 * $tempF * pow($humidity, 2.0);
-        $terme6 = $c9 * pow($tempF, 2.0) * pow($humidity, 2.0);
-        $heat_index_F = $terme1 + $terme2 + $terme3 + $terme4 + $terme5 + $terme6;
-        $heat_index = ($heat_index_F - 32.0) / 1.8;
-        log::add(__CLASS__, 'debug', '│ │ Indice de Chaleur (Humidex) : ' . $heat_index); */
 
         if ($temperature < 10) {
             if (0 < $windchill) {
