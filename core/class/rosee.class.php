@@ -859,7 +859,7 @@ class rosee extends eqLogic
     public static function getTemperature($wind, $temperature, $humidity, $pre_seuil, $seuil)
     {
         /*  ********************** Calcul du Windchill *************************** */
-        log::add(__CLASS__, 'debug', '│ ┌───────── CALCUL DU WINDCHILL / REFROIDISSEMENT EOLIEN');
+        log::add(__CLASS__, 'debug', '│ ┌───────── CALCUL DE LA TEMPERATURE RESSENTIE (WINDCHILL)');
         // sources : https://fr.m.wikipedia.org/wiki/Refroidissement_éolien#Calcul
         if ($temperature > 10.0) {
             $windchill = $temperature;
