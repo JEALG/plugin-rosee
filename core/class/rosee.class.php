@@ -875,7 +875,7 @@ class rosee extends eqLogic
                 $windchill = $temperature + $Rc3 * $wind;
             }
         }
-        log::add(__CLASS__, 'debug', '│ │ Windchill : ' . $windchill . '°C');
+        log::add(__CLASS__, 'debug', '│ │ Température ressentie (Windchill) : ' . $windchill . '°C');
         log::add(__CLASS__, 'debug', '│ └───────');
 
         /*  ********************** Calcul de l'indice de chaleur *************************** */
