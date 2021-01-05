@@ -151,7 +151,7 @@ function addCmdToTable(_cmd) {
 	tr += '<td style="min-width:50px;width:70px;">';
 	tr += '<span class="cmdAttr" data-l1key="id" ></span>';
 	tr += '</td>';
-	tr += '<td style="min-width:300px;width:350px;">';
+	tr += '<td style="min-width:400px;width:450px;">';
 	tr += '<div class="row">';
 	tr += '<div class="col-xs-7">';
 	tr += '<input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom de la commande}}">';
