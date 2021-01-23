@@ -156,8 +156,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                             <?php
                                             $options = '';
                                             foreach ((jeeObject::buildTree(null, false)) as $object) {
-                                                $decay = $object->getConfiguration('parentNumber');
-                                                $options .= '<option value="' . $object->getId() . '">' . str_repeat('&nbsp;&nbsp;', $decay) . $object->getName() . '</option>';
+                                                $options .= '<option value="' . $object->getId() . '">' . str_repeat('&nbsp;&nbsp;', $object->getConfiguration('parentNumber')) . $object->getName() . '</option>';
                                             }
                                             echo $options;
                                             ?>
