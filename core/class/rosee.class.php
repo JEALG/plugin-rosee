@@ -301,7 +301,7 @@ class rosee extends eqLogic
             $order++;
         }
 
-        if ($calcul != 'tendance') {
+        if ($calcul != 'tendance' || $calcul != null) {
             $Equipement->AddCommand('Température', 'temperature', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
             $order++;
         }
