@@ -239,7 +239,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </div>
                                 <div id="pressure" class="form-group" style="display:none">
                                     <label class="col-sm-3 control-label">{{Pression Atmosphérique}}
-                                        <sup><i class="fas fa-question-circle" title="{{(hPa) Pression atmosphérique réelle sur le site. 1013,25 hPa par défaut si non renseignée.}}"></i></sup>
+                                        <sup><i class="fas fa-question-circle" title="{{(hPa) Pression atmosphérique réelle sur le site. 1013,25 hPa par défaut si non renseignée. Ce champ est obligatoire pour le calcul Tendance Météo}}"></i></sup>
                                     </label>
                                     <div class="col-md-7">
                                         <div class="input-group">

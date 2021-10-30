@@ -13,5 +13,7 @@
     "language": ["de_DE", "en_US", "es_ES", "fr_FR", "id_ID", "it_IT", "ru_RU", "sp_SP"],
     "changelog": "https://jealg.github.io/documentation/plugin-rosee/#language#/changelog",
     "documentation": "https://jealg.github.io/documentation/plugin-rosee/#language#/",
+    "changelog_beta" : "https://jealg.github.io/documentation/plugin-rosee/#language#/changelog",
+ 	"documentation_beta" : "https://jealg.github.io/documentation/plugin-rosee/#language#/",
     "compatibility": ["miniplus", "smart", "rpi", "docker", "diy", "v4", "mobile"]
 }
