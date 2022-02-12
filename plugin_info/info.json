@@ -18,13 +18,13 @@
     "changelog_beta" : "https://jealg.github.io/documentation/plugin-rosee/#language#/changelog",
  	"documentation_beta" : "https://jealg.github.io/documentation/plugin-rosee/#language#/",
      "compatibility": [
-        "miniplus",
-        "smart",
-        "atlas",
-        "rpi",
-        "docker",
-        "diy",
-        "mobile",
-        "v4"
-    ]
+		"miniplus",
+		"smart",
+		"rpi",
+		"docker",
+		"diy",
+		"mobile",
+		"v4",
+		"atlas"
+	]
 }
