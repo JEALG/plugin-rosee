@@ -46,7 +46,10 @@ class rosee extends eqLogic
         }
         return $return;
     }
+    //Fonction Widget
     public static $_widgetPossibility = array('custom' => true);
+
+    //Fonction exécutée automatiquement
     public static function cron5($_eqlogic_id = null)
     {
         foreach (eqLogic::byType('rosee') as $rosee) {
