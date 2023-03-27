@@ -90,7 +90,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
             if ($status == 1) {
                 //echo '</div>';
             } else {
-                echo "<br/><br/><br/><center><span style='color:#767676;font-size:1em;font-weight: bold;margin-left: 10px'>{{Aucun équipement de type Tendance n\'aa été créé.}}</span></center>";
+                echo "<br/><br/><br/><center><span style='color:#767676;font-size:1em;font-weight: bold;margin-left: 10px'>{{Aucun équipement de type Tendance n\'a été créé.}}</span></center>";
             }
             ?>
         </div>
