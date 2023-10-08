@@ -33,13 +33,13 @@ class rosee extends eqLogic
                 preg_match_all("/#([0-9]*)#/", $cmd->getConfiguration('infoName', ''), $matches);
                 foreach ($matches[1] as $cmd_id) {
                     if (!cmd::byId(str_replace('#', '', $cmd_id))) {
-                        $return[] = array('detail' => __('rosee', __FILE__) . ' ' . $rosee->getHumanName() . ' ' . __('dans la commande', __FILE__) . ' ' . $cmd->getName(), 'help' => __('Nom Information', __FILE__), 'who' => '#' . $cmd_id . '#');
+                        $return[] = array('detail' => __('Rosée', __FILE__) . ' ' . $rosee->getHumanName() . ' ' . __('dans la commande', __FILE__) . ' ' . $cmd->getName(), 'help' => __('Nom Information', __FILE__), 'who' => '#' . $cmd_id . '#');
                     }
                 }
                 preg_match_all("/#([0-9]*)#/", $cmd->getConfiguration('calcul', ''), $matches);
                 foreach ($matches[1] as $cmd_id) {
                     if (!cmd::byId(str_replace('#', '', $cmd_id))) {
-                        $return[] = array('detail' => __('rosee', __FILE__) . ' ' . $rosee->getHumanName() . ' ' . __('dans la commande', __FILE__) . ' ' . $cmd->getName(), 'help' => __('Calcul', __FILE__), 'who' => '#' . $cmd_id . '#');
+                        $return[] = array('detail' => __('Rosée', __FILE__) . ' ' . $rosee->getHumanName() . ' ' . __('dans la commande', __FILE__) . ' ' . $cmd->getName(), 'help' => __('Calcul', __FILE__), 'who' => '#' . $cmd_id . '#');
                     }
                 }
             }
@@ -250,8 +250,8 @@ class rosee extends eqLogic
             $td_num = 1;
             $template_td = 'default';
             $template_td_num = 'rosee::tendance';
-            $name_td = 'Tendance';
-            $name_td_num = 'Tendance numérique';
+            $name_td = (__('Tendance', __FILE__));
+            $name_td_num = (__('Tendance numérique', __FILE__));
             $_iconname_td = 1;
             $_iconname_td_num = 1;
         } else if ($calcul == 'temperature') {
@@ -261,12 +261,12 @@ class rosee extends eqLogic
             $td_num = 1;
             $template_td = 'default';
             $template_td_num = $templatecore_V4 . 'line';
-            $name_td = 'Message';
-            $name_td_num = 'Message numérique';
+            $name_td = (__('Message', __FILE__));
+            $name_td_num = (__('Message numérique', __FILE__));
             $_iconname_td = 1;
             $_iconname_td_num = null;
-            $alert1 = 'Pré Alerte Humidex';
-            $alert2 = 'Alerte Humidex';
+            $alert1 = (__('Pré Alerte Humidex', __FILE__));
+            $alert2 = (__('Alerte Humidex', __FILE__));
         } else {
             $td_num_min = '0';
             $td_num_max = 3;
@@ -274,19 +274,29 @@ class rosee extends eqLogic
             $td_num = 1;
             $template_td = 'default';
             $template_td_num = $templatecore_V4 . 'line';
-            $name_td = 'Message';
-            $name_td_num = 'Message numérique';
+            $name_td = (__('Message', __FILE__));
+            $name_td_num =  (__('Message numérique', __FILE__));
             $_iconname_td = 1;
             $_iconname_td_num = null;
-            $alert1 = 'Alerte rosée';
-            $alert2 = 'Alerte givre';
+            $alert1 =  (__('Alerte rosée', __FILE__));
+            $alert2 = (__('Alerte givre', __FILE__));
         }
+        $humidityname =  (__('Humidité absolue', __FILE__));
+        $humidity_relative_name =  (__('Humidité Relative', __FILE__));
+        $pointroseename =  (__('Point de Rosée', __FILE__));
+        $pointgivrename =  (__('Point de Givrage', __FILE__));
+        $temp_ressentiename =  (__('Température ressentie', __FILE__));
+        $temp_name =  (__('Température', __FILE__));
+        $indice_chaleur_name =  (__('Indice de Chaleur (Humidex)', __FILE__));
+        $pressure_name =  (__('Pression Atmosphérique', __FILE__));
+        $dPdT_name =  (__('dPdT', __FILE__));
+        $vent_name =  (__('Vitesse du Vent', __FILE__));
 
         $Equipement = eqlogic::byId($this->getId());
 
 
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs') {
-            $Equipement->AddCommand('Humidité absolue', 'humidityabs', 'info', 'numeric', $templatecore_V4 . 'line', 'g/m3', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+            $Equipement->AddCommand($humidityname, 'humidityabs', 'info', 'numeric', $templatecore_V4 . 'line', 'g/m3', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
             $order++;
         }
 
@@ -296,7 +306,7 @@ class rosee extends eqLogic
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'givre') {
-            $Equipement->AddCommand('Point de rosée', 'rosee', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+            $Equipement->AddCommand($pointroseename, 'rosee', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
             $order++;
         }
 
@@ -304,14 +314,14 @@ class rosee extends eqLogic
             $Equipement->AddCommand($alert2, 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
             $order++;
             if ($calcul != 'temperature') {
-                $Equipement->AddCommand('Point de givrage', 'givrage', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+                $Equipement->AddCommand($pointgivrename, 'givrage', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
                 $order++;
             }
         }
         if ($calcul == 'temperature') {
-            $Equipement->AddCommand('Température ressentie', 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
+            $Equipement->AddCommand($temp_ressentiename, 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
             $order++;
-            $Equipement->AddCommand('Indice de Chaleur (Humidex)', 'humidex', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
+            $Equipement->AddCommand($indice_chaleur_name, 'humidex', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
             $order++;
         }
         if ($calcul != 'humidityabs' && $calcul != null) {
@@ -322,19 +332,19 @@ class rosee extends eqLogic
         }
 
         if ($calcul != 'tendance' && $calcul != null) {
-            $Equipement->AddCommand('Température', 'temperature', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+            $Equipement->AddCommand($temp_name, 'temperature', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
             $order++;
         }
         if ($calcul != 'temperature' && $calcul != null) {
-            $Equipement->AddCommand('Pression Atmosphérique', 'pressure', 'info', 'numeric', $templatecore_V4 . 'line', 'hPa', 'WEATHER_PRESSURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+            $Equipement->AddCommand($pressure_name, 'pressure', 'info', 'numeric', $templatecore_V4 . 'line', 'hPa', 'WEATHER_PRESSURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
             $order++;
         }
         if ($calcul == 'tendance') {
-            $Equipement->AddCommand('dPdT', 'dPdT', 'info', 'numeric', $templatecore_V4 . 'line', 'hPa/h', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+            $Equipement->AddCommand($dPdT_name, 'dPdT', 'info', 'numeric', $templatecore_V4 . 'line', 'hPa/h', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
             $order++;
         }
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs' || $calcul == 'temperature') {
-            $Equipement->AddCommand('Humidité Relative', 'humidityrel', 'info', 'numeric', $templatecore_V4 . 'line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+            $Equipement->AddCommand($humidity_relative_name, 'humidityrel', 'info', 'numeric', $templatecore_V4 . 'line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
             $order++;
         }
         if ($calcul == 'temperature') {
@@ -346,7 +356,7 @@ class rosee extends eqLogic
             if ($wind_unite == 'm/s') {
                 $wind_unite = ' km/h';
             }
-            $Equipement->AddCommand('Vitesse du Vent', 'wind', 'info', 'numeric', $templatecore_V4 . 'line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+            $Equipement->AddCommand($vent_name, 'wind', 'info', 'numeric', $templatecore_V4 . 'line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
             $order++;
         }
     }
@@ -356,7 +366,7 @@ class rosee extends eqLogic
         if (!$this->getIsEnable()) return;
 
         if ($this->getConfiguration('type_calcul') == '') {
-            throw new Exception(__('Le champ "Calcul" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+            throw new Exception(__((__('Le champ TYPE DE CALCUL ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
             log::add(__CLASS__, 'error', '│ Configuration : Méthode de Calcul inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('type_calcul'));
         }
     }
@@ -396,7 +406,7 @@ class rosee extends eqLogic
         /*  ********************** Calcul *************************** */
         $calcul = $this->getConfiguration('type_calcul');
         if ($calcul == '') {
-            throw new Exception(__('Le champ "Calcul" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+            throw new Exception(__((__('Le champ TYPE DE CALCUL ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
             log::add(__CLASS__, 'error', '│ Configuration : Méthode de Calcul inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('type_calcul'));
         }
         log::add(__CLASS__, 'debug', '│ Méthode de calcul : ' . $calcul);
@@ -409,8 +419,8 @@ class rosee extends eqLogic
             log::add(__CLASS__, 'debug', '│ Température : ' . $temperature . ' °C');
         } else {
             if ($calcul != 'tendance') {
-                throw new Exception(__('Le champ "Température" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
-                log::add(__CLASS__, 'error', '│ Configuration : Température inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('temperature'));
+                throw new Exception(__((__('Le champ TEMPERATURE ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
+                log::add(__CLASS__, 'error', '│ Configuration : TEMPERATURE inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('temperature'));
             }
         }
 
@@ -433,8 +443,8 @@ class rosee extends eqLogic
                 $wind_unite = $cmdvirt->getUnite();
                 log::add(__CLASS__, 'debug', '│ Vent : ' . $wind . ' ' . $wind_unite);
             } else {
-                throw new Exception(__('Le champ "Vent" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
-                log::add(__CLASS__, 'error', '│ Configuration : vent inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('wind'));
+                throw new Exception(__((__('Le champ VITESSE DU VENT ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
+                log::add(__CLASS__, 'error', '│ Configuration : VITESSE DU VENT inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('wind'));
             }
             if ($wind_unite == 'm/s') {
                 log::add(__CLASS__, 'debug', '│ La vitesse du vent sélectionnée est en m/s, le plugin va convertir en km/h');
@@ -478,7 +488,7 @@ class rosee extends eqLogic
                     $pressure = $cmdvirt->execCmd();
                     log::add(__CLASS__, 'debug', '│ Pression Atmosphérique : ' . $pressure . ' hPa');
                 } else {
-                    throw new Exception(__('Le champ "Pression Atmosphérique" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+                    throw new Exception(__((__('Le champ PRESSION ATMOSPHÉRIQUE ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
                     log::add(__CLASS__, 'error', '│ Configuration : Pression Atmosphérique inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('pression'));
                 }
             }
@@ -491,7 +501,7 @@ class rosee extends eqLogic
             log::add(__CLASS__, 'debug', '│ Humidité Relative : ' . $humidity . ' %');
         } else {
             if ($calcul != 'tendance') {
-                throw new Exception(__('Le champ "Humidité Relative" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+                throw new Exception(__((__('Le champ HUMIDITÉ RELATIVE ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
                 log::add(__CLASS__, 'error', '│ Configuration : Humidité Relative inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('humidite'));
             }
         }
@@ -747,7 +757,7 @@ class rosee extends eqLogic
     /*  ********************** Calcul du Point de givrage *************************** */
     public static function getGivre($temperature, $SHA, $humidityabs_m3, $rosee)
     {
-        $td = 'Aucun risque de Givre';
+        $td = (__('Aucun risque de Givre', __FILE__));
         $td_num = number_format(0);
         $alert_2  = 0;
         if ($temperature <= 5) {
@@ -765,23 +775,23 @@ class rosee extends eqLogic
             if ($temperature <= 1 && $frost_point <= 0) {
                 $alert_2  = 1;
                 if ($humidityabs_m3 > $SHA) { // Cas N°3
-                    $td = 'Givre, Présence de givre';
+                    $td = (__('Givre, Présence de givre', __FILE__));
                     $td_num = number_format(3);
                 };
                 if ($humidityabs_m3 < $SHA) { // Cas N°1
-                    $td = 'Givre peu probable malgré la température';
+                    $td = (__('Givre peu probable malgré la température', __FILE__));
                     $td_num = number_format(1);
                 };
             } elseif ($temperature <= 4 && $frost_point <= 0.5) { // Cas N°2
-                $td = 'Risque de givre';
+                $td = (__('Risque de givre', __FILE__));
                 $td_num = number_format(2);
                 $alert_2  = 1;
                 //} else {// Cas N°0
             };
         } else {
             $frost_point = 5;
-            $msg_givre2 = 'Info supplémentaire : Il fait trop chaud pas de calcul de l\'alerte givre (' . $temperature . ' °C > 5 °C)';
-            $msg_givre3 = 'Info supplémentaire : Point de givre fixé est : ' . $frost_point . ' °C';
+            $msg_givre2 = (__('Info supplémentaire : Il fait trop chaud pas de calcul de l\'alerte givre (', __FILE__)) . $temperature . ' °C > 5 °C)';
+            $msg_givre3 = (__('Info supplémentaire : Point de givre fixé est : ', __FILE__)) . $frost_point . ' °C';
         };
         return array($td_num, $td, $alert_2, $frost_point, $msg_givre2, $msg_givre3);
     }
@@ -859,22 +869,22 @@ class rosee extends eqLogic
         log::add(__CLASS__, 'debug', '│ │ Tendance Moyenne (dPdT): ' . $dPdT . ' hPa/h');
 
         if ($td_moy > 2.5) { // Quickly rising High Pressure System, not stable
-            $td = 'Forte embellie, instable';
+            $td = (__('Forte embellie, instable', __FILE__));
             $td_num = number_format(5);
         } elseif ($td_moy > 0.5 && $td_moy <= 2.5) { // Slowly rising High Pressure System, stable good weather
-            $td = 'Amélioration, beau temps durable';
+            $td = (__('Amélioration, beau temps durable', __FILE__));
             $td_num = number_format(4);
         } elseif ($td_moy > 0.0 && $td_moy <= 0.5) { // Stable weather condition
-            $td = 'Lente amélioration, temps stable';
+            $td = (__('Lente amélioration, temps stable', __FILE__));
             $td_num = number_format(3);
         } elseif ($td_moy > -0.5 && $td_moy <= 0) { // Stable weather condition
-            $td = 'Lente dégradation, temps stable';
+            $td = (__('Lente dégradation, temps stable', __FILE__));
             $td_num = number_format(2);
         } elseif ($td_moy > -2.5 && $td_moy <= -0.5) { // Slowly falling Low Pressure System, stable rainy weather
-            $td = 'Dégradation, mauvais temps durable';
+            $td = (__('Dégradation, mauvais temps durable', __FILE__));
             $td_num = number_format(1);
         } else { // Quickly falling Low Pressure, Thunderstorm, not stable
-            $td = 'Forte dégradation, instable';
+            $td = (__('Forte dégradation, instable', __FILE__));
             $td_num = 0;
         };
         log::add(__CLASS__, 'debug', '│ └─────────');
@@ -925,51 +935,51 @@ class rosee extends eqLogic
 
         if ($temperature < 10) {
             if (0 < $windchill) {
-                $td = 'Pas de risque de gelures ni d’hypothermie (pour une exposition normale)';
+                $td = (__('Pas de risque de gelures ni d’hypothermie (pour une exposition normale', __FILE__));
                 $td_num = -1;
             } else if (-10 < $windchill && 0 <= $windchill) {
-                $td = 'Faible risque de gelures';
+                $td = (__('Faible risque de gelures', __FILE__));
                 $td_num = -2;
             } else if (-28 < $windchill && -10 <= $windchill) {
-                $td = 'Faible risque de gelures et d’hypothermie';
+                $td = (__('Faible risque de gelures et d’hypothermie', __FILE__));
                 $td_num = -3;
             } else if (-40 < $windchill && -28 <= $windchill) {
-                $td = 'Risque modéré de gelures en 10 à 30 minutes de la peau exposée et d’hypothermie';
+                $td = (__('Risque modéré de gelures en 10 à 30 minutes de la peau exposée et d’hypothermie', __FILE__));
                 $td_num = -4;
             } else if (-48 < $windchill && -40 <= $windchill) {
-                $td = 'Risque élevé de gelures en 5 à 10 minutes (voir note) de la peau exposée et d’hypothermie';
+                $td = (__('Risque élevé de gelures en 5 à 10 minutes (voir note) de la peau exposée et d’hypothermie', __FILE__));
                 $td_num = -5;
             } else if (-55 < $windchill && -48 <= $windchill) {
-                $td = 'Risque très élevé de gelures en 2 à 5 minutes (voir note) sans protection intégrale ni activité';
+                $td = (__('Risque très élevé de gelures en 2 à 5 minutes (voir note) sans protection intégrale ni activité', __FILE__));
                 $td_num = -6;
             } else if ($windchill <= -55) {
-                $td = 'Danger ! Risque extrêmement élevé de gelures en moins de 2 minutes (voir note) et d\'hypothermie. Rester à l\'abri';
+                $td = (__('Danger ! Risque extrêmement élevé de gelures en moins de 2 minutes (voir note) et d\'hypothermie. Rester à l\'abri', __FILE__));
                 $td_num = -7;
             }
         } else {
             if ($humidex < 15.0) {
+                $td = (__('Sensation de frais ou de froid', __FILE__));
                 $td_num = 1;
-                $td = 'Sensation de frais ou de froid';
             } elseif ($humidex >= 15.0 && $humidex <= 19.0) {
-                $td = 'Aucun inconfort';
+                $td = (__('Aucun inconfort', __FILE__));
                 $td_num = 2;
             } elseif ($humidex > 19.0 && $humidex <= 29.0) {
-                $td = "Sensation de bien être";
+                $td = (__('Sensation de bien être', __FILE__));
                 $td_num = 3;
             } elseif ($humidex > 29.0 && $humidex <= 34.0) {
-                $td = "Sensation d'inconfort plus ou moins grande";
+                $td = (__('Sensation d\'inconfort plus ou moins grande', __FILE__));
                 $td_num = 4;
             } elseif ($humidex > 34.0 && $humidex <= 39.0) {
-                $td = "Sensation d'inconfort assez grande. Prudence. Ralentir certaines activités en plein air.";
+                $td = (__('Sensation d\'inconfort assez grande. Prudence. Ralentir certaines activités en plein air.', __FILE__));
                 $td_num = 5;
             } elseif ($humidex > 39.0 && $humidex <= 45.0) {
-                $td = "Sensation d'inconfort généralisée. Danger. Éviter les efforts.";
+                $td = (__('Sensation d\'inconfort généralisée. Danger. Éviter les efforts.', __FILE__));
                 $td_num = 6;
             } elseif ($humidex > 45.0 && $humidex <= 53.0) {
-                $td = 'Danger extrême. Arrêt de travail dans de nombreux domaines.';
+                $td = (__('Danger extrême. Arrêt de travail dans de nombreux domaines.', __FILE__));
                 $td_num = 7;
             } else {
-                $td = 'Coup de chaleur imminent (danger de mort).';
+                $td = (__('Coup de chaleur imminent (danger de mort).', __FILE__));
                 $td_num = 8;
             }
         }
