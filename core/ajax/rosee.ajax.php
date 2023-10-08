@@ -27,7 +27,7 @@ try {
     if (init('action') == 'getRosee') {
         $rosee = rosee::byId(init('id'));
         if (!is_object($rosee)) {
-            throw new Exception(__('Plugin inconnu verifier l\'id', __FILE__));
+            throw new Exception(__('Plugin inconnu vérifier l\'id', __FILE__));
         }
         $return = utils::o2a($rosee);
         $return['cmd'] = array();
@@ -42,7 +42,7 @@ try {
     if (init('action') == 'autoDEL_eq') {
         $eqLogic = rosee::byId(init('id'));
         if (!is_object($eqLogic)) {
-            throw new Exception(__('Rosee eqLogic non trouvé : ', __FILE__) . init('id'));
+            throw new Exception(__('Rosée eqLogic non trouvé : ', __FILE__) . init('id'));
         }
         foreach ($eqLogic->getCmd() as $cmd) {
             $cmd->remove();

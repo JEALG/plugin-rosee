@@ -22,6 +22,21 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 <i class="fas fa-wrench"></i><br>
                 <span>{{Configuration}}</span>
             </div>
+            <?php
+            // à conserver
+            // sera afficher uniquement si l'utilisateur est en version 4.4 ou supérieur
+            $jeedomVersion  = jeedom::version() ?? '0';
+            $displayInfoValue = version_compare($jeedomVersion, '4.4.0', '>=');
+            if ($displayInfoValue) :
+            ?>
+                <div class="cursor eqLogicAction info" data-action="createCommunityPost">
+                    <i class="fas fa-ambulance"></i>
+                    <br>
+                    <span style="color:var(--txt-color)">{{Créer un post Community}}</span>
+                </div>
+            <?php
+            endif;
+            ?>
         </div>
         <!-- Champ de recherche -->
         <div class="input-group" style="margin-bottom:5px;">
@@ -49,8 +64,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     echo '<br>';
                     echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
                     echo '<span class="hiddenAsCard displayTableRight hidden">';
-                    echo '<span class="label">' . $eqLogic->getConfiguration('type_calcul')  .  '</span>';
-                    echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Equipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Equipement non visible}}"></i>';
+                    echo '<span class="label" title="{{Type de Calcul}}">' . $eqLogic->getConfiguration('type_calcul')  .  '</span>';
+                    echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Équipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Équipement non visible}}"></i>';
                     echo '</span>';
                     echo '</div>';
                 }
@@ -81,8 +96,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     echo '<br>';
                     echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
                     echo '<span class="hiddenAsCard displayTableRight hidden">';
-                    echo '<span class="label">' . $eqLogic->getConfiguration('type_calcul')  .  '</span>';
-                    echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Equipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Equipement non visible}}"></i>';
+                    echo '<span class="label" title="{{Type de Calcul}}">' . $eqLogic->getConfiguration('type_calcul')  .  '</span>';
+                    echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Équipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Équipement non visible}}"></i>';
                     echo '</span>';
                     echo '</div>';
                 }
@@ -112,8 +127,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     echo '<br>';
                     echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
                     echo '<span class="hiddenAsCard displayTableRight hidden">';
-                    echo '<span class="label">' . $eqLogic->getConfiguration('type_calcul')  .  '</span>';
-                    echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Equipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Equipement non visible}}"></i>';
+                    echo '<span class="label" title="{{Type de Calcul}}">' . $eqLogic->getConfiguration('type_calcul')  .  '</span>';
+                    echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Équipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Équipement non visible}}"></i>';
                     echo '</span>';
                     echo '</div>';
                 }
@@ -143,8 +158,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
         <!-- Onglets -->
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation"><a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
-            <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Equipement}}</a></li>
-            <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Commandes}}</a></li>
+            <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Équipement}}</a></li>
+            <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list"></i> {{Commandes}}</a></li>
         </ul>
         <div class="tab-content">
             <!-- Onglet de configuration de l'équipement -->
@@ -218,20 +233,20 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </div>
                             <div id="temperature" class="form-group" style="display:none">
                                 <label class="col-md-4 control-label">{{Température}}
-                                    <sup><i class="fas fa-question-circle" title="{{(°C) Commande température}}"></i></sup>
+                                    <sup><i class="fas fa-question-circle" title="{{(°C) Température}}"></i></sup>
                                 </label>
                                 <div class="col-sm-6">
                                     <div class="input-group">
-                                        <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="temperature" placeholder="{{Température °C}}">
+                                        <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="temperature" placeholder="{{(°C) Température}}">
                                         <span class="input-group-btn">
-                                            <a class="btn btn-default listCmdActionOther roundedRight" title="Rechercher une commande"><i class="fas fa-list-alt"></i></a>
+                                            <a class="btn btn-default listCmdActionOther roundedRight" title="{{Rechercher une commande}}"><i class="fas fa-list-alt"></i></a>
                                         </span>
                                     </div>
                                 </div>
                             </div>
                             <div id="temperature_offset" class="form-group" style="display:none">
                                 <label class="col-sm-4 control-label">{{Offset Température}}
-                                    <sup><i class="fas fa-question-circle" title="{{A ajuster en fonction des observations locales et de la position de la sonde, 0 par défaut.}}"></i></sup>
+                                    <sup><i class="fas fa-question-circle" title="{{À ajuster en fonction des observations locales et de la position de la sonde, 0 par défaut.}}"></i></sup>
                                 </label>
                                 <div class="col-md-2">
                                     <input type="number" step="0.1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="OffsetT" placeholder="0">
@@ -239,13 +254,13 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </div>
                             <div id="humidite" class="form-group" style="display:none">
                                 <label class="col-sm-4 control-label">{{Humidité Relative}}
-                                    <sup><i class="fas fa-question-circle" title="{{(%) Commande humidité}}"></i></sup>
+                                    <sup><i class="fas fa-question-circle" title="F{{(%) Humidité Relative}}"></i></sup>
                                 </label>
                                 <div class="col-sm-6">
                                     <div class="input-group">
-                                        <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="humidite" placeholder="{{Humidité Relative %}}">
+                                        <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="humidite" placeholder="{{(%) Humidité Relative}}">
                                         <span class="input-group-btn">
-                                            <a class="btn btn-default listCmdActionOther roundedRight" title="Rechercher une commande"><i class="fas fa-list-alt"></i></a>
+                                            <a class="btn btn-default listCmdActionOther roundedRight" title="{{Rechercher une commande}}"><i class="fas fa-list-alt"></i></a>
                                         </span>
                                     </div>
                                 </div>
@@ -258,7 +273,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     <div class="input-group">
                                         <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="pression" placeholder="1013.25 hPa">
                                         <span class="input-group-btn">
-                                            <a class="btn btn-default listCmdActionOther roundedRight" title="Rechercher une commande"><i class="fas fa-list-alt"></i></a>
+                                            <a class="btn btn-default listCmdActionOther roundedRight" title="{{Rechercher une commande}}"><i class="fas fa-list-alt"></i></a>
                                         </span>
                                     </div>
                                 </div>
@@ -269,9 +284,9 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </label>
                                 <div class="col-sm-6">
                                     <div class="input-group">
-                                        <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="wind" placeholder="{{Vitesse du vent}}">
+                                        <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="wind" placeholder="{{Vitesse du Vent}}">
                                         <span class="input-group-btn">
-                                            <a class="btn btn-default listCmdActionOther roundedRight" title="Rechercher une commande"><i class="fas fa-list-alt"></i></a>
+                                            <a class="btn btn-default listCmdActionOther roundedRight" title="{{Rechercher une commande}}"><i class="fas fa-list-alt"></i></a>
                                         </span>
                                     </div>
                                 </div>
