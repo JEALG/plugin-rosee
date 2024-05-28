@@ -39,7 +39,7 @@ function rosee_install()
 function rosee_update()
 {
     jeedom::getApiKey('rosee');
-
+    //log::add('rosee', 'debug', '[INFO] Mise à jour Plugin');
     $cron = cron::byClassAndFunction('rosee', 'pull');
     if (is_object($cron)) {
         $cron->remove();
@@ -66,6 +66,7 @@ function rosee_update()
     }
 
     $plugin = plugin::byId('rosee');
+
     $eqLogics = eqLogic::byType($plugin->getId());
     foreach ($eqLogics as $eqLogic) {
         updateLogicalId($eqLogic, 'humidityabs', null, '2');
@@ -85,7 +86,7 @@ function rosee_update()
         }
     } catch (Exception $e) {
         $e = print_r($e, 1);
-        log::add('rosee', 'error', 'rosee update ERROR : ' . $e);
+        log::add('rosee', 'error', '[ALERT] rosee update ERROR : ' . $e);
     }
 
     //message::add('Plugin Rosée - Givre - Tendance', 'Merci pour la mise à jour de ce plugin, consultez le changelog.');
@@ -93,6 +94,7 @@ function rosee_update()
     foreach (eqLogic::byType('rosee') as $rosee) {
         $rosee->getInformations();
     }
+    //log::add('rosee', 'debug', '[INFO] Mise à jour Plugin');
 }
 
 function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = null, $unite = null)
@@ -103,7 +105,7 @@ function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = 
             $command->setLogicalId($to);
         }
         if ($_historizeRound != null) {
-            log::add('rosee', 'debug', 'Correction arrondi pour : ' . $from . 'Par :' . $_historizeRound);
+            log::add('rosee', 'debug', '[INFO] Correction de la valeur d\'arrondi pour : ' . $from . ' Par la valeur :' . $_historizeRound);
             $command->setConfiguration('historizeRound', $_historizeRound);
         }
         if ($name != null) {
