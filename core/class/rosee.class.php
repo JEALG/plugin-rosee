@@ -401,7 +401,7 @@ class rosee extends eqLogic
 
         /*  ********************** Calcul *************************** */
         $calcul = $this->getConfiguration('type_calcul');
-        if ($calcul == '') {
+        if ($calcul === '') {
             log::add(__CLASS__, 'error', 'Configuration : Méthode de Calcul inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('type_calcul'));
             throw new Exception(__((__('Le champ TYPE DE CALCUL ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
         }
@@ -412,7 +412,7 @@ class rosee extends eqLogic
         $cmdvirt = cmd::byId($idvirt);
         if (is_object($cmdvirt)) {
             $temperature = $cmdvirt->execCmd();
-            if ($temperature == '') {
+            if ($temperature === '') {
                 log::add(__CLASS__, 'error', (__('La valeur :', __FILE__)) . ' ' . (__('Température', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
                 throw new Exception((__('La valeur :', __FILE__)) . ' ' . (__('Température', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
             } else {
@@ -428,7 +428,7 @@ class rosee extends eqLogic
         /*  ********************** Offset Température *************************** */
         if ($calcul != 'tendance') {
             $OffsetT = $this->getConfiguration('OffsetT');
-            if ($OffsetT == '') {
+            if ($OffsetT === '') {
                 $OffsetT = 0;
             } else {
                 $temperature = $temperature + $OffsetT;
@@ -442,7 +442,7 @@ class rosee extends eqLogic
             if (is_object($cmdvirt)) {
                 $wind = $cmdvirt->execCmd();
                 $wind_unite = $cmdvirt->getUnite();
-                if ($wind == '') {
+                if ($wind === '') {
                     log::add(__CLASS__, 'error', (__('La valeur :', __FILE__)) . ' ' . (__('Vitesse du Vent', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
                     throw new Exception((__('La valeur :', __FILE__)) . ' ' . (__('Vitesse du Vent', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
                 } else {
@@ -461,9 +461,9 @@ class rosee extends eqLogic
         }
 
         /*  ********************** Seuil PRE-Alerte Humidex *************************** */
-        if ($calcul == 'temperature') {
+        if ($calcul === 'temperature') {
             $pre_seuil = $this->getConfiguration('PRE_SEUIL');
-            if ($pre_seuil == '') {
+            if ($pre_seuil === '') {
                 $pre_seuil = 30;
                 log::add(__CLASS__, 'debug', '[INFO] Aucun Seuil Pré-Alerte Humidex de saisie, valeur par défaut : ' . $pre_seuil . ' °C');
             } else {
@@ -471,9 +471,9 @@ class rosee extends eqLogic
             }
         }
         /*  ********************** Seuil Alerte Humidex*************************** */
-        if ($calcul == 'temperature') {
+        if ($calcul === 'temperature') {
             $seuil = $this->getConfiguration('SEUIL');
-            if ($seuil == '') {
+            if ($seuil === '') {
                 $seuil = 40;
                 log::add(__CLASS__, 'debug', '[INFO] Aucun Seuil Alerte Humidex de saisie, valeur par défaut : ' . $seuil . ' °C');
             } else {
@@ -484,7 +484,7 @@ class rosee extends eqLogic
         /*  ********************** PRESSION *************************** */
         if ($calcul != 'temperature') {
             $pressure = $this->getConfiguration('pression');
-            if ($pressure == '' && $calcul != 'tendance') { //valeur par défaut de la pression atmosphérique : 1013.25 hPa
+            if ($pressure === '' && $calcul != 'tendance') { //valeur par défaut de la pression atmosphérique : 1013.25 hPa
                 $pressure = 1013.25;
                 log::add(__CLASS__, 'debug', '[INFO] Pression Atmosphérique aucun équipement sélectionné, valeur par défaut : ' . $pressure . ' hPa');
             } else {
@@ -492,7 +492,7 @@ class rosee extends eqLogic
                 $cmdvirt = cmd::byId($pressureID);
                 if (is_object($cmdvirt)) {
                     $pressure = $cmdvirt->execCmd();
-                    if ($pressure == '') {
+                    if ($pressure === '') {
                         log::add(__CLASS__, 'error', (__('La valeur :', __FILE__)) . ' ' . (__('Pression Atmosphérique', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
                         throw new Exception((__('La valeur :', __FILE__)) . ' ' . (__('Pression Atmosphérique', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
                     } else {
@@ -509,7 +509,7 @@ class rosee extends eqLogic
         $cmdvirt = cmd::byId($idvirt);
         if (is_object($cmdvirt)) {
             $humidity = $cmdvirt->execCmd();
-            if ($humidity == '') {
+            if ($humidity === '') {
                 log::add(__CLASS__, 'error', (__('La valeur :', __FILE__)) . ' ' . (__('Humidité Relative', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
                 throw new Exception((__('La valeur :', __FILE__)) . ' ' . (__('Humidité Relative', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
             } else {
@@ -524,7 +524,7 @@ class rosee extends eqLogic
 
 
         /*  ********************** SEUIL D'ALERTE ROSEE *************************** */
-        if ($calcul == 'rosee' || $calcul == 'rosee_givre' || $calcul == 'givre') {
+        if ($calcul === 'rosee' || $calcul == 'rosee_givre' || $calcul == 'givre') {
             $dpr = $this->getConfiguration('DPR');
             if ($dpr == '') {
                 $dpr = 2.0;
