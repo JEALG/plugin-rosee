@@ -105,7 +105,7 @@ function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = 
             $command->setLogicalId($to);
         }
         if ($_historizeRound != null) {
-            log::add('rosee', 'debug', '[INFO] Correction de la valeur d\'arrondi pour : ' . $from . ' Par la valeur :' . $_historizeRound);
+            log::add('rosee', 'debug', '[INFO] Correction de la valeur d\'arrondi pour : ' . $from . ' Par la valeur : ' . $_historizeRound);
             $command->setConfiguration('historizeRound', $_historizeRound);
         }
         if ($name != null) {
