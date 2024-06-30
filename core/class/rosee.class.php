@@ -50,7 +50,7 @@ class rosee extends eqLogic
     public static $_widgetPossibility = array('custom' => true);
 
     //Fonction exécutée automatiquement
-    public static function cron5($_eqlogic_id = null)
+    public static function cron5()
     {
         foreach (eqLogic::byType('rosee') as $rosee) {
             if ($rosee->getIsEnable()) {
@@ -60,7 +60,7 @@ class rosee extends eqLogic
         }
     }
 
-    public static function cron10($_eqlogic_id = null)
+    public static function cron10()
     {
         foreach (eqLogic::byType('rosee') as $rosee) {
             if ($rosee->getIsEnable()) {
@@ -70,7 +70,7 @@ class rosee extends eqLogic
         }
     }
 
-    public static function cron15($_eqlogic_id = null)
+    public static function cron15()
     {
         foreach (eqLogic::byType('rosee') as $rosee) {
             if ($rosee->getIsEnable()) {
@@ -90,7 +90,7 @@ class rosee extends eqLogic
         }
     }
 
-    public static function cronHourly($_eqlogic_id = null)
+    public static function cronHourly()
     {
         //no both cron30 and cronHourly enabled:
         if (config::byKey('functionality::cron30::enable', 'rosee', 0) == 1) {
