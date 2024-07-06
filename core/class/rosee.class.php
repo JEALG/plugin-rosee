@@ -493,10 +493,19 @@ class rosee extends eqLogic
                 $cmdvirt = cmd::byId($pressureID);
                 if (is_object($cmdvirt)) {
                     $pressure = $cmdvirt->execCmd();
+                    $pressureHISTO = $cmdvirt->getIsHistorized($pressureID);
+
                     if ($pressure === '') {
                         log::add('rosee', 'error', (__('La valeur :', __FILE__)) . ' ' . (__('Pression Atmosphérique', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
                         throw new Exception((__('La valeur :', __FILE__)) . ' ' . (__('Pression Atmosphérique', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
                     } else {
+                        $log_msg = (__('La pression Atmosphérique doit avoir l\'historique d\'activé', __FILE__));
+                        if ($pressureHISTO != 1) {
+                            log::add('rosee', 'debug', '| ───▶︎ [ALERT] ' . $log_msg . ' : ' . $pressureHISTO);
+                            message::add('Plugin Rosée - Givre - Tendance', $_eqName . ' : ' . $log_msg);
+                        } else {
+                            log::add('rosee', 'debug', '| ───▶︎ :fg-success:La commande de Pression Atmosphérique a bien l\'historique d\'activé:/fg:');
+                        }
                         log::add('rosee', 'debug', '| ───▶︎ Pression Atmosphérique : ' . $pressure . ' hPa');
                     }
                 } else {
