@@ -623,8 +623,8 @@ class rosee extends eqLogic
         $Equipement = eqlogic::byId($this->getId());
         if (is_object($Equipement) && $Equipement->getIsEnable()) {
             // Préparation futur mise à jour des commandes
-            //$liste = 'alert_1,alert_2,frost_point,humidex,humidityabs,humidityrel,pressure,temperature,rosee,td,dPdT,td_num,wind,windchill';
-            //$fields = explode(',', $liste);
+            //$cmd_list = 'alert_1,alert_2,frost_point,humidex,humidityabs_m3,humidityrel,pressure,temperature,rosee,td,dPdT,td_num,wind,windchill';
+            //$explode_list = explode(',', $cmd_list);
 
             foreach ($Equipement->getCmd('info') as $Command) {
                 if (is_object($Command)) {
