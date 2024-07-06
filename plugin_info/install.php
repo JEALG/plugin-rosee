@@ -71,7 +71,8 @@ function rosee_update()
     foreach ($eqLogics as $eqLogic) {
         updateLogicalId($eqLogic, 'humidityabs', null, '2');
         updateLogicalId($eqLogic, 'rosee', null, '2');
-        updateLogicalId($eqLogic, 'givrage', 'frost_point', '2'); // Modification du 06/07/2024
+        updateLogicalId($eqLogic, 'givrage', 'frost_point', '2'); // Modification du 06/07/2024 -> changement de logicalId de givrage à frost_point
+        updateLogicalId($eqLogic, 'humidityabs', 'humidityabs_m3', null); // Modification du 06/07/2024 -> changement de logicalId de humidityabs à frost_point
         updateLogicalId($eqLogic, 'td', null, null, 'Message'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'td_num', null, null, 'Message numérique'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'windchill', null, null, 'Température ressentie'); // Modification du 7/12/2020

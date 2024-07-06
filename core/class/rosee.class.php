@@ -292,7 +292,7 @@ class rosee extends eqLogic
 
 
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs') {
-            $Equipement->AddCommand($humidityname, 'humidityabs', 'info', 'numeric', $templatecore_V4 . 'line', 'g/m3', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+            $Equipement->AddCommand($humidityname, 'humidityabs_m3', 'info', 'numeric', $templatecore_V4 . 'line', 'g/m3', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
             $order++;
         }
 
@@ -654,7 +654,7 @@ class rosee extends eqLogic
                             log::add('rosee', 'debug', '| ───▶︎ Indice de Chaleur (Humidex) : ' . $humidex);
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidex);
                             break;
-                        case "humidityabs":
+                        case "humidityabs_m3":
                             log::add('rosee', 'debug', '| ───▶︎ Humidité Absolue : ' . $humidityabs_m3 . ' g/m3');
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidityabs_m3);
                             break;
