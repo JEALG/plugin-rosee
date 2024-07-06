@@ -69,13 +69,13 @@ function rosee_update()
 
     $eqLogics = eqLogic::byType($plugin->getId());
     foreach ($eqLogics as $eqLogic) {
-        //updateLogicalId($eqLogic, 'humidityabs', null, '2');
-        //updateLogicalId($eqLogic, 'rosee', null, '2');
-        updateLogicalId($eqLogic, 'givrage', 'frost_point', '2');
-        //updateLogicalId($eqLogic, 'td', null, null, 'Message'); // Modification du 7/12/2020
-        //updateLogicalId($eqLogic, 'td_num', null, null, 'Message numérique'); // Modification du 7/12/2020
-        //updateLogicalId($eqLogic, 'windchill', null, null, 'Température ressentie'); // Modification du 7/12/2020
-        //updateLogicalId($eqLogic, 'heat_index', 'humidex', 0, 'Indice de Chaleur (Humidex)', 'DELETE'); // Modification du 7/12/2020
+        updateLogicalId($eqLogic, 'humidityabs', null, '2');
+        updateLogicalId($eqLogic, 'rosee', null, '2');
+        updateLogicalId($eqLogic, 'givrage', 'frost_point', '2'); // Modification du 06/07/2024
+        updateLogicalId($eqLogic, 'td', null, null, 'Message'); // Modification du 7/12/2020
+        updateLogicalId($eqLogic, 'td_num', null, null, 'Message numérique'); // Modification du 7/12/2020
+        updateLogicalId($eqLogic, 'windchill', null, null, 'Température ressentie'); // Modification du 7/12/2020
+        updateLogicalId($eqLogic, 'heat_index', 'humidex', 0, 'Indice de Chaleur (Humidex)', 'DELETE'); // Modification du 7/12/2020
     }
 
     //resave eqLogics for new cmd:
