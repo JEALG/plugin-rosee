@@ -79,7 +79,7 @@ function rosee_update()
     }
 
     //resave eqLogics for new cmd:
-    /*try {
+    try {
         $eqs = eqLogic::byType('rosee');
         foreach ($eqs as $eq) {
             $eq->save();
@@ -87,7 +87,7 @@ function rosee_update()
     } catch (Exception $e) {
         $e = print_r($e, 1);
         log::add('rosee', 'error', '[ALERT] rosee update ERROR : ' . $e);
-    }*/
+    }
 
     //message::add('Plugin Rosée - Givre - Tendance', 'Merci pour la mise à jour de ce plugin, consultez le changelog.');
 
