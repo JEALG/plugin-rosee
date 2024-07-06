@@ -826,91 +826,84 @@ class rosee extends eqLogic
         $_date2 = new DateTime("$endDate");
         $startDate = $_date1->modify('-15 minute');
         $startDate = $_date1->format('Y-m-d H:i:s');
+        // Valeur nulle 
+        $td_moy = 100;
+        $dPdT = number_format($td_moy, 3, '.', '');
+        $td_num = number_format(5);
+        $td = (__('Pression atmosphérique nulle (historique)', __FILE__));
 
         // dernière mesure barométrique
         $h1 = $histo->lastBetween($pressureID, $startDate, $endDate);
         if ($h1 != '') {
             log::add('rosee', 'debug', '| ───▶︎ Timestamp -15min : Start/End Date : ' . $startDate . '/' . $endDate . ' - Pression Atmosphérique : ' . $h1 . ' hPa');
+
+            // calcul du timestamp - 2h
+            $endDate = $_date2->modify('-2 hour');
+            $endDate = $_date2->format('Y-m-d H:i:s');
+            $startDate = $_date1->modify('-2 hour');
+            $startDate = $_date1->format('Y-m-d H:i:s');
+
+            // mesure barométrique -2h
+            $h2 = $histo->lastBetween($pressureID, $startDate, $endDate);
+
+
+            // calculs de tendance 15min/2h
+            if ($h2 != null) {
+                $td2h = ($h1 - $h2) / 2;
+                $log_msg = 'Tendance -2h : ' . $td2h . ' hPa/h';
+                log::add('rosee', 'debug', '| ───▶︎ Timestamp -2h    : Start/End Date : ' . $startDate . '/' . $endDate . ' - Pression Atmosphérique : ' . $h2 . ' hPa - ' . $log_msg);
+                // calcul du timestamp - 4h
+                $endDate = $_date2->modify('-2 hour');
+                $endDate = $_date2->format('Y-m-d H:i:s');
+                $startDate = $_date1->modify('-2 hour');
+                $startDate = $_date1->format('Y-m-d H:i:s');
+
+                // mesure barométrique -4h
+                $h4 = $histo->lastBetween($pressureID, $startDate, $endDate);
+
+                // calculs de tendance 2h/4h
+                if ($h4 != null) {
+                    $td4h = (($h1 - $h4) / 4);
+                    $log_msg = 'Tendance -4h : ' . $td4h . ' hPa/h';
+                    log::add('rosee', 'debug', '| ───▶︎ Timestamp -4h    : Start/End Date : ' . $startDate . '/' . $endDate . ' - Pression Atmosphérique : ' . $h4 . ' hPa - ' . $log_msg);
+
+                    // Calcul de la tendance
+                    //log::add('rosee', 'debug', '│ ┌───────── Calcul Tendance Moyenne');
+                    // sources : http://www.freescale.com/files/sensors/doc/app_note/AN3914.pdf
+                    // et : https://www.parallax.com/sites/default/files/downloads/29124-Altimeter-Application-Note-501.pdf
+                    $td_moy = (0.5 * $td2h + 0.5 * $td4h);
+                    $dPdT = number_format($td_moy, 3, '.', '');
+
+                    log::add('rosee', 'debug', '| ───▶︎ Tendance Moyenne (dPdT): ' . $dPdT . ' hPa/h');
+                    if ($td_moy > 2.5) { // Quickly rising High Pressure System, not stable
+                        $td = (__('Forte embellie, instable', __FILE__));
+                        $td_num = number_format(5);
+                    } elseif ($td_moy > 0.5 && $td_moy <= 2.5) { // Slowly rising High Pressure System, stable good weather
+                        $td = (__('Amélioration, beau temps durable', __FILE__));
+                        $td_num = number_format(4);
+                    } elseif ($td_moy > 0.0 && $td_moy <= 0.5) { // Stable weather condition
+                        $td = (__('Lente amélioration, temps stable', __FILE__));
+                        $td_num = number_format(3);
+                    } elseif ($td_moy > -0.5 && $td_moy <= 0) { // Stable weather condition
+                        $td = (__('Lente dégradation, temps stable', __FILE__));
+                        $td_num = number_format(2);
+                    } elseif ($td_moy > -2.5 && $td_moy <= -0.5) { // Slowly falling Low Pressure System, stable rainy weather
+                        $td = (__('Dégradation, mauvais temps durable', __FILE__));
+                        $td_num = number_format(1);
+                    } else { // Quickly falling Low Pressure, Thunderstorm, not stable
+                        $td = (__('Forte dégradation, instable', __FILE__));
+                        $td_num = 0;
+                    };
+                } else {
+                    $td4h = 0;
+                    log::add('rosee', 'debug', '| ───▶︎ [ALERT] Pression Atmosphérique -4h nulle (historique) : ' . $h4 . ' hPa');
+                }
+            } else {
+                $td2h = 0;
+                log::add('rosee', 'debug', '| ───▶︎ [ALERT] Pression Atmosphérique -2h nulle (historique) : ' . $h2 . ' hPa');
+            }
         } else {
             log::add('rosee', 'debug', '| ───▶︎ [ALERT] Pression Atmosphérique -15min nulle (historique) : ' . $h1 . ' hPa');
-        }
-
-        // calcul du timestamp - 2h
-        $endDate = $_date2->modify('-2 hour');
-        $endDate = $_date2->format('Y-m-d H:i:s');
-        $startDate = $_date1->modify('-2 hour');
-        $startDate = $_date1->format('Y-m-d H:i:s');
-
-        // mesure barométrique -2h
-        $h2 = $histo->lastBetween($pressureID, $startDate, $endDate);
-
-
-        // calculs de tendance 15min/2h
-        if ($h2 != null) {
-            $td2h = ($h1 - $h2) / 2;
-            $log_msg = 'Tendance -2h : ' . $td2h . ' hPa/h';
-            log::add('rosee', 'debug', '| ───▶︎ Timestamp -2h    : Start/End Date : ' . $startDate . '/' . $endDate . ' - Pression Atmosphérique : ' . $h2 . ' hPa - ' . $log_msg);
-        } else {
-            $td2h = 0;
-            log::add('rosee', 'debug', '| ───▶︎ [ALERT] Pression Atmosphérique -2h nulle (historique) : ' . $h2 . ' hPa');
-        }
-
-
-        // calcul du timestamp - 4h
-        $endDate = $_date2->modify('-2 hour');
-        $endDate = $_date2->format('Y-m-d H:i:s');
-        $startDate = $_date1->modify('-2 hour');
-        $startDate = $_date1->format('Y-m-d H:i:s');
-
-        // mesure barométrique -4h
-        $h4 = $histo->lastBetween($pressureID, $startDate, $endDate);
-
-        // calculs de tendance 2h/4h
-        if ($h4 != null) {
-            $td4h = (($h1 - $h4) / 4);
-            $log_msg = 'Tendance -4h : ' . $td4h . ' hPa/h';
-            log::add('rosee', 'debug', '| ───▶︎ Timestamp -4h    : Start/End Date : ' . $startDate . '/' . $endDate . ' - Pression Atmosphérique : ' . $h4 . ' hPa - ' . $log_msg);
-        } else {
-            $td4h = 0;
-            log::add('rosee', 'debug', '| ───▶︎ [ALERT] Pression Atmosphérique -4h nulle (historique) : ' . $h4 . ' hPa');
-        }
-
-        // calculs de tendance
-        //log::add('rosee', 'debug', '│ ┌───────── Calcul Tendance Moyenne');
-        // sources : http://www.freescale.com/files/sensors/doc/app_note/AN3914.pdf
-        // et : https://www.parallax.com/sites/default/files/downloads/29124-Altimeter-Application-Note-501.pdf
-
-        // moyennation de la tendance à -2h (50%) et -4h (50%)
-        if ($h2 != null && $h1 != null) {
-            $td_moy = (0.5 * $td2h + 0.5 * $td4h);
-            $dPdT = number_format($td_moy, 3, '.', '');
-
-            log::add('rosee', 'debug', '| ───▶︎ Tendance Moyenne (dPdT): ' . $dPdT . ' hPa/h');
-
-            if ($td_moy > 2.5) { // Quickly rising High Pressure System, not stable
-                $td = (__('Forte embellie, instable', __FILE__));
-                $td_num = number_format(5);
-            } elseif ($td_moy > 0.5 && $td_moy <= 2.5) { // Slowly rising High Pressure System, stable good weather
-                $td = (__('Amélioration, beau temps durable', __FILE__));
-                $td_num = number_format(4);
-            } elseif ($td_moy > 0.0 && $td_moy <= 0.5) { // Stable weather condition
-                $td = (__('Lente amélioration, temps stable', __FILE__));
-                $td_num = number_format(3);
-            } elseif ($td_moy > -0.5 && $td_moy <= 0) { // Stable weather condition
-                $td = (__('Lente dégradation, temps stable', __FILE__));
-                $td_num = number_format(2);
-            } elseif ($td_moy > -2.5 && $td_moy <= -0.5) { // Slowly falling Low Pressure System, stable rainy weather
-                $td = (__('Dégradation, mauvais temps durable', __FILE__));
-                $td_num = number_format(1);
-            } else { // Quickly falling Low Pressure, Thunderstorm, not stable
-                $td = (__('Forte dégradation, instable', __FILE__));
-                $td_num = 0;
-            };
-        } else {
-            $td_moy = 100;
-            $dPdT = number_format($td_moy, 3, '.', '');
-            $td_num = number_format(5);
-            $td = (__('Pression atmosphérique nulle (historique)', __FILE__));
         }
         return array($td_num, $td, $dPdT);
     }
