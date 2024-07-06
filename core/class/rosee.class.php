@@ -240,6 +240,7 @@ class rosee extends eqLogic
         /*  ********************** Calcul *************************** */
         $calcul = $this->getConfiguration('type_calcul');
         $templatecore_V4  = 'core::';
+        $td_num_min = null;
         if ($calcul == 'tendance') {
             $td_num_max = 5;
             $td_num_visible = 1;
