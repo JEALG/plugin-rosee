@@ -69,17 +69,17 @@ function rosee_update()
 
     $eqLogics = eqLogic::byType($plugin->getId());
     foreach ($eqLogics as $eqLogic) {
-        updateLogicalId($eqLogic, 'humidityabs', null, '2');
-        updateLogicalId($eqLogic, 'rosee', null, '2');
+        //updateLogicalId($eqLogic, 'humidityabs', null, '2');
+        //updateLogicalId($eqLogic, 'rosee', null, '2');
         updateLogicalId($eqLogic, 'givrage', 'frost_point', '2');
-        updateLogicalId($eqLogic, 'td', null, null, 'Message'); // Modification du 7/12/2020
-        updateLogicalId($eqLogic, 'td_num', null, null, 'Message numérique'); // Modification du 7/12/2020
-        updateLogicalId($eqLogic, 'windchill', null, null, 'Température ressentie'); // Modification du 7/12/2020
-        updateLogicalId($eqLogic, 'heat_index', 'humidex', 0, 'Indice de Chaleur (Humidex)', 'DELETE'); // Modification du 7/12/2020
+        //updateLogicalId($eqLogic, 'td', null, null, 'Message'); // Modification du 7/12/2020
+        //updateLogicalId($eqLogic, 'td_num', null, null, 'Message numérique'); // Modification du 7/12/2020
+        //updateLogicalId($eqLogic, 'windchill', null, null, 'Température ressentie'); // Modification du 7/12/2020
+        //updateLogicalId($eqLogic, 'heat_index', 'humidex', 0, 'Indice de Chaleur (Humidex)', 'DELETE'); // Modification du 7/12/2020
     }
 
     //resave eqLogics for new cmd:
-    try {
+    /*try {
         $eqs = eqLogic::byType('rosee');
         foreach ($eqs as $eq) {
             $eq->save();
@@ -87,7 +87,7 @@ function rosee_update()
     } catch (Exception $e) {
         $e = print_r($e, 1);
         log::add('rosee', 'error', '[ALERT] rosee update ERROR : ' . $e);
-    }
+    }*/
 
     //message::add('Plugin Rosée - Givre - Tendance', 'Merci pour la mise à jour de ce plugin, consultez le changelog.');
 

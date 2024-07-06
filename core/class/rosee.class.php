@@ -310,7 +310,7 @@ class rosee extends eqLogic
             $Equipement->AddCommand($alert2, 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
             $order++;
             if ($calcul != 'temperature') {
-                $Equipement->AddCommand($pointgivrename, 'givrage', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+                $Equipement->AddCommand($pointgivrename, 'frost_point', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
                 $order++;
             }
         }
