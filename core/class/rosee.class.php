@@ -643,7 +643,7 @@ class rosee extends eqLogic
                             log::add('rosee', 'debug', '| ───▶︎ ' . $log . $alert_2);
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_2);
                             break;
-                        case "givrage":
+                        case "frost_point":
                             log::add('rosee', 'debug', '| ───▶︎ Point de givrage : ' . $frost_point . ' °C');
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $frost_point);
                             break;
