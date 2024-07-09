@@ -235,7 +235,7 @@ class rosee extends eqLogic
     {
         $_eqName = $this->getName();
         //log::add('rosee', 'debug', 'Sauvegarde de l\'équipement [postSave()] : ' . $_eqName);
-        $order = 1;
+        $order = 0;
 
         /*  ********************** Calcul *************************** */
         $calcul = $this->getConfiguration('type_calcul');
@@ -289,60 +289,44 @@ class rosee extends eqLogic
         $dPdT_name =  (__('dPdT', __FILE__));
         $vent_name =  (__('Vitesse du Vent', __FILE__));
 
-        $Equipement = eqlogic::byId($this->getId());
-
-
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs') {
-            $Equipement->AddCommand($humidityname, 'humidityabs_m3', 'info', 'numeric', $templatecore_V4 . 'line', 'g/m3', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
-            $order++;
+            $this->AddCommand($humidityname, 'humidityabs_m3', 'info', 'numeric', $templatecore_V4 . 'line', 'g/m3', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'temperature') {
-            $Equipement->AddCommand($alert1, 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
-            $order++;
+            $this->AddCommand($alert1, 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, null, null);
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'givre') {
-            $Equipement->AddCommand($pointroseename, 'rosee', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
-            $order++;
+            $this > AddCommand($pointroseename, 'rosee', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'temperature') {
-            $Equipement->AddCommand($alert2, 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
-            $order++;
+            $this->AddCommand($alert2, 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, null, null);
             if ($calcul != 'temperature') {
-                $Equipement->AddCommand($pointgivrename, 'frost_point', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
-                $order++;
+                $this->AddCommand($pointgivrename, 'frost_point', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
             }
         }
         if ($calcul == 'temperature') {
-            $Equipement->AddCommand($temp_ressentiename, 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
-            $order++;
-            $Equipement->AddCommand($indice_chaleur_name, 'humidex', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
-            $order++;
+            $this->AddCommand($temp_ressentiename, 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 1, null);
+            $this->AddCommand($indice_chaleur_name, 'humidex', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 1, null);
         }
         if ($calcul != 'humidityabs' && $calcul != null && $calcul != 'rosee') {
-            $Equipement->AddCommand($name_td, 'td', 'info', 'string', $template_td, null, 'WEATHER_CONDITION', $td_num, 'default', 'default', 'default', 'default', $order, '0', true, $_iconname_td, null, null, null);
-            $order++;
-            $Equipement->AddCommand($name_td_num, 'td_num', 'info', 'numeric', $template_td_num, null, 'GENERIC_INFO', $td_num_visible, 'default', 'default', $td_num_min, $td_num_max, $order, '0', true, $_iconname_td_num, null, null, null);
-            $order++;
+            $this->AddCommand($name_td, 'td', 'info', 'string', $template_td, null, 'WEATHER_CONDITION', $td_num, 'default', 'default', 'default', 'default', $order++, '0', true, $_iconname_td, null, null, null);
+            $this->AddCommand($name_td_num, 'td_num', 'info', 'numeric', $template_td_num, null, 'GENERIC_INFO', $td_num_visible, 'default', 'default', $td_num_min, $td_num_max, $order++, '0', true, $_iconname_td_num, null, null, null);
         }
 
         if ($calcul != 'tendance' && $calcul != null) {
-            $Equipement->AddCommand($temp_name, 'temperature', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
-            $order++;
+            $this->AddCommand($temp_name, 'temperature', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
         if ($calcul != 'temperature' && $calcul != null) {
-            $Equipement->AddCommand($pressure_name, 'pressure', 'info', 'numeric', $templatecore_V4 . 'line', 'hPa', 'WEATHER_PRESSURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
-            $order++;
+            $this->AddCommand($pressure_name, 'pressure', 'info', 'numeric', $templatecore_V4 . 'line', 'hPa', 'WEATHER_PRESSURE', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
         if ($calcul == 'tendance') {
-            $Equipement->AddCommand($dPdT_name, 'dPdT', 'info', 'numeric', $templatecore_V4 . 'line', 'hPa/h', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
-            $order++;
+            $this->AddCommand($dPdT_name, 'dPdT', 'info', 'numeric', $templatecore_V4 . 'line', 'hPa/h', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs' || $calcul == 'temperature') {
-            $Equipement->AddCommand($humidity_relative_name, 'humidityrel', 'info', 'numeric', $templatecore_V4 . 'line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
-            $order++;
+            $this->AddCommand($humidity_relative_name, 'humidityrel', 'info', 'numeric', $templatecore_V4 . 'line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
         if ($calcul == 'temperature') {
             $idvirt = str_replace("#", "", $this->getConfiguration('wind'));
@@ -353,8 +337,7 @@ class rosee extends eqLogic
             if ($wind_unite == 'm/s') {
                 $wind_unite = ' km/h';
             }
-            $Equipement->AddCommand($vent_name, 'wind', 'info', 'numeric', $templatecore_V4 . 'line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
-            $order++;
+            $this->AddCommand($vent_name, 'wind', 'info', 'numeric', $templatecore_V4 . 'line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
         $this->getInformations();
     }
@@ -499,14 +482,16 @@ class rosee extends eqLogic
                         log::add('rosee', 'error', (__('La valeur :', __FILE__)) . ' ' . (__('Pression Atmosphérique', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
                         throw new Exception((__('La valeur :', __FILE__)) . ' ' . (__('Pression Atmosphérique', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
                     } else {
-                        $log_msg = (__('La pression Atmosphérique doit avoir l\'historique d\'activé', __FILE__));
+                        $log_msg = (__('L\'historique de la commande', __FILE__)) . ' ';
+                        $log_msg .= $cmdvirt->getName();
+                        $log_msg .= ' ' . (__('doit être activé', __FILE__));
                         if ($pressureHISTO != 1) {
                             log::add('rosee', 'debug', '| ───▶︎ [ALERT] ' . $log_msg . ' : ' . $pressureHISTO);
                             message::add('Plugin Rosée - Givre - Tendance', $_eqName . ' : ' . $log_msg);
                         } else {
-                            log::add('rosee', 'debug', '| ───▶︎ :fg-success:La commande de Pression Atmosphérique a bien l\'historique d\'activé:/fg:');
+                            log::add('rosee', 'debug', '| ───▶︎ :fg-success:L\'historique de la commande' . $cmdvirt->getName() . ' est bien activé:/fg:');
                         }
-                        log::add('rosee', 'debug', '| ───▶︎ Pression Atmosphérique : ' . $pressure . ' hPa');
+                        log::add('rosee', 'debug', '| ───▶︎ Pression Atmosphérique (' . $cmdvirt->getName() . ') : ' . $pressure . ' hPa');
                     }
                 } else {
                     log::add('rosee', 'error', (__('Configuration :', __FILE__)) . ' ' . (__('Le champ PRESSION ATMOSPHÉRIQUE', __FILE__))  . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName() . ']');

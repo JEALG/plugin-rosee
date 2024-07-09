@@ -87,7 +87,9 @@
         "Viesociale": "Vie sociale",
         "Citationdujour": "Citation du jour",
         "Nombredechance": "Nombre de chance",
-        "Clindoeil": "Clin d oeil"
+        "Clindoeil": "Clin d oeil",
+        "L'historique de la commande" :"L\'historique de la commande",
+        "doit être activé" :"doit être activé"
     },
     "plugins\/rosee\/desktop\/php\/rosee.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",

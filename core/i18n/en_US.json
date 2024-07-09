@@ -86,7 +86,9 @@
         "Viesociale": "Social life",
         "Citationdujour": "Quote of the day",
         "Nombredechance": "Number of luck",
-        "Clindoeil": "Wink"
+        "Clindoeil": "Wink",
+         "L'historique de la commande" :"Command history",
+        "doit être activé" :"must be enabled"
     },
     "plugins\/rosee\/desktop\/php\/rosee.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access",
