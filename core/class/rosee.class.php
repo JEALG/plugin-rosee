@@ -297,8 +297,8 @@ class rosee extends eqLogic
             $this->AddCommand($alert1, 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, null, null);
         }
 
-        if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'givre') {
-            $this > AddCommand($pointroseename, 'rosee', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+        if ($calcul == 'rosee_givre' || $calcul == 'rosee') {
+            $this->AddCommand($pointroseename, 'rosee', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'temperature') {
@@ -614,105 +614,33 @@ class rosee extends eqLogic
         /*  ********************** Mise à Jour des équipements *************************** */
         log::add('rosee', 'debug', '┌── :fg-info:Mise à jour : '  . $_eqName . ':/fg: ──');
 
-        $Equipement = eqlogic::byId($this->getId());
-        if (is_object($Equipement) && $Equipement->getIsEnable()) {
-            // Préparation futur mise à jour des commandes
-            //$cmd_list = 'alert_1,alert_2,frost_point,humidex,humidityabs_m3,humidityrel,pressure,temperature,rosee,td,dPdT,td_num,wind,windchill';
-            //$explode_list = explode(',', $cmd_list);
-
-            foreach ($Equipement->getCmd('info') as $Command) {
-                if (is_object($Command)) {
-                    switch ($Command->getLogicalId()) {
-                        case "alert_1":
-                            if ($calcul == 'temperature') {
-                                $log = 'Pré-alerte Humidex : ';
-                            } else {
-                                $log = 'Etat Alerte Rosée : ';
-                            }
-                            log::add('rosee', 'debug', '| ───▶︎ ' . $log . $alert_1);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_1);
-                            break;
-                        case "alert_2":
-                            if ($calcul == 'temperature') {
-                                $log = 'Alerte Haute Humidex : ';
-                            } else {
-                                $log = 'Etat Alerte Givre : ';
-                            }
-                            log::add('rosee', 'debug', '| ───▶︎ ' . $log . $alert_2);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_2);
-                            break;
-                        case "frost_point":
-                            log::add('rosee', 'debug', '| ───▶︎ Point de givrage : ' . $frost_point . ' °C');
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $frost_point);
-                            break;
-                        case "humidex":
-                            log::add('rosee', 'debug', '| ───▶︎ Indice de Chaleur (Humidex) : ' . $humidex);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidex);
-                            break;
-                        case "humidityabs_m3":
-                            log::add('rosee', 'debug', '| ───▶︎ Humidité Absolue : ' . $humidityabs_m3 . ' g/m3');
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidityabs_m3);
-                            break;
-                        case "humidityrel":
-                            log::add('rosee', 'debug', '| ───▶︎ Humidité Relative : ' . $humidity . ' %');
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidity);
-                            break;
-                        case "pressure":
-                            log::add('rosee', 'debug', '| ───▶︎ Pression Atmosphérique : ' . $pressure . ' hPa');
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $pressure);
-                            break;
-                        case "temperature":
-                            log::add('rosee', 'debug', '| ───▶︎ Température : ' . $temperature . ' °C');
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $temperature);
-                            break;
-                        case "rosee":
-                            log::add('rosee', 'debug', '| ───▶︎ Point de Rosée : ' . $rosee_point . ' °C');
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $rosee_point);
-                            break;
-                        case "td":
-                            if (isset($td)) {
-                                if ($calcul == 'tendance') {
-                                    $log = 'Tendance (format texte) : ';
-                                } else if ($calcul == 'temperature') {
-                                    $log = 'Message (format texte) : ';
-                                } else {
-                                    $log = 'Message Alerte givre (format texte) : ';
-                                }
-                                log::add('rosee', 'debug', '| ───▶︎ ' . $log . $td);
-                                $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td);
-                            } else {
-                                log::add('rosee', 'debug', '[ALERT] Problème avec la variable td non déclaré ');
-                            }
-                            break;
-                        case "dPdT":
-                            log::add('rosee', 'debug', '| ───▶︎ Tendance dPdT : ' . $dPdT . ' hPa/h');
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $dPdT);
-                            break;
-                        case "td_num":
-                            if (isset($td_num)) {
-                                if ($calcul == 'tendance') {
-                                    $log = 'Tendance (format numérique) : ';
-                                } else if ($calcul == 'temperature') {
-                                    $log = 'Message (format numérique) : ';
-                                } else {
-                                    $log = 'Message Alerte givre (format numérique) : ';
-                                }
-                                log::add('rosee', 'debug', '| ───▶︎ ' . $log . $td_num);
-                                $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td_num);
-                            } else {
-                                log::add('rosee', 'debug', '[ALERT] Problème avec la variable td_num non déclaré ');
-                            }
-                            break;
-                        case "wind":
-                            log::add('rosee', 'debug', '| ───▶︎ Vitesse du vent : ' . $wind . ' ' . $wind_unite);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $wind);
-                            break;
-                        case "windchill":
-                            log::add('rosee', 'debug', '| ───▶︎ Température ressentie (Windchill) : ' . $windchill . ' °C');
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $windchill);
-                            break;
-                        default:
-                            // log::add('rosee', 'debug', '│ | ───▶︎ test ' . $Command->getLogicalId());
+        $EqLogics = eqlogic::byId($this->getId());
+        if (is_object($EqLogics) && $EqLogics->getIsEnable()) {
+            if ($calcul === 'temperature') { // Température ressentie
+                $list = 'alert_1,alert_2,humidex,humidityrel,temperature,td,td_num,wind,windchill';
+                $Value_calcul = array('alert_1' => $alert_1, 'alert_2' => $alert_2, 'humidex' => $humidex, 'humidityrel' => $humidity, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num, 'wind' => $wind, 'windchill' => $windchill);
+            } else if ($calcul === 'humidityabs') { // Humidité absolue
+                $list = 'humidityabs_m3,humidityrel,pressure,temperature';
+                $Value_calcul = array('humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'temperature' => $temperature);
+            } else if ($calcul === 'tendance') { // Tendance
+                $list = 'dPdT,pressure,td,td_num';
+                $Value_calcul = array('dPdT' => $dPdT, 'pressure' => $pressure, 'td' => $td, 'td_num' => $td_num, 'wind' => $wind, 'windchill' => $windchill);
+            } else if ($calcul === 'rosee_givre') { // Point de rosee et de Givre
+                $list = 'alert_1,alert_2,frost_point,humidityabs_m3,humidityrel,pressure,rosee,temperature,td,td_num';
+                $Value_calcul = array('alert_1' => $alert_1, 'alert_2' => $alert_2, 'frost_point' => $frost_point, 'humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'rosee' => $rosee, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num);
+            } else if ($calcul === 'rosee') { // Point de rosee
+                $list = 'alert_1,pressure,rosee,temperature';
+                $Value_calcul = array('alert_1' => $alert_1, 'pressure' => $pressure, 'rosee' => $rosee, 'temperature' => $temperature);
+            } else if ($calcul === 'givre') { // Point de Givre
+                $list = 'alert_2,frost_point,humidityabs_m3,humidityrel,pressure,temperature,td,td_num';
+                $Value_calcul = array('alert_2' => $alert_2, 'frost_point' => $frost_point, 'humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num);
+            }
+            $fields = explode(',', $list);
+            foreach ($this->getCmd() as $cmd) {
+                foreach ($fields as $fieldname) {
+                    if ($cmd->getLogicalId('data') == $fieldname) {
+                        $this->checkAndUpdateCmd($fieldname, $Value_calcul[$fieldname]);
+                        log::add('rosee', 'debug', ':fg-info:| ───▶︎ ' . $cmd->getName() . ' ::/fg: ' . $Value_calcul[$fieldname]);
                     }
                 }
             }
