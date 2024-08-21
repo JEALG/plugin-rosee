@@ -34,6 +34,7 @@
         "pour l\\'équipement" : "pour l\'équipement",
         "ne peut être vide" : "cannot be empty",
         "Humidité absolue" : "Humidité absolue",
+        "La commande de Pression Atmosphérique a bien l\\'historique d\\'activé" : "La commande de Pression Atmosphérique a bien l\'historique d\'activé",
         "Indice de Chaleur (Humidex)" : "Indice de Chaleur (Humidex)",
         "Info supplémentaire : Il fait trop chaud pas de calcul de l\\'alerte givre (" : "Info supplémentaire : Il fait trop chaud pas de calcul de l\\'alerte givre (",
         "Info supplémentaire : Point de givre fixé est : " : "Info supplémentaire : Point de givre fixé est : ",
@@ -86,7 +87,9 @@
         "Viesociale": "Vie sociale",
         "Citationdujour": "Citation du jour",
         "Nombredechance": "Nombre de chance",
-        "Clindoeil": "Clin d oeil"
+        "Clindoeil": "Clin d oeil",
+        "L'historique de la commande" :"L\'historique de la commande",
+        "doit être activé" :"doit être activé"
     },
     "plugins\/rosee\/desktop\/php\/rosee.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
