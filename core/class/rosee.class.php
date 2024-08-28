@@ -374,8 +374,7 @@ class rosee extends eqLogic
         /*  ********************** Calcul *************************** */
         $calcul = $this->getConfiguration('type_calcul');
         if ($calcul === '') {
-            (__('Configuration : Méthode de Calcul inexistant pour l\'équipement :', __FILE__))
-            //log::add('rosee', 'error', (__('Configuration : Méthode de Calcul inexistant pour l\'équipement :', __FILE__)) . $this->getName() . ' ' . $this->getConfiguration('type_calcul'));
+            log::add('rosee', 'error', (__('Configuration : Méthode de Calcul inexistant pour l\'équipement :', __FILE__)) . $this->getName() . ' ' . $this->getConfiguration('type_calcul'));
             throw new Exception(__((__('Le champ TYPE DE CALCUL ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
         }
         log::add('rosee', 'debug', '| ───▶︎ Méthode de calcul : ' . $calcul);
