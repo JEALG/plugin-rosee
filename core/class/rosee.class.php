@@ -114,7 +114,7 @@ class rosee extends eqLogic
 
         $Command = $this->getCmd(null, $_logicalId);
         if (!is_object($Command)) {
-            log::add('rosee', 'debug', '| ───▶︎ - CREATION COMMANDE : ' . $Name . ' -- Type : ' . $Type . ' -- LogicalID : ' . $_logicalId . ' -- Template Widget / Ligne : ' . $Template . '/' . $forceLineB . '-- Type de générique : ' . $generic_type . ' -- Icône : ' . $icon . ' -- Min/Max : ' . $valuemin . '/' . $valuemax . ' -- Calcul/Arrondi : ' . $_calculValueOffset . '/' . $_historizeRound . ' -- Ordre : ' . $_order);
+            log::add('rosee', 'debug', '| ───▶︎ - {{CRÉATION COMMANDE}} : ' . $Name . ' -- Type : ' . $Type . ' -- LogicalID : ' . $_logicalId . ' -- Template Widget / Ligne : ' . $Template . '/' . $forceLineB . '-- {{Type de générique}} : ' . $generic_type . ' -- {{Icône}} : ' . $icon . ' -- Min/Max : ' . $valuemin . '/' . $valuemax . ' -- Calcul/Arrondi : ' . $_calculValueOffset . '/' . $_historizeRound . ' -- {{Ordre}} : ' . $_order);
             $Command = new roseeCmd();
             $Command->setId(null);
             $Command->setLogicalId($_logicalId);
@@ -219,17 +219,11 @@ class rosee extends eqLogic
         }
     }
 
-    public function preInsert()
-    {
-    }
+    public function preInsert() {}
 
-    public function postInsert()
-    {
-    }
+    public function postInsert() {}
 
-    public function preSave()
-    {
-    }
+    public function preSave() {}
 
     public function postSave()
     {
@@ -347,22 +341,16 @@ class rosee extends eqLogic
         if (!$this->getIsEnable()) return;
 
         if ($this->getConfiguration('type_calcul') == '') {
-            throw new Exception(__((__('Le champ TYPE DE CALCUL ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
             log::add('rosee', 'error', '│ Configuration : Méthode de Calcul inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('type_calcul'));
+            throw new Exception(__((__('Le champ TYPE DE CALCUL ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
         }
     }
 
-    public function postUpdate()
-    {
-    }
+    public function postUpdate() {}
 
-    public function preRemove()
-    {
-    }
+    public function preRemove() {}
 
-    public function postRemove()
-    {
-    }
+    public function postRemove() {}
 
     public function getImage()
     {
@@ -381,12 +369,13 @@ class rosee extends eqLogic
         if (!$this->getIsEnable()) return;
 
         $_eqName = $this->getName();
-        log::add('rosee', 'debug', '┌── :fg-success:Configuration de l\'équipement : '  . $_eqName . ':/fg: ──');
+        log::add('rosee', 'debug', '┌── :fg-success:{{Configuration de l\'équipement}} : '  . $_eqName . ':/fg: ──');
 
         /*  ********************** Calcul *************************** */
         $calcul = $this->getConfiguration('type_calcul');
         if ($calcul === '') {
-            log::add('rosee', 'error', 'Configuration : Méthode de Calcul inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('type_calcul'));
+            (__('Configuration : Méthode de Calcul inexistant pour l\'équipement :', __FILE__))
+            log::add('rosee', 'error', (__('Configuration : Méthode de Calcul inexistant pour l\'équipement :', __FILE__)) . $this->getName() . ' ' . $this->getConfiguration('type_calcul'));
             throw new Exception(__((__('Le champ TYPE DE CALCUL ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
         }
         log::add('rosee', 'debug', '| ───▶︎ Méthode de calcul : ' . $calcul);
