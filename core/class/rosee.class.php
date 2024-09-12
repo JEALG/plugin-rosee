@@ -452,7 +452,7 @@ class rosee extends eqLogic
             }
         }
 
-        /*  ********************** PRESSION *************************** => VALABLE AUSSI POUR LE PLUGIN BARO */
+        /*  ********************** PRESSION *************************** => VALABLE AUSSI POUR LE PLUGIN BARO/ROSEE*/
         if ($calcul != 'temperature') {
             $pressure = $this->getConfiguration('pression');
             if ($pressure === '' && $calcul != 'tendance') { //valeur par défaut de la pression atmosphérique : 1013.25 hPa
@@ -533,7 +533,7 @@ class rosee extends eqLogic
             log::add('rosee', 'debug', '└───────');
         }
 
-        /*  ********************** Calcul de la tendance *************************** => VALABLE AUSSI POUR LE PLUGIN BARO */
+        /*  ********************** Calcul de la tendance *************************** => VALABLE AUSSI POUR LE PLUGIN BARO/ROSEE*/
         if ($calcul == 'tendance') {
             log::add('rosee', 'debug', '┌── :fg-warning:Calcul de la tendance ::/fg: '  . $_eqName . ' ──');
             $va_result_T = rosee::getTendance($pressureID);
@@ -723,7 +723,7 @@ class rosee extends eqLogic
         };
         return array($td_num, $td, $alert_2, $frost_point, $msg_givre2, $msg_givre3);
     }
-    /*  ********************** Calcul de la tendance *************************** => VALABLE AUSSI POUR LE PLUGIN BARO */
+    /*  ********************** Calcul de la tendance *************************** => VALABLE AUSSI POUR LE PLUGIN BARO/ROSEE*/
     public static function getTendance($pressureID)
     {
         $histo = new scenarioExpression();
