@@ -227,7 +227,7 @@ class rosee extends eqLogic
 
     public function postSave()
     {
-        $_eqName = $this->getName();
+        //$_eqName = $this->getName();
         //log::add('rosee', 'debug', 'Sauvegarde de l\'équipement [postSave()] : ' . $_eqName);
         $order = 0;
 
@@ -280,7 +280,7 @@ class rosee extends eqLogic
         $temp_name =  (__('Température', __FILE__));
         $indice_chaleur_name =  (__('Indice de Chaleur (Humidex)', __FILE__));
         $pressure_name =  (__('Pression Atmosphérique', __FILE__));
-        $dPdT_name =  (__('dPdT', __FILE__));
+        $dPdT_name =  'dPdT';
         $vent_name =  (__('Vitesse du Vent', __FILE__));
 
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs') {
@@ -367,9 +367,8 @@ class rosee extends eqLogic
     public function getInformations()
     {
         if (!$this->getIsEnable()) return;
-
         $_eqName = $this->getName();
-        log::add('rosee', 'debug', '┌── :fg-success:{{Configuration de l\'équipement}} : '  . $_eqName . ':/fg: ──');
+        log::add('rosee', 'debug', '┌── :fg-success:Configuration de l\'équipement ::/fg: '  . $_eqName . ' ──');
 
         /*  ********************** Calcul *************************** */
         $calcul = $this->getConfiguration('type_calcul');
@@ -453,7 +452,7 @@ class rosee extends eqLogic
             }
         }
 
-        /*  ********************** PRESSION *************************** */
+        /*  ********************** PRESSION *************************** => VALABLE AUSSI POUR LE PLUGIN BARO */
         if ($calcul != 'temperature') {
             $pressure = $this->getConfiguration('pression');
             if ($pressure === '' && $calcul != 'tendance') { //valeur par défaut de la pression atmosphérique : 1013.25 hPa
@@ -465,7 +464,6 @@ class rosee extends eqLogic
                 if (is_object($cmdvirt)) {
                     $pressure = $cmdvirt->execCmd();
                     $pressureHISTO = $cmdvirt->getIsHistorized($pressureID);
-
                     if ($pressure === '') {
                         log::add('rosee', 'error', (__('La valeur :', __FILE__)) . ' ' . (__('Pression Atmosphérique', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
                         throw new Exception((__('La valeur :', __FILE__)) . ' ' . (__('Pression Atmosphérique', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
@@ -535,9 +533,9 @@ class rosee extends eqLogic
             log::add('rosee', 'debug', '└───────');
         }
 
-        /*  ********************** Calcul de la tendance *************************** */
+        /*  ********************** Calcul de la tendance *************************** => VALABLE AUSSI POUR LE PLUGIN BARO */
         if ($calcul == 'tendance') {
-            log::add('rosee', 'debug', '┌── :fg-warning:Calcul de la tendance : '  . $_eqName . ':/fg: ──');
+            log::add('rosee', 'debug', '┌── :fg-warning:Calcul de la tendance ::/fg: '  . $_eqName . ' ──');
             $va_result_T = rosee::getTendance($pressureID);
             $td_num = $va_result_T[0];
             $td = $va_result_T[1];
@@ -600,7 +598,7 @@ class rosee extends eqLogic
         }
 
         /*  ********************** Mise à Jour des équipements *************************** */
-        log::add('rosee', 'debug', '┌── :fg-info:Mise à jour : '  . $_eqName . ':/fg: ──');
+        log::add('rosee', 'debug', '┌── :fg-info:Mise à jour ::/fg: '  . $_eqName . ' ──');
 
         $EqLogics = eqlogic::byId($this->getId());
         if (is_object($EqLogics) && $EqLogics->getIsEnable()) {
@@ -628,7 +626,7 @@ class rosee extends eqLogic
                 foreach ($fields as $fieldname) {
                     if ($cmd->getLogicalId('data') == $fieldname) {
                         $this->checkAndUpdateCmd($fieldname, $Value_calcul[$fieldname]);
-                        log::add('rosee', 'debug', ':fg-info:| ───▶︎ ' . $cmd->getName() . ' ::/fg: ' . $Value_calcul[$fieldname]);
+                        log::add('rosee', 'debug', '| :fg-info:───▶︎ ' . $cmd->getName() . ' ::/fg: ' . $Value_calcul[$fieldname]);
                     }
                 }
             }
@@ -725,7 +723,7 @@ class rosee extends eqLogic
         };
         return array($td_num, $td, $alert_2, $frost_point, $msg_givre2, $msg_givre3);
     }
-    /*  ********************** Calcul de la tendance *************************** */
+    /*  ********************** Calcul de la tendance *************************** => VALABLE AUSSI POUR LE PLUGIN BARO */
     public static function getTendance($pressureID)
     {
         $histo = new scenarioExpression();
@@ -755,7 +753,6 @@ class rosee extends eqLogic
 
             // mesure barométrique -2h
             $h2 = $histo->lastBetween($pressureID, $startDate, $endDate);
-
 
             // calculs de tendance 15min/2h
             if ($h2 != null) {
