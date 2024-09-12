@@ -546,7 +546,7 @@ class rosee extends eqLogic
         /*  ********************** Calcul du Point de rosée *************************** */
         $alert_1  = 0;
         if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'givre') {
-            log::add('rosee', 'debug', '┌── :fg-warning:Calcul du point de rosée : '  . $_eqName . ':/fg: ──');
+            log::add('rosee', 'debug', '┌── :fg-warning:Calcul du point de rosée ::/fg: '  . $_eqName . ' ──');
             $va_result_R = rosee::getRosee($temperature, $humidity, $dpr);
             $rosee_point = $va_result_R[0];
             $alert_1 = $va_result_R[1];
@@ -561,7 +561,7 @@ class rosee extends eqLogic
 
         /*  ********************** Calcul du Point de givrage *************************** */
         if ($calcul == 'rosee_givre' || $calcul == 'givre') {
-            log::add('rosee', 'debug', '┌── :fg-warning:Calcul du point givrage : '  . $_eqName . ':/fg: ──');
+            log::add('rosee', 'debug', '┌── :fg-warning:Calcul du point givrage ::/fg: '  . $_eqName . ' ──');
             $va_result_G = rosee::getGivre($temperature, $SHA, $humidityabs_m3, $rosee);
             $td_num = $va_result_G[0];
             $td = $va_result_G[1];
@@ -586,7 +586,7 @@ class rosee extends eqLogic
         };
         /*  ********************** Calcul de la température ressentie *************************** */
         if ($calcul == 'temperature') {
-            log::add('rosee', 'debug', '┌── :fg-warning:Calcul de la température ressentie : '  . $_eqName . ':/fg: ──');
+            log::add('rosee', 'debug', '┌── :fg-warning:Calcul de la température ressentie ::/fg: '  . $_eqName . ' ──');
             $result_T = rosee::getTemperature($wind, $temperature, $humidity, $pre_seuil, $seuil);
             $windchill = $result_T[0];
             $td = $result_T[1];
