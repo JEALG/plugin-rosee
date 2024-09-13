@@ -39,7 +39,6 @@ function rosee_install()
 function rosee_update()
 {
     jeedom::getApiKey('rosee');
-    //log::add('rosee', 'debug', '[INFO] Mise à jour Plugin');
     $cron = cron::byClassAndFunction('rosee', 'pull');
     if (is_object($cron)) {
         $cron->remove();
