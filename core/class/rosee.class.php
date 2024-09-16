@@ -620,7 +620,7 @@ class rosee extends eqLogic
                     $list = 'dPdT,pressure,td,td_num';
                     if ($td === 'Pression atmosphérique nulle (historique)') {
                         $list = 'dPdT,pressure';
-                        log::add('baro', 'debug', '| :fg-warning:───▶︎ Problème avec l\'historique de la pression atmosphérique ::/fg: ' . 'Non mise à jour de tendance et de tendance numérique');
+                        log::add('baro', 'debug', '| :fg-warning:───▶︎ Problème avec l\'historique de la pression atmosphérique ::/fg: ' . 'Non mise à jour de la tendance et de la tendance numérique');
                     }
                     $Value_calcul = array('dPdT' => $dPdT, 'pressure' => $pressure, 'td' => $td, 'td_num' => $td_num);
                     break;
