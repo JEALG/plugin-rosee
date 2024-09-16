@@ -480,9 +480,9 @@ class rosee extends eqLogic
                             log::add('rosee', 'debug', '| ───▶︎ [ALERT] ' . $log_msg . ' : ' . $pressureHISTO);
                             message::add('Plugin Rosée - Givre - Tendance', $_eqName . ' : ' . $log_msg);
                         } else {
-                            log::add('rosee', 'debug', '| ───▶︎ :fg-success:' . (__('L\'historique de la commande', __FILE__)) . ':/fg: ' . $cmdvirt->getName() . ':fg-success: est bien activé:/fg:');
+                            log::add('rosee', 'debug', '| ───▶︎ Pression Atmosphérique (' . $cmdvirt->getName() . ') : ' . $pressure . ' hPa');
+                            log::add('rosee', 'debug', '|  └───▶︎ :fg-success:' . (__('L\'historique de la commande', __FILE__)) . ':/fg: ' . $cmdvirt->getName() . ':fg-success: est bien activé:/fg:');
                         }
-                        log::add('rosee', 'debug', '| ───▶︎ Pression Atmosphérique (' . $cmdvirt->getName() . ') : ' . $pressure . ' hPa');
                     }
                 } else {
                     log::add('rosee', 'error', (__('Configuration :', __FILE__)) . ' ' . (__('Le champ PRESSION ATMOSPHÉRIQUE', __FILE__))  . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName() . ']');
@@ -612,17 +612,18 @@ class rosee extends eqLogic
                     $list = 'alert_1,alert_2,humidex,humidityrel,temperature,td,td_num,wind,windchill';
                     $Value_calcul = array('alert_1' => $alert_1, 'alert_2' => $alert_2, 'humidex' => $humidex, 'humidityrel' => $humidity, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num, 'wind' => $wind, 'windchill' => $windchill);
                     break;
-                case 'humidityab': // Humidité absolue
+                case 'humidityabs': // Humidité absolue
                     $list = 'humidityabs_m3,humidityrel,pressure,temperature';
                     $Value_calcul = array('humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'temperature' => $temperature);
                     break;
                 case 'tendance': // Tendance  => VALABLE AUSSI POUR LE PLUGIN BARO/ROSEE
                     $list = 'dPdT,pressure,td,td_num';
-                    if ($td === 'Pression atmosphérique nulle (historique)') {
-                        $list = 'dPdT,pressure';
-                        log::add('baro', 'debug', '| :fg-warning:───▶︎ Problème avec l\'historique de la pression atmosphérique ::/fg: ' . 'Non mise à jour de la tendance et de la tendance numérique');
-                    }
                     $Value_calcul = array('dPdT' => $dPdT, 'pressure' => $pressure, 'td' => $td, 'td_num' => $td_num);
+                    if ($td == 'Pression atmosphérique nulle (historique)') { // Non mise à jour des valeurs si problème dans l'historique
+                        $list = 'dPdT,pressure';
+                        $Value_calcul = array('dPdT' => $dPdT, 'pressure' => $pressure);
+                        log::add('rosee', 'debug', '| :fg-warning:───▶︎ Problème avec l\'historique de la pression atmosphérique ::/fg: ' . 'Non mise à jour de la tendance et de la tendance numérique');
+                    }
                     break;
                 case 'rosee_givre': // Point de rosee et de Givre
                     $list = 'alert_1,alert_2,frost_point,humidityabs_m3,humidityrel,pressure,rosee,temperature,td,td_num';
