@@ -480,7 +480,7 @@ class rosee extends eqLogic
                             log::add('rosee', 'debug', '| ───▶︎ [ALERT] ' . $log_msg . ' : ' . $pressureHISTO);
                             message::add('Plugin Rosée - Givre - Tendance', $_eqName . ' : ' . $log_msg);
                         } else {
-                            log::add('rosee', 'debug', '| ───▶︎ :fg-success:' . (__('L\'historique de la commande', __FILE__)) . ' ' . $cmdvirt->getName() . ' est bien activé:/fg:');
+                            log::add('rosee', 'debug', '| ───▶︎ :fg-success:' . (__('L\'historique de la commande', __FILE__)) . ':/fg: ' . $cmdvirt->getName() . ':fg-success: est bien activé:/fg:');
                         }
                         log::add('rosee', 'debug', '| ───▶︎ Pression Atmosphérique (' . $cmdvirt->getName() . ') : ' . $pressure . ' hPa');
                     }
