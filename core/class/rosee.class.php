@@ -607,7 +607,33 @@ class rosee extends eqLogic
 
         $EqLogics = eqlogic::byId($this->getId());
         if (is_object($EqLogics) && $EqLogics->getIsEnable()) {
-            if ($calcul === 'temperature') { // Température ressentie
+            switch ($calcul) {
+                case 'temperature': // Température ressentie
+                    $list = 'alert_1,alert_2,humidex,humidityrel,temperature,td,td_num,wind,windchill';
+                    $Value_calcul = array('alert_1' => $alert_1, 'alert_2' => $alert_2, 'humidex' => $humidex, 'humidityrel' => $humidity, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num, 'wind' => $wind, 'windchill' => $windchill);
+                    break;
+                case 'humidityab': // Humidité absolue
+                    $list = 'humidityabs_m3,humidityrel,pressure,temperature';
+                    $Value_calcul = array('humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'temperature' => $temperature);
+                    break;
+                case 'tendance': // Tendance  => VALABLE AUSSI POUR LE PLUGIN BARO/ROSEE
+                    $list = 'dPdT,pressure,td,td_num';
+                    $Value_calcul = array('dPdT' => $dPdT, 'pressure' => $pressure, 'td' => $td, 'td_num' => $td_num);
+                    break;
+                case 'rosee_givre': // Point de rosee et de Givre
+                    $list = 'alert_1,alert_2,frost_point,humidityabs_m3,humidityrel,pressure,rosee,temperature,td,td_num';
+                    $Value_calcul = array('alert_1' => $alert_1, 'alert_2' => $alert_2, 'frost_point' => $frost_point, 'humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'rosee' => $rosee, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num);
+                    break;
+                case 'rosee': // Point de rosee
+                    $list = 'alert_1,pressure,rosee,temperature';
+                    $Value_calcul = array('alert_1' => $alert_1, 'pressure' => $pressure, 'rosee' => $rosee, 'temperature' => $temperature);
+                    break;
+                case 'givre': // Point de Givre
+                    $list = 'alert_2,frost_point,humidityabs_m3,humidityrel,pressure,temperature,td,td_num';
+                    $Value_calcul = array('alert_2' => $alert_2, 'frost_point' => $frost_point, 'humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num);
+                    break;
+            }
+            /*    if ($calcul === 'temperature') { // Température ressentie
                 $list = 'alert_1,alert_2,humidex,humidityrel,temperature,td,td_num,wind,windchill';
                 $Value_calcul = array('alert_1' => $alert_1, 'alert_2' => $alert_2, 'humidex' => $humidex, 'humidityrel' => $humidity, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num, 'wind' => $wind, 'windchill' => $windchill);
             } else if ($calcul === 'humidityabs') { // Humidité absolue
@@ -625,7 +651,7 @@ class rosee extends eqLogic
             } else if ($calcul === 'givre') { // Point de Givre
                 $list = 'alert_2,frost_point,humidityabs_m3,humidityrel,pressure,temperature,td,td_num';
                 $Value_calcul = array('alert_2' => $alert_2, 'frost_point' => $frost_point, 'humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num);
-            }
+            }*/
             $fields = explode(',', $list);
             foreach ($this->getCmd() as $cmd) {
                 foreach ($fields as $fieldname) {
@@ -743,7 +769,7 @@ class rosee extends eqLogic
         $td_moy = 100;
         $dPdT = number_format($td_moy, 3, '.', '');
         $td_num = number_format(5);
-        $td = (__('Pression atmosphérique nulle (historique)', __FILE__));
+        $td = 'Pression atmosphérique nulle (historique)';
 
         // dernière mesure barométrique
         $h1 = $histo->lastBetween($pressureID, $startDate, $endDate);
