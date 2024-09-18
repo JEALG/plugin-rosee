@@ -11,8 +11,3 @@ _[Documentation](https://jealg.github.io/documentation/plugin-rosee/#language#/)
 
 _[changelog](https://jealg.github.io/documentation/plugin-rosee/#language#/changelog)_
 
-# Jeedom - Mes Widgets
-
-Documentation de l'ensemble de mes widgets
-
-_[Documentation](https://jealg.github.io/documentation/#language#/)_

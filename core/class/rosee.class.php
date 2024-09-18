@@ -966,10 +966,12 @@ class roseeCmd extends cmd
     public function execute($_options = null)
     {
         if ($this->getLogicalId() == 'refresh') {
-            log::add('rosee', 'debug', ' ─────────> ACTUALISATION MANUELLE');
+            log::add('rosee', 'debug', ' ─────────▶︎ ' . (__('ACTUALISATION MANUELLE', __FILE__)));
             $this->getEqLogic()->getInformations();
-            log::add('rosee', 'debug', ' ─────────> FIN ACTUALISATION MANUELLE');
+            log::add('rosee', 'debug', ' ─────────▶︎ ' . (__("FIN D'ACTUALISATION MANUELLE", __FILE__)));
             return;
+        } else {
+            log::add('rosee', 'debug', '│  [WARNING] ' . __("Pas d'action pour la commande execute",  __FILE__) . ' : ' . $this->getLogicalId());
         }
     }
 }
