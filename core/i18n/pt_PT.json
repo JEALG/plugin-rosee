@@ -8,6 +8,7 @@
         "{{Aucune méthode correspondante à}} : ": "{{Nenhum método correspondente a}} :"
     },
     "plugins\/rosee\/core\/class\/rosee.class.php": {
+        "ACTUALISATION MANUELLE": "ACTUALIZAÇÃO MANUAL",
         "Alerte Humidex": "Alerta Humidex",
         "Alerte givre": "Alerta de geada",
         "Alerte rosée": "Alerta de orvalho",
@@ -21,6 +22,7 @@
         "Danger ! Risque extrêmement élevé de gelures en moins de 2 minutes (voir note) et d\\'hypothermie. Rester à l\\'abri": "Perigo! Risco extremamente elevado de queimaduras pelo frio em menos de 2 minutos (ver nota) e de hipotermia. Manter-se abrigado",
         "Danger extrême. Arrêt de travail dans de nombreux domaines.": "Perigo extremo. Paragem de trabalho em muitas zonas.",
         "Dégradation, mauvais temps durable": "Deterioração, intempéries duradouras",
+        "FIN D'ACTUALISATION MANUELLE": "FIM DA ACTUALIZAÇÃO MANUAL",
         "Faible risque de gelures": "Baixo risco de queimaduras pelo frio",
         "Faible risque de gelures et d’hypothermie": "Baixo risco de queimaduras pelo frio e hipotermia",
         "Forte dégradation, instable": "Forte degradação, instável",
@@ -44,6 +46,7 @@
         "Message": "Mensagem",
         "Message numérique": "Mensagem digital",
         "Nom Information": "Informações sobre o nome",
+        "Pas d'action pour la commande execute": "Nenhuma ação para executar o comando",
         "Pas de risque de gelures ni d’hypothermie (pour une exposition normale": "Sem risco de queimaduras pelo frio ou hipotermia (para uma exposição normal)",
         "Point de Givrage": "Ponto de Gelo",
         "Point de Rosée": "Ponto de orvalho",
