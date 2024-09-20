@@ -336,6 +336,7 @@ class rosee extends eqLogic
             }
             $this->AddCommand($vent_name, 'wind', 'info', 'numeric', $templatecore_V4 . 'line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
+        if (!$this->getIsEnable()) return;
         $this->getInformations();
     }
 
