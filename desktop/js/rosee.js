@@ -185,8 +185,8 @@ function addCmdToTable(_cmd) {
   	}
   	tr += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove" title="{{Supprimer la commande}}"></i></td>'
   	tr += '</tr>'
-	  if (jeeFrontEnd.jeedomVersion.substr(0, 3) < 4.4 && typeof jQuery === 'function') {      
-		/* 
+	if (jeeFrontEnd.jeedomVersion.substr(0, 3) < 4.4 && typeof jQuery === 'function') {
+		/*
 			à supprimer lorsque le require sera >= 4.4 
 		*/
 		$('#table_cmd tbody').append(tr)
@@ -204,7 +204,7 @@ function addCmdToTable(_cmd) {
 		  }
 		})
 		
-	  } else {
+	} else {
 		/* 
 			garder que cette partie lorsque le require sera >= 4.4 
 		*/
@@ -225,5 +225,5 @@ function addCmdToTable(_cmd) {
 			jeedom.cmd.changeType(newRow, init(_cmd.subType))
 		  }
 		})
-	  }
+	}
 }
