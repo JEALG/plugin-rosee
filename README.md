@@ -5,9 +5,9 @@
 
 # Jeedom - Plugin rosée
 
-Plugin permetant de calculer le point de rosée, le point de givrage et l'humidité absolue. <BR/>Le point de givrage ainsi que l'alerte ne se calculent uniquement dans le cas où la température < 5°C.
+Ce Plugin permet de calculer le point de rosée, le point de givrage et l'humidité absolue. <BR/>Le point de givrage ainsi que l'alerte ne se calculent uniquement dans le cas où la température < 5°C.
 
-_[Documentation](https://jealg.github.io/documentation/plugin-rosee/#language#/)_
+_[Documentation](https://jealg.github.io/documentation/plugin-rosee/fr_FR/)_
 
-_[changelog](https://jealg.github.io/documentation/plugin-rosee/#language#/changelog)_
+_[changelog](https://jealg.github.io/documentation/plugin-rosee/fr_FR/changelog)_
 
