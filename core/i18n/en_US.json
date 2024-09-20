@@ -8,6 +8,7 @@
         "{{Aucune méthode correspondante à}} : ": "{{No corresponding method to}} :"
     },
     "plugins\/rosee\/core\/class\/rosee.class.php": {
+        "ACTUALISATION MANUELLE": "MANUAL UPDATE",
         "Alerte Humidex": "Humidex alert",
         "Alerte givre": "Frost alert",
         "Alerte rosée": "Dew alert",
@@ -21,6 +22,7 @@
         "Danger ! Risque extrêmement élevé de gelures en moins de 2 minutes (voir note) et d\\'hypothermie. Rester à l\\'abri": "Danger! Extremely high risk of frostbite in less than 2 minutes (see note) and hypothermia. Remain sheltered",
         "Danger extrême. Arrêt de travail dans de nombreux domaines.": "Extreme danger. Work stoppage in many areas.",
         "Dégradation, mauvais temps durable": "Degradation, lasting bad weather",
+        "FIN D'ACTUALISATION MANUELLE": "END OF MANUAL UPDATE",
         "Faible risque de gelures": "Low risk of frostbite",
         "Faible risque de gelures et d’hypothermie": "Low risk of frostbite and hypothermia",
         "Forte dégradation, instable": "Strong degradation, unstable",
@@ -44,6 +46,7 @@
         "Message": "Message",
         "Message numérique": "Digital message",
         "Nom Information": "Name Information",
+        "Pas d'action pour la commande execute": "No action for execute command",
         "Pas de risque de gelures ni d’hypothermie (pour une exposition normale": "No risk of frostbite or hypothermia (for normal exposure",
         "Point de Givrage": "Icing Point",
         "Point de Rosée": "Dew point",
