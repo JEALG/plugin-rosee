@@ -478,7 +478,7 @@ class rosee extends eqLogic
                             message::add('Plugin Rosée - Givre - Tendance', $_eqName . ' : ' . $log_msg);
                         } else {
                             log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression Atmosphérique', __FILE__) . ' (' . $cmdvirt->getName() . ') : ' . $pressure . ' hPa');
-                            log::add('rosee', 'debug', '|  └───▶︎ :fg-success:' . __('L\'historique de la commande', __FILE__) . ':/fg: ' . $cmdvirt->getName() . ':fg-success: est bien activé:/fg:');
+                            log::add('rosee', 'debug', '|  └───▶︎ :fg-success:' . __('L\'historique de la commande', __FILE__) . ':/fg: ' . $cmdvirt->getName() . ':fg-success: ' . __('est bien activé', __FILE__) . ':/fg:');
                         }
                     }
                 } else {
@@ -789,7 +789,6 @@ class rosee extends eqLogic
                     log::add('rosee', 'debug', '| ───▶︎ Timestamp -4h    : Start/End Date : ' . $startDate . '/' . $endDate . ' - ' . __('Pression Atmosphérique)', __FILE__)  . ' : ' . $h4 . ' hPa - ' . $log_msg);
 
                     // Calcul de la tendance
-                    //log::add('rosee', 'debug', '│ ┌───────── Calcul Tendance Moyenne');
                     // sources : http://www.freescale.com/files/sensors/doc/app_note/AN3914.pdf
                     // et : https://www.parallax.com/sites/default/files/downloads/29124-Altimeter-Application-Note-501.pdf
                     $td_moy = (0.5 * $td2h + 0.5 * $td4h);
