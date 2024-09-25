@@ -94,7 +94,6 @@
         "Risque modéré de gelures en 10 à 30 minutes de la peau exposée et d’hypothermie": "Moderato rischio di congelamento in 10-30 minuti di pelle esposta e ipotermia",
         "Risque très élevé de gelures en 2 à 5 minutes (voir note) sans protection intégrale ni activité": "Rischio molto elevato di congelamento in 2-5 minuti (vedi nota) senza protezione o attività completa",
         "Risque élevé de gelures en 5 à 10 minutes (voir note) de la peau exposée et d’hypothermie": "Alto rischio di congelamento in 5-10 minuti (vedi nota) di pelle esposta e ipotermia",
-        "Rosée": "Rugiada",
         "Résultat": "Risultato",
         "Sensation d\\'inconfort assez grande. Prudence. Ralentir certaines activités en plein air.": "Livello di disagio abbastanza elevato. Esercitare cautela. Rallentare alcune attività all'aperto.",
         "Sensation d\\'inconfort généralisée. Danger. Éviter les efforts.": "Sensazione di disagio generale. Pericolo. Evitare lo sforzo.",
@@ -125,7 +124,8 @@
         "est bien activé": "è attivata",
         "ne peut être vide": "non può essere vuoto",
         "nulle (historique)": "nullo (storico)",
-        "pour l\\'équipement": "per le apparecchiature"
+        "pour l\\'équipement": "per le apparecchiature",
+        "rosee": "rosee"
     },
     "plugins\/rosee\/desktop\/js\/rosee.js": {
         "Afficher": "Mostra",
