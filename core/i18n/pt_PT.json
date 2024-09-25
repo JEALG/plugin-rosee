@@ -94,7 +94,6 @@
         "Risque modéré de gelures en 10 à 30 minutes de la peau exposée et d’hypothermie": "Risco moderado de queimaduras pelo frio em 10 a 30 minutos de pele exposta e hipotermia",
         "Risque très élevé de gelures en 2 à 5 minutes (voir note) sans protection intégrale ni activité": "Risco muito elevado de queimaduras pelo frio em 2 a 5 minutos (ver nota) sem proteção total ou atividade",
         "Risque élevé de gelures en 5 à 10 minutes (voir note) de la peau exposée et d’hypothermie": "Risco elevado de queimaduras pelo frio em 5 a 10 minutos (ver nota) de pele exposta e hipotermia",
-        "Rosée": "Orvalho",
         "Résultat": "Resultado",
         "Sensation d\\'inconfort assez grande. Prudence. Ralentir certaines activités en plein air.": "Nível de desconforto bastante elevado. Ter cuidado. Abrandar algumas actividades ao ar livre.",
         "Sensation d\\'inconfort généralisée. Danger. Éviter les efforts.": "Sensação geral de desconforto. Perigo. Evitar o esforço.",
@@ -125,7 +124,8 @@
         "est bien activé": "está ativado",
         "ne peut être vide": "não pode estar vazio",
         "nulle (historique)": "nulo (histórico)",
-        "pour l\\'équipement": "para equipamentos"
+        "pour l\\'équipement": "para equipamentos",
+        "rosee": "rosee"
     },
     "plugins\/rosee\/desktop\/js\/rosee.js": {
         "Afficher": "Mostrar",
