@@ -94,7 +94,6 @@
         "Risque modéré de gelures en 10 à 30 minutes de la peau exposée et d’hypothermie": "Mäßiges Risiko von Erfrierungen innerhalb von 10 bis 30 Minuten der exponierten Haut und von Unterkühlungen",
         "Risque très élevé de gelures en 2 à 5 minutes (voir note) sans protection intégrale ni activité": "Sehr hohes Risiko von Erfrierungen innerhalb von 2 bis 5 Minuten (siehe Anmerkung) ohne vollständigen Schutz oder Aktivität",
         "Risque élevé de gelures en 5 à 10 minutes (voir note) de la peau exposée et d’hypothermie": "Hohes Risiko von Erfrierungen innerhalb von 5 bis 10 Minuten (siehe Hinweis) der exponierten Haut und Unterkühlung",
-        "Rosée": "Tau",
         "Résultat": "Ergebnis",
         "Sensation d\\'inconfort assez grande. Prudence. Ralentir certaines activités en plein air.": "Ziemlich großes Unbehagen. Lassen Sie Vorsicht walten. Verlangsamen Sie einige Aktivitäten im Freien.",
         "Sensation d\\'inconfort généralisée. Danger. Éviter les efforts.": "Allgemeines Gefühl des Unbehagens. Gefahr. Vermeiden von Anstrengungen.",
@@ -125,7 +124,8 @@
         "est bien activé": "richtig aktiviert ist",
         "ne peut être vide": "kann nicht leer sein",
         "nulle (historique)": "null (historisch)",
-        "pour l\\'équipement": "für die Ausstattung"
+        "pour l\\'équipement": "für die Ausstattung",
+        "rosee": "rosee"
     },
     "plugins\/rosee\/desktop\/js\/rosee.js": {
         "Afficher": "Anzeige",
