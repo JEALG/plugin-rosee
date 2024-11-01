@@ -114,7 +114,7 @@ class rosee extends eqLogic
 
         $Command = $this->getCmd(null, $_logicalId);
         if (!is_object($Command)) {
-            log::add('rosee', 'debug', '│ ' . (__('Création Commande', __FILE__)) . ' : ' . $Name . ' ── ' . (__("Type / SubType", __FILE__)) . ' : '  . $Type . '/' . $SubType . ' -- LogicalID : ' . $_logicalId . ' -- Template Widget / Ligne : ' . $Template . '/' . $forceLineB . ' ── ' . (__("Type de générique", __FILE__)) . ' : ' . $generic_type . ' ── ' . (__("Icône", __FILE__)) . ' : ' . $icon . ' ── ' . (__("Min/Max", __FILE__)) . ' : ' . $valuemin . '/' . $valuemax . ' -- Calcul/Arrondi : ' . $_calculValueOffset . '/' . $_historizeRound . ' ── ' . (__("Ordre", __FILE__)) . $_order);
+            log::add('rosee', 'debug', '│ ' . (__('Création Commande', __FILE__)) . ' : ' . $Name . ' ── ' . (__('Type / SubType', __FILE__)) . ' : '  . $Type . '/' . $SubType . ' -- LogicalID : ' . $_logicalId . ' -- Template Widget / Ligne : ' . $Template . '/' . $forceLineB . ' ── ' . (__('Type de générique', __FILE__)) . ' : ' . $generic_type . ' ── ' . (__('Icône', __FILE__)) . ' : ' . $icon . ' ── ' . (__('Min/Max', __FILE__)) . ' : ' . $valuemin . '/' . $valuemax . ' -- Calcul/Arrondi : ' . $_calculValueOffset . '/' . $_historizeRound . ' ── ' . (__('Ordre', __FILE__)) . ' : ' . $_order);
             $Command = new roseeCmd();
             $Command->setId(null);
             $Command->setLogicalId($_logicalId);
@@ -142,16 +142,16 @@ class rosee extends eqLogic
             $Command->setIsHistorized($IsHistorized);
 
             if ($icon != 'default') {
-                $Command->setdisplay('icon', '<i class="' . $icon . '"></i>');
+                $Command->setDisplay('icon', '<i class="' . $icon . '"></i>');
             }
             if ($forceLineB != 'default') {
-                $Command->setdisplay('forceReturnLineBefore', 1);
+                $Command->setDisplay('forceReturnLineBefore', 1);
             }
             if ($_iconname != 'default') {
-                $Command->setdisplay('showIconAndNamedashboard', 1);
+                $Command->setDisplay('showIconAndNamedashboard', 1);
             }
             if ($_noiconname != null) {
-                $Command->setdisplay('showNameOndashboard', 0);
+                $Command->setDisplay('showNameOndashboard', 0);
             }
 
             if ($_calculValueOffset != null) {
