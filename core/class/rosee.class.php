@@ -846,7 +846,7 @@ class rosee extends eqLogic
         $var1 = null;
         // Calcul pression vapeur eau
         $temperature_k = $temperature + 273.15;
-        log::add('rosee', 'debug', '| ───▶︎ '  . __('Temperature', __FILE__) . 'Kelvin : ' . $temperature_k . ' K');
+        log::add('rosee', 'debug', '| ───▶︎ '  . __('Temperature', __FILE__) . ' ' . 'Kelvin : ' . $temperature_k . ' K');
         // Partage calcul
         $var1 = (-2937.4 / $temperature_k);
         $eTs = pow(10, ($var1 - 4.9283 * log($temperature_k) / 2.302585092994046 + 23.5471));
