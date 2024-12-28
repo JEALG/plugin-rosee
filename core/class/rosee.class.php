@@ -221,7 +221,6 @@ class rosee extends eqLogic
 
         /*  ********************** Calcul *************************** */
         $calcul = $this->getConfiguration('type_calcul');
-        $templatecore_V4  = 'core::';
         $td_num_min = null;
         if ($calcul == 'tendance') {
             $td_num_max = 5;
@@ -240,7 +239,7 @@ class rosee extends eqLogic
             $td_num_visible = 0;
             $td_num = 1;
             $template_td = 'default';
-            $template_td_num = $templatecore_V4 . 'line';
+            $template_td_num = 'core::line';
             $name_td = (__('Message', __FILE__));
             $name_td_num = (__('Message numérique', __FILE__));
             $_iconname_td = 1;
@@ -253,7 +252,7 @@ class rosee extends eqLogic
             $td_num_visible = 0;
             $td_num = 1;
             $template_td = 'default';
-            $template_td_num = $templatecore_V4 . 'line';
+            $template_td_num = 'core::line';
             $name_td = (__('Message', __FILE__));
             $name_td_num =  (__('Message numérique', __FILE__));
             $_iconname_td = 1;
@@ -262,38 +261,27 @@ class rosee extends eqLogic
             $alert2 = (__('Alerte givre', __FILE__));
         }
         /* Commun */
-        $humidityname =  (__('Humidité absolue', __FILE__));
-        $humidity_relative_name =  (__('Humidité Relative', __FILE__));
-        $pointroseename =  (__('Point de Rosée', __FILE__));
-        $pointgivrename =  (__('Point de Givrage', __FILE__));
-        $temp_ressentiename =  (__('Température ressentie', __FILE__));
-        $temp_name =  (__('Température', __FILE__));
-        $indice_chaleur_name =  (__('Indice de Chaleur (Humidex)', __FILE__));
-        $pressure_name =  (__('Pression Atmosphérique', __FILE__));
-        $dPdT_name =  'dPdT';
-        $vent_name =  (__('Vitesse du Vent', __FILE__));
-
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs') {
-            $this->AddCommand($humidityname, 'humidityabs_m3', 'info', 'numeric', $templatecore_V4 . 'line', 'g/m3', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+            $this->AddCommand((__('Humidité absolue', __FILE__)), 'humidityabs_m3', 'info', 'numeric', 'core::line', 'g/m3', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'temperature') {
-            $this->AddCommand($alert1, 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, null, null);
+            $this->AddCommand($alert1, 'alert_1', 'info', 'binary', 'core::line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, null, null);
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'rosee') {
-            $this->AddCommand($pointroseename, 'rosee', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+            $this->AddCommand((__('Point de Rosée', __FILE__)), 'rosee', 'info', 'numeric', 'core::line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'temperature') {
-            $this->AddCommand($alert2, 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, null, null);
+            $this->AddCommand($alert2, 'alert_2', 'info', 'binary', 'core::line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, null, null);
             if ($calcul != 'temperature') {
-                $this->AddCommand($pointgivrename, 'frost_point', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+                $this->AddCommand((__('Point de Givrage', __FILE__)), 'frost_point', 'info', 'numeric', 'core::line', '°C', 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
             }
         }
         if ($calcul == 'temperature') {
-            $this->AddCommand($temp_ressentiename, 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 1, null);
-            $this->AddCommand($indice_chaleur_name, 'humidex', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 1, null);
+            $this->AddCommand((__('Température ressentie', __FILE__)), 'windchill', 'info', 'numeric', 'core::line', '°C', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 1, null);
+            $this->AddCommand((__('Indice de Chaleur (Humidex)', __FILE__)), 'humidex', 'info', 'numeric', 'core::line', null, 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 1, null);
         }
         if ($calcul != 'humidityabs' && $calcul != null && $calcul != 'rosee') {
             $this->AddCommand($name_td, 'td', 'info', 'string', $template_td, null, 'WEATHER_CONDITION', $td_num, 'default', 'default', 'default', 'default', $order++, '0', true, $_iconname_td, null, null, null);
@@ -301,16 +289,16 @@ class rosee extends eqLogic
         }
 
         if ($calcul != 'tendance' && $calcul != null) {
-            $this->AddCommand($temp_name, 'temperature', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+            $this->AddCommand((__('Température', __FILE__)), 'temperature', 'info', 'numeric', 'core::line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
         if ($calcul != 'temperature' && $calcul != null) {
-            $this->AddCommand($pressure_name, 'pressure', 'info', 'numeric', $templatecore_V4 . 'line', 'hPa', 'WEATHER_PRESSURE', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+            $this->AddCommand((__('Pression Atmosphérique', __FILE__));, 'pressure', 'info', 'numeric', 'core::line', 'hPa', 'WEATHER_PRESSURE', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
         if ($calcul == 'tendance') {
-            $this->AddCommand($dPdT_name, 'dPdT', 'info', 'numeric', $templatecore_V4 . 'line', 'hPa/h', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+            $this->AddCommand('dPdT', 'dPdT', 'info', 'numeric', 'core::line', 'hPa/h', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs' || $calcul == 'temperature') {
-            $this->AddCommand($humidity_relative_name, 'humidityrel', 'info', 'numeric', $templatecore_V4 . 'line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+            $this->AddCommand((__('Humidité Relative', __FILE__)), 'humidityrel', 'info', 'numeric', 'core::line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
         if ($calcul == 'temperature') {
             /*  ********************** Vitesse vent *************************** */
@@ -323,7 +311,7 @@ class rosee extends eqLogic
             if ($wind_unite == 'm/s') {
                 $wind_unite = 'km/h';
             }
-            $this->AddCommand($vent_name, 'wind', 'info', 'numeric', $templatecore_V4 . 'line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+            $this->AddCommand((__('Vitesse du Vent', __FILE__)), 'wind', 'info', 'numeric', 'core::line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
         if (!$this->getIsEnable()) return;
         $this->getInformations();
