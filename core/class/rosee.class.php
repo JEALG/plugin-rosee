@@ -292,7 +292,7 @@ class rosee extends eqLogic
             $this->AddCommand((__('Température', __FILE__)), 'temperature', 'info', 'numeric', 'core::line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
         if ($calcul != 'temperature' && $calcul != null) {
-            $this->AddCommand((__('Pression Atmosphérique', __FILE__));, 'pressure', 'info', 'numeric', 'core::line', 'hPa', 'WEATHER_PRESSURE', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+            $this->AddCommand((__('Pression Atmosphérique', __FILE__)), 'pressure', 'info', 'numeric', 'core::line', 'hPa', 'WEATHER_PRESSURE', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
         if ($calcul == 'tendance') {
             $this->AddCommand('dPdT', 'dPdT', 'info', 'numeric', 'core::line', 'hPa/h', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
