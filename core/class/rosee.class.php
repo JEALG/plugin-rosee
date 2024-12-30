@@ -436,7 +436,7 @@ class rosee extends eqLogic
             $pressure = $this->getConfiguration('pression');
             if ($pressure === '' && $calcul != 'tendance') { //valeur par défaut de la pression atmosphérique : 1013.25 hPa
                 $pressure = 1013.25;
-                log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression Atmosphérique aucun équipement sélectionné, valeur par défaut', __FILE__) . ' : ' .  $pressure . ' hPa');
+                log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression atmosphérique aucun équipement sélectionné, valeur par défaut', __FILE__) . ' : ' .  $pressure . ' hPa');
             } else {
                 $pressureID = str_replace("#", "", $this->getConfiguration('pression'));
                 $cmdvirt = cmd::byId($pressureID);
@@ -444,8 +444,8 @@ class rosee extends eqLogic
                     $pressure = $cmdvirt->execCmd();
                     $pressureHISTO = $cmdvirt->getIsHistorized($pressureID);
                     if ($pressure === '') {
-                        log::add('rosee', 'error', (__('La valeur :', __FILE__)) . ' ' . __('Pression Atmosphérique', __FILE__) . ' (' . $cmdvirt->getName() .  ')' . ' ' . __('pour l\'équipement', __FILE__) . ' [' . $this->getName() . '] ' . __('ne peut être vide', __FILE__));
-                        throw new Exception((__('La valeur :', __FILE__)) . ' ' . __('Pression Atmosphérique', __FILE__) . ' (' . $cmdvirt->getName() .  ')' . ' ' . __('pour l\'équipement', __FILE__) . ' [' . $this->getName() . '] ' . __('ne peut être vide', __FILE__));
+                        log::add('rosee', 'error', (__('La valeur :', __FILE__)) . ' ' . __('Pression atmosphérique', __FILE__) . ' (' . $cmdvirt->getName() .  ')' . ' ' . __('pour l\'équipement', __FILE__) . ' [' . $this->getName() . '] ' . __('ne peut être vide', __FILE__));
+                        throw new Exception((__('La valeur :', __FILE__)) . ' ' . __('Pression atmosphérique', __FILE__) . ' (' . $cmdvirt->getName() .  ')' . ' ' . __('pour l\'équipement', __FILE__) . ' [' . $this->getName() . '] ' . __('ne peut être vide', __FILE__));
                     } else {
                         $log_msg = __('L\'historique de la commande', __FILE__) . ' ';
                         $log_msg .= $cmdvirt->getName();
@@ -454,7 +454,7 @@ class rosee extends eqLogic
                             log::add('rosee', 'debug', '| ───▶︎ [ALERT] ' . $log_msg . ' : ' . $pressureHISTO);
                             message::add('Plugin Rosée - Givre - Tendance', $this->getName() . ' : ' . $log_msg);
                         } else {
-                            log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression Atmosphérique', __FILE__) . ' (' . $cmdvirt->getName() . ') : ' . $pressure . ' hPa');
+                            log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression atmosphérique', __FILE__) . ' (' . $cmdvirt->getName() . ') : ' . $pressure . ' hPa');
                             log::add('rosee', 'debug', '|  └───▶︎ :fg-success:' . __('L\'historique de la commande', __FILE__) . ':/fg: ' . $cmdvirt->getName() . ':fg-success: ' . __('est bien activé', __FILE__) . ':/fg:');
                         }
                     }
@@ -735,7 +735,7 @@ class rosee extends eqLogic
         $h1 = $histo->lastBetween($pressureID, $startDate, $endDate);
         if ($h1 != '') {
             $log_msg_h =  '-15min';
-            log::add('rosee', 'debug', '| ───▶︎ Timestamp ' . $log_msg_h  . ' : Start/End Date : ' . $startDate . '/' . $endDate . ' - ' . __('Pression Atmosphérique)', __FILE__)  . ' : ' . $h1 . ' hPa');
+            log::add('rosee', 'debug', '| :fg-success:───▶︎ Timestamp:/fg: ' . $log_msg_h  . ' ::fg-success: Start/End Date ::/fg: ' . $startDate . ' :fg-success:/:/fg: ' . $endDate . ':fg-success: - ' . __('Pression atmosphérique', __FILE__)  . ' :/fg:: ' . $h1 . ' hPa');
 
             // calcul du timestamp - 2h
             $endDate = $_date2->modify('-2 hour');
@@ -750,8 +750,8 @@ class rosee extends eqLogic
             if ($h2 != null) {
                 $td2h = ($h1 - $h2) / 2;
                 $log_msg_h =  ' -2h';
-                $log_msg = __('Tendance', __FILE__) . $log_msg_h .  ' : ' . $td2h . ' hPa/h';
-                log::add('rosee', 'debug', '| ───▶︎ Timestamp ' . $log_msg_h  . ' : Start/End Date : ' . $startDate . '/' . $endDate . ' - ' . __('Pression Atmosphérique)', __FILE__)  . ' : ' . $h2 . ' hPa - ' . $log_msg);
+                $log_msg = ':fg-success: - ' . __('Tendance', __FILE__) . $log_msg_h .  ' ::/fg: ' . $td2h . ' hPa/h';
+                log::add('rosee', 'debug', '| :fg-success:───▶︎ Timestamp:/fg: ' . $log_msg_h  . ' ::fg-success: Start/End Date ::/fg: ' . $startDate . ' :fg-success:/:/fg: ' . $endDate . ':fg-success: - ' . __('Pression atmosphérique', __FILE__)  . ' ::/fg: ' . $h2 . ' hPa - ' . $log_msg);
                 // calcul du timestamp - 4h
                 $endDate = $_date2->modify('-2 hour');
                 $endDate = $_date2->format('Y-m-d H:i:s');
@@ -765,8 +765,8 @@ class rosee extends eqLogic
                 if ($h4 != null) {
                     $td4h = (($h1 - $h4) / 4);
                     $log_msg_h =  ' -4h';
-                    $log_msg = __('Tendance', __FILE__) . ' -4h : ' . $td4h . ' hPa/h';
-                    log::add('rosee', 'debug', '| ───▶︎ Timestamp ' . $log_msg_h  . ' : Start/End Date : ' . $startDate . '/' . $endDate . ' - ' . __('Pression Atmosphérique)', __FILE__)  . ' : ' . $h4 . ' hPa - ' . $log_msg);
+                    $log_msg = ':fg-success: - ' . __('Tendance', __FILE__) . $log_msg_h . ' ::/fg: ' . $td4h . ' hPa/h';
+                    log::add('rosee', 'debug', '| :fg-success:───▶︎ Timestamp:/fg: ' . $log_msg_h  . ' ::fg-success: Start/End Date ::/fg: ' . $startDate . ' :fg-success:/:/fg: ' . $endDate . ':fg-success: - ' . __('Pression atmosphérique', __FILE__)  . ' ::/fg: ' . $h4 . ' hPa' . $log_msg);
 
                     // Calcul de la tendance
                     // sources : http://www.freescale.com/files/sensors/doc/app_note/AN3914.pdf
@@ -796,14 +796,14 @@ class rosee extends eqLogic
                     };
                 } else {
                     $td4h = 0;
-                    log::add('rosee', 'debug', '| ───▶︎ [ALERT] ' . __('Pression Atmosphérique', __FILE__) . ' -4h ' . __('nulle (historique)', __FILE__)  . '  : ' . $h4 . ' hPa');
+                    log::add('rosee', 'debug', '| ───▶︎ [ALERT] ' . __('Pression atmosphérique', __FILE__) . ' -4h ' . __('nulle (historique)', __FILE__)  . '  : ' . $h4 . ' hPa');
                 }
             } else {
                 $td2h = 0;
-                log::add('rosee', 'debug', '| ───▶︎ [ALERT] ' . __('Pression Atmosphérique', __FILE__) . ' -2h ' . __('nulle (historique)', __FILE__)  . '  : ' . $h2 . ' hPa');
+                log::add('rosee', 'debug', '| ───▶︎ [ALERT] ' . __('Pression atmosphérique', __FILE__) . ' -2h ' . __('nulle (historique)', __FILE__)  . '  : ' . $h2 . ' hPa');
             }
         } else {
-            log::add('rosee', 'debug', '| ───▶︎ [ALERT] '  . __('Pression Atmosphérique', __FILE__) . ' -15min ' . __('nulle (historique)', __FILE__)  . '  : ' . $h1 . ' hPa');
+            log::add('rosee', 'debug', '| ───▶︎ [ALERT] '  . __('Pression atmosphérique', __FILE__) . ' -15min ' . __('nulle (historique)', __FILE__)  . '  : ' . $h1 . ' hPa');
         }
         return array($td_num, $td, $dPdT);
     }
