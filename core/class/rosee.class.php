@@ -853,19 +853,19 @@ class rosee extends eqLogic
             if (0 < $windchill) {
                 $td = (__('Pas de risque de gelures ni d’hypothermie (pour une exposition normale', __FILE__));
                 $td_num = -1;
-            } else if (-10 < $windchill && 0 <= $windchill) {
+            } else if (-10 < $windchill && $windchill <= 0) {
                 $td = (__('Faible risque de gelures', __FILE__));
                 $td_num = -2;
-            } else if (-28 < $windchill && -10 <= $windchill) {
+            } else if (-28 < $windchill && $windchill <= -10) {
                 $td = (__('Faible risque de gelures et d’hypothermie', __FILE__));
                 $td_num = -3;
-            } else if (-40 < $windchill && -28 <= $windchill) {
+            } else if (-40 < $windchill && $windchill <= -28) {
                 $td = (__('Risque modéré de gelures en 10 à 30 minutes de la peau exposée et d’hypothermie', __FILE__));
                 $td_num = -4;
-            } else if (-48 < $windchill && -40 <= $windchill) {
+            } else if (-48 < $windchill && $windchill <= -40) {
                 $td = (__('Risque élevé de gelures en 5 à 10 minutes (voir note) de la peau exposée et d’hypothermie', __FILE__));
                 $td_num = -5;
-            } else if (-55 < $windchill && -48 <= $windchill) {
+            } else if (-55 < $windchill && $windchill <= -48) {
                 $td = (__('Risque très élevé de gelures en 2 à 5 minutes (voir note) sans protection intégrale ni activité', __FILE__));
                 $td_num = -6;
             } else if ($windchill <= -55) {
