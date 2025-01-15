@@ -13,9 +13,6 @@
 	"licence": "AGPL",
 	"author": "JAG",
 	"require": "4.2",
-	"os": {
-		"min": 10
-	},
 	"category": "weather",
 	"hasDependency": false,
 	"hasOwnDeamon": false,
