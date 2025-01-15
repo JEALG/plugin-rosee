@@ -56,6 +56,7 @@
         "Info supplémentaire : Il fait trop chaud pas de calcul de l\\'alerte givre (": "Additional info: It's too hot to calculate the frost alert (",
         "Info supplémentaire : Point de givre fixé est : ": "Additional info: Set frost point is :",
         "L\\'historique de la commande": "Order history",
+        "L\\'unité de la VITESSE DU VENT": "WIND SPEED unit",
         "La valeur :": "Value :",
         "La vitesse du vent sélectionnée est en m\/s, le plugin va convertir en km\/h": "The selected wind speed is in m\/s, the plugin will convert to km\/h",
         "Le champ HUMIDITÉ RELATIVE": "The RELATIVE HUMIDITY field",
@@ -123,6 +124,7 @@
         "doit être activé": "must be activated",
         "est bien activé": "is enabled",
         "est nulle": "is null",
+        "n\\'est pas renseignée": "is not filled in",
         "ne peut être vide": "cannot be empty",
         "pour l\\'équipement": "for equipment",
         "rosee": "rosee"

@@ -402,7 +402,10 @@ class rosee extends eqLogic
                 log::add('rosee', 'error', (__('Configuration :', __FILE__)) . ' ' . (__('Le champ VITESSE DU VENT', __FILE__))  . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName() . ']');
                 throw new Exception(__((__('Le champ VITESSE DU VENT', __FILE__)) . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName(), __FILE__) . ']');
             }
-            if ($wind_unite == 'm/s') {
+            if ($wind_unite == '') {
+                log::add('rosee', 'error', (__('Configuration :', __FILE__)) . ' ' . (__('L\'unité de la VITESSE DU VENT', __FILE__))  . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('n\'est pas renseignée', __FILE__)));
+                throw new Exception(__((__('L\'unité de la VITESSE DU VENT', __FILE__)) . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName(), __FILE__) . ']');
+            } else if ($wind_unite == 'm/s') {
                 log::add('rosee', 'debug', '| ───▶︎ ' . __('La vitesse du vent sélectionnée est en m/s, le plugin va convertir en km/h', __FILE__));
                 $wind = $wind * 3.6;
                 $wind_unite = ' km/h';

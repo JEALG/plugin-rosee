@@ -56,6 +56,7 @@
         "Info supplémentaire : Il fait trop chaud pas de calcul de l\\'alerte givre (": "Informação adicional: Está demasiado calor para calcular o alerta de geada (",
         "Info supplémentaire : Point de givre fixé est : ": "Informação adicional: O ponto de congelação definido é :",
         "L\\'historique de la commande": "Histórico de encomendas",
+        "L\\'unité de la VITESSE DU VENT": "A unidade WIND SPEED",
         "La valeur :": "O valor :",
         "La vitesse du vent sélectionnée est en m\/s, le plugin va convertir en km\/h": "A velocidade do vento selecionada é em m\/s, o plugin converte-a para km\/h",
         "Le champ HUMIDITÉ RELATIVE": "O campo HUMIDADE RELATIVA",
@@ -123,6 +124,7 @@
         "doit être activé": "deve ser ativado",
         "est bien activé": "está ativado",
         "est nulle": "é nulo",
+        "n\\'est pas renseignée": "não está preenchido",
         "ne peut être vide": "não pode estar vazio",
         "pour l\\'équipement": "para equipamentos",
         "rosee": "rosee"

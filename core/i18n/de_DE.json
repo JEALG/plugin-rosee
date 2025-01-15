@@ -56,6 +56,7 @@
         "Info supplémentaire : Il fait trop chaud pas de calcul de l\\'alerte givre (": "Zusatzinfo: Es ist zu warm, keine Berechnung der Vereisungswarnung (",
         "Info supplémentaire : Point de givre fixé est : ": "Zusatzinfo: Festgelegter Vereisungspunkt ist :",
         "L\\'historique de la commande": "Die Bestellhistorie",
+        "L\\'unité de la VITESSE DU VENT": "Einheit der Windgeschwindigkeit",
         "La valeur :": "Wert :",
         "La vitesse du vent sélectionnée est en m\/s, le plugin va convertir en km\/h": "Die ausgewählte Windgeschwindigkeit ist in m\/s, das Plugin wird in km\/h umrechnen",
         "Le champ HUMIDITÉ RELATIVE": "Das Feld RELATIVE FEUCHTIGKEIT",
@@ -123,6 +124,7 @@
         "doit être activé": "muss aktiviert werden",
         "est bien activé": "richtig aktiviert ist",
         "est nulle": "ist null",
+        "n\\'est pas renseignée": "n ist nicht ausgefüllt",
         "ne peut être vide": "kann nicht leer sein",
         "pour l\\'équipement": "für die Ausstattung",
         "rosee": "rosee"
