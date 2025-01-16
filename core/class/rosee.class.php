@@ -311,6 +311,7 @@ class rosee extends eqLogic
             if ($wind_unite == 'm/s') {
                 $wind_unite = 'km/h';
             } else if ($wind_unite == '') {
+                log::add('rosee', 'debug', '| ───▶︎ :fg-warning:' . __('Aucune unité pour la vitesse du vent n\'est renseignée, le plugin va faire les calculs en utiisant l\'unité : km/h', __FILE__) . ':/fg:');
                 $wind_unite = 'km/h';
             }
 
