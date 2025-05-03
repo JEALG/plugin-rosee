@@ -128,6 +128,7 @@
         "est nulle": "is null",
         "ne peut être vide": "cannot be empty",
         "pour l\\'équipement": "for equipment",
+        "rapport de mélange": "mixing ratio",
         "rosee": "rosee"
     },
     "plugins\/rosee\/desktop\/js\/rosee.js": {
