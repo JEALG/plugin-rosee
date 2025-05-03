@@ -93,6 +93,7 @@
         "Problème avec l\\'historique de la pression atmosphérique": "Problem mit dem Verlauf des Luftdrucks",
         "Pré Alerte Humidex": "Humidex Pre-Alert",
         "Rafraichir": "Auffrischen",
+        "Rapport de mélange": "Mischungsverhältnis",
         "Risque de givre": "Gefahr von Vereisung",
         "Risque modéré de gelures en 10 à 30 minutes de la peau exposée et d’hypothermie": "Mäßiges Risiko von Erfrierungen innerhalb von 10 bis 30 Minuten der exponierten Haut und von Unterkühlungen",
         "Risque très élevé de gelures en 2 à 5 minutes (voir note) sans protection intégrale ni activité": "Sehr hohes Risiko von Erfrierungen innerhalb von 2 bis 5 Minuten (siehe Anmerkung) ohne vollständigen Schutz oder Aktivität",
@@ -126,9 +127,10 @@
         "doit être activé": "muss aktiviert werden",
         "est bien activé": "richtig aktiviert ist",
         "est nulle": "ist null",
+        "masse molaire moyenne de l\\’air": "durchschnittliche molare Masse von Luft",
+        "masse molaire moyenne de l\\’eau": "durchschnittliche molare Masse von Wasser",
         "ne peut être vide": "kann nicht leer sein",
         "pour l\\'équipement": "für die Ausstattung",
-        "rapport de mélange": "mischungsverhältnis",
         "rosee": "rosee"
     },
     "plugins\/rosee\/desktop\/js\/rosee.js": {

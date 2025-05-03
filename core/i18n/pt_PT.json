@@ -93,6 +93,7 @@
         "Problème avec l\\'historique de la pression atmosphérique": "Problema com o historial da pressão do ar",
         "Pré Alerte Humidex": "Pré-alerta Humidex",
         "Rafraichir": "Recarregar",
+        "Rapport de mélange": "Rácio de mistura",
         "Risque de givre": "Risco de geada",
         "Risque modéré de gelures en 10 à 30 minutes de la peau exposée et d’hypothermie": "Risco moderado de queimaduras pelo frio em 10 a 30 minutos de pele exposta e hipotermia",
         "Risque très élevé de gelures en 2 à 5 minutes (voir note) sans protection intégrale ni activité": "Risco muito elevado de queimaduras pelo frio em 2 a 5 minutos (ver nota) sem proteção total ou atividade",
@@ -126,9 +127,10 @@
         "doit être activé": "deve ser ativado",
         "est bien activé": "está ativado",
         "est nulle": "é nulo",
+        "masse molaire moyenne de l\\’air": "massa molar média do ar",
+        "masse molaire moyenne de l\\’eau": "massa molar média da água",
         "ne peut être vide": "não pode estar vazio",
         "pour l\\'équipement": "para equipamentos",
-        "rapport de mélange": "rácio de mistura",
         "rosee": "rosee"
     },
     "plugins\/rosee\/desktop\/js\/rosee.js": {
