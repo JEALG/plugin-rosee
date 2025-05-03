@@ -264,7 +264,7 @@ class rosee extends eqLogic
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs') {
             $this->AddCommand((__('Humidité absolue', __FILE__)), 'humidityabs_m3', 'info', 'numeric', 'core::line', 'g/m³', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
             $this->AddCommand((__('Pression de vapeur réelle', __FILE__)), 'pressure_vapor', 'info', 'numeric', 'core::line', 'Pa', 'default', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
-            $this->AddCommand((__('rapport de mélange', __FILE__)), 'pressure_vapor', 'info', 'numeric', 'core::line', 'g/Kg', 'default', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+            $this->AddCommand((__('Rapport de mélange', __FILE__)), 'mixing_ratio', 'info', 'numeric', 'core::line', 'g/Kg', 'default', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', '#value#/100', 2, null);
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'temperature') {
@@ -521,6 +521,8 @@ class rosee extends eqLogic
             log::add('rosee', 'debug', '| ───▶︎ ' . __('Humidité Absolue', __FILE__) . ' : ' . $humidityabs_m3 . ' g/m³');
             $pressure_vapor_pa = $humidity_result['pressure_vapor'];
             log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression de vapeur réelle', __FILE__) . ' : ' . $pressure_vapor_pa . ' Pa');
+            $mixing_ratio = $humidity_result['mixing_ratio'];
+            log::add('rosee', 'debug', '| ───▶︎ ' . __('Rapport de mélange', __FILE__) . ' : ' . $mixing_ratio . ' g/Kg');
             log::add('rosee', 'debug', '└──');
         }
 
@@ -599,8 +601,8 @@ class rosee extends eqLogic
                     $Value_calcul = array('alert_1' => $alert_1, 'alert_2' => $alert_2, 'humidex' => $humidex, 'humidityrel' => $humidity, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num, 'wind' => $wind, 'windchill' => $windchill);
                     break;
                 case 'humidityabs': // Humidité absolue
-                    $list = 'humidityabs_m3,humidityrel,pressure,temperature,pressure_vapor';
-                    $Value_calcul = array('humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'temperature' => $temperature, 'pressure_vapor' => $pressure_vapor_pa);
+                    $list = 'humidityabs_m3,humidityrel,pressure,temperature,pressure_vapor,mixing_ratio';
+                    $Value_calcul = array('humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'temperature' => $temperature, 'pressure_vapor' => $pressure_vapor_pa, 'mixing_ratio' => $mixing_ratio);
                     break;
                 case 'tendance': // Tendance  => VALABLE AUSSI POUR LE PLUGIN BARO/ROSEE
                     $list = 'dPdT,pressure,td,td_num';
@@ -653,10 +655,25 @@ class rosee extends eqLogic
         log::add('rosee', 'debug', '| ───▶︎ ' . __('Volume specifique [variable : v]', __FILE__)  . ' ::/fg: '  . $v . ' m³/Kg');
         $p = 1.0 / $v;
         log::add('rosee', 'debug', '| ───▶︎ ' . __('Poids spécifique [variable : p]', __FILE__)  . ' ::/fg: '   . $p . ' m³/Kg');
+        $masse_air = 18.0154;
+        $masse_eau = 28.965;
+        //B = (18,0154 / 28,965) * 1000 (Unité g/Kg)
+        $B = ($masse_air / $masse_eau) * 1000;
+        /* B * (Pw / (Patmo - Pw)) 
+        Avec:
+        Patmo => Pression atmosphérique (Déjà présent dans le plugins) : $pressure
+        Pw => Pression de vapeur en Pa qui est calculé pour avoir l’humidité absolue. : $pressure_vapor 
+        */
+        log::add('rosee', 'debug', '| ───▶︎ B = ' . __('masse molaire moyenne de l\’air', __FILE__)  . ' x ' . __('masse molaire moyenne de l\’eau', __FILE__) . ' =:/fg: '   . $B . ' g/Kg');
+        $mixing_ratio1 = ($pressure_vapor - $pressure);
+        $mixing_ratio2 = ($pressure_vapor / $mixing_ratio1);
+        $mixing_ratio = $B * $mixing_ratio2;
+        log::add('rosee', 'debug', '| ───▶︎ ' . __('Rapport de mélange', __FILE__)  . ' ::/fg: '   . $mixing_ratio . ' g/Kg');
         $humidityabs_m3 = 1000.0 * $humi_a * $p;
         $humidity_result = array(
             'humidityabs_m3' => $humidityabs_m3,
             'pressure_vapor' => $pressure_vapor,
+            'mixing_ratio' => $mixing_ratio
 
         );
         return  $humidity_result;

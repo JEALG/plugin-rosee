@@ -76,6 +76,7 @@ function rosee_update()
         updateLogicalId($eqLogic, 'td_num', null, null, 'Message numérique'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'windchill', null, null, 'Température ressentie'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'heat_index', 'humidex', 0, 'Indice de Chaleur (Humidex)', 'DELETE'); // Modification du 7/12/2020
+        updateLogicalId($eqLogic, 'humidityabs_m3', null, 0, null, 'g/m³'); // Modification du 7/12/2020
     }
 
     //resave eqLogics for new cmd:
