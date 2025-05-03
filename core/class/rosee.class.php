@@ -641,7 +641,7 @@ class rosee extends eqLogic
         $pvs = pow(10, $terme_pvs1);
         log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression de saturation de la vapeur d\'eau (pvs)', __FILE__)  . ' ::/fg: '  . $pvs);
         $pv = ($humidity * $pvs) / 100.0;
-        log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression partielle de vapeur d\'eau (pv)', __FILE__)  . ' ::/fg: '  . $pv);
+        log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression partielle de vapeur d\'eau (pv)', __FILE__)  . ' ::/fg: '  . $pv . ' pa');
         $humi_a = 0.622 * ($pv / (($pressure * 100.0) - $pv));
         log::add('rosee', 'debug', '| ───▶︎ ' . __('Humidité absolue en kg d\'eau par kg d\'air', __FILE__)  . ' ::/fg: '  . $humi_a . ' kg');
         $v = (461.24 * (0.622 + $humi_a) * ($temperature + 273.15)) / ($pressure * 100.0);
