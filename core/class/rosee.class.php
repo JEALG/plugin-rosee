@@ -262,8 +262,9 @@ class rosee extends eqLogic
         }
         /* Commun */
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs') {
-            $this->AddCommand((__('Humidité absolue', __FILE__)), 'humidityabs_m3', 'info', 'numeric', 'core::line', 'g/m3', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+            $this->AddCommand((__('Humidité absolue', __FILE__)), 'humidityabs_m3', 'info', 'numeric', 'core::line', 'g/m³', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
             $this->AddCommand((__('Pression de vapeur réelle', __FILE__)), 'pressure_vapor', 'info', 'numeric', 'core::line', 'Pa', 'default', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+            $this->AddCommand((__('rapport de mélange', __FILE__)), 'pressure_vapor', 'info', 'numeric', 'core::line', 'g/Kg', 'default', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'temperature') {
@@ -517,7 +518,7 @@ class rosee extends eqLogic
             log::add('rosee', 'debug', '┌── :fg-warning:' . __('Calcul de l\'humidité absolue', __FILE__) . ' ::/fg: '  . $this->getName() . ' ──');
             $humidity_result = rosee::getHumidity($temperature, $humidity, $pressure);
             $humidityabs_m3 = $humidity_result['humidityabs_m3'];
-            log::add('rosee', 'debug', '| ───▶︎ ' . __('Humidité Absolue', __FILE__) . ' : ' . $humidityabs_m3 . ' g/m3');
+            log::add('rosee', 'debug', '| ───▶︎ ' . __('Humidité Absolue', __FILE__) . ' : ' . $humidityabs_m3 . ' g/m³');
             $pressure_vapor_pa = $humidity_result['pressure_vapor'];
             log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression de vapeur réelle', __FILE__) . ' : ' . $pressure_vapor_pa . ' Pa');
             log::add('rosee', 'debug', '└──');
@@ -647,11 +648,11 @@ class rosee extends eqLogic
         $pressure_vapor = ($humidity * $pvs) / 100.0;
         log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression partielle de vapeur d\'eau', __FILE__)  . ' ::/fg: '  . $pressure_vapor . ' Pa');
         $humi_a = 0.622 * ($pv / (($pressure * 100.0) - $pressure_vapor));
-        log::add('rosee', 'debug', '| ───▶︎ ' . __('Humidité absolue en kg d\'eau par kg d\'air', __FILE__)  . ' ::/fg: '  . $humi_a . ' kg');
+        log::add('rosee', 'debug', '| ───▶︎ ' . __('Humidité absolue en kg d\'eau par kg d\'air', __FILE__)  . ' ::/fg: '  . $humi_a . ' Kg');
         $v = (461.24 * (0.622 + $humi_a) * ($temperature + 273.15)) / ($pressure * 100.0);
-        log::add('rosee', 'debug', '| ───▶︎ ' . __('Volume specifique [variable : v]', __FILE__)  . ' ::/fg: '  . $v . ' m3/kg');
+        log::add('rosee', 'debug', '| ───▶︎ ' . __('Volume specifique [variable : v]', __FILE__)  . ' ::/fg: '  . $v . ' m³/Kg');
         $p = 1.0 / $v;
-        log::add('rosee', 'debug', '| ───▶︎ ' . __('Poids spécifique [variable : p]', __FILE__)  . ' ::/fg: '   . $p . ' m3/kg');
+        log::add('rosee', 'debug', '| ───▶︎ ' . __('Poids spécifique [variable : p]', __FILE__)  . ' ::/fg: '   . $p . ' m³/Kg');
         $humidityabs_m3 = 1000.0 * $humi_a * $p;
         $humidity_result = array(
             'humidityabs_m3' => $humidityabs_m3,
