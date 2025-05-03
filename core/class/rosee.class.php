@@ -519,7 +519,7 @@ class rosee extends eqLogic
             $humidityabs_m3 = $humidity_result['humidityabs_m3'];
             log::add('rosee', 'debug', '| ───▶︎ ' . __('Humidité Absolue', __FILE__) . ' : ' . $humidityabs_m3 . ' g/m3');
             $pressure_vapor_pa = $humidity_result['pressure_vapor'];
-            log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression de vapeur réelle', __FILE__) . ' : ' . $pressure_vapor_pa . ' pa');
+            log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression de vapeur réelle', __FILE__) . ' : ' . $pressure_vapor_pa . ' Pa');
             log::add('rosee', 'debug', '└──');
         }
 
@@ -645,7 +645,7 @@ class rosee extends eqLogic
         $pvs = pow(10, $terme_pvs1);
         log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression de saturation de la vapeur d\'eau [variable : pvs]', __FILE__)  . ' ::/fg: '  . $pvs);
         $pressure_vapor = ($humidity * $pvs) / 100.0;
-        log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression partielle de vapeur d\'eau', __FILE__)  . ' ::/fg: '  . $pressure_vapor . ' pa');
+        log::add('rosee', 'debug', '| ───▶︎ ' . __('Pression partielle de vapeur d\'eau', __FILE__)  . ' ::/fg: '  . $pressure_vapor . ' Pa');
         $humi_a = 0.622 * ($pv / (($pressure * 100.0) - $pressure_vapor));
         log::add('rosee', 'debug', '| ───▶︎ ' . __('Humidité absolue en kg d\'eau par kg d\'air', __FILE__)  . ' ::/fg: '  . $humi_a . ' kg');
         $v = (461.24 * (0.622 + $humi_a) * ($temperature + 273.15)) / ($pressure * 100.0);
