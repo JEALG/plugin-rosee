@@ -645,9 +645,9 @@ class rosee extends eqLogic
         $humi_a = 0.622 * ($pv / (($pressure * 100.0) - $pv));
         log::add('rosee', 'debug', '| ───▶︎ ' . __('Humidité absolue en kg d\'eau par kg d\'air', __FILE__)  . ' ::/fg: '  . $humi_a . ' kg');
         $v = (461.24 * (0.622 + $humi_a) * ($temperature + 273.15)) / ($pressure * 100.0);
-        log::add('rosee', 'debug', '| ───▶︎ ' . __('Volume specifique (v)', __FILE__)  . ' ::/fg: '  . $v . ' m3/kg');
+        log::add('rosee', 'debug', '| ───▶︎ ' . __('Volume specifique [variable : v]', __FILE__)  . ' ::/fg: '  . $v . ' m3/kg');
         $p = 1.0 / $v;
-        log::add('rosee', 'debug', '| ───▶︎ ' . __('Poids spécifique (p)', __FILE__)  . ' ::/fg: '   . $p . ' m3/kg');
+        log::add('rosee', 'debug', '| ───▶︎ ' . __('Poids spécifique [variable : p]', __FILE__)  . ' ::/fg: '   . $p . ' m3/kg');
         $humidityabs_m3 = 1000.0 * $humi_a * $p;
         return $humidityabs_m3;
     }
