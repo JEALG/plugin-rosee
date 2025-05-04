@@ -246,7 +246,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </div>
                             <div id="humidite" class="form-group" style="display:none">
                                 <label class="col-sm-4 control-label">{{Humidité Relative}}
-                                    <sup><i class="fas fa-question-circle" title="F{{(%) Humidité Relative}}"></i></sup>
+                                    <sup><i class="fas fa-question-circle" title="{{(%) Humidité Relative}}"></i></sup>
                                 </label>
                                 <div class="col-sm-6">
                                     <div class="input-group">
