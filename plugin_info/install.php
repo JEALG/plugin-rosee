@@ -77,7 +77,7 @@ function rosee_update()
         updateLogicalId($eqLogic, 'windchill', null, null, 'Température ressentie'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'heat_index', 'humidex', 0, 'Indice de Chaleur (Humidex)', 'DELETE'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'humidityabs_m3', null, 0, null, 'g/m³'); // Modification du 4/05/2025
-        updateLogicalId($eqLogic, 'mixing_ratio', null, 0, 'DELETE', 'g/Kg'); // Modification du 4/05/2025
+        updateLogicalId($eqLogic, 'mixing_ratio', null, 2, null, 'g/Kg', 'DELETE'); // Modification du 4/05/2025
     }
 
     //resave eqLogics for new cmd:
@@ -99,7 +99,7 @@ function rosee_update()
     //log::add('rosee', 'debug', '[INFO] Mise à jour Plugin');
 }
 
-function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = null, $unite = null)
+function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = null, $unite = null, $_calculValueOffset = null)
 {
     $command = $eqLogic->getCmd(null, $from);
     if (is_object($command)) {
@@ -108,10 +108,14 @@ function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = 
         }
         if ($_historizeRound != null) {
             log::add('rosee', 'debug', '[INFO] Correction de l\'Arrondi (Nombre de décimale) pour : ' . $from . ' -> Par la valeur : ' . $_historizeRound);
-            if ($_historizeRound == 'DELETE') {
-                $command->setConfiguration('historizeRound', null);
+            $command->setConfiguration('historizeRound', $_historizeRound);
+        }
+        if ($_calculValueOffset != null) {
+            log::add('rosee', 'debug', '[INFO] Correction de la formule de calcul : ' . $from . ' -> Par la formule : ' . $_calculValueOffset);
+            if ($_calculValueOffset  == 'DELETE') {
+                $command->setConfiguration('calculValueOffset', null);
             } else {
-                $command->setConfiguration('historizeRound', $_historizeRound);
+                $command->setConfiguration('calculValueOffset', $_calculValueOffset);
             }
         }
         if ($name != null) {
