@@ -219,5 +219,11 @@
         "Équipement": "Equipment",
         "Équipement non visible": "Equipment not visible",
         "Équipement visible": "Visible equipment"
+    },
+    "plugins\/rosee\/plugin_info\/install.php": {
+        "Correction de l\\'Arrondi (Nombre de décimale) pour": "Rounding correction (number of decimal places) for",
+        "Correction de la formule de calcul": "Correction of the calculation formula",
+        "Par la formule": "With the",
+        "Par la valeur": "By value"
     }
 }
