@@ -76,6 +76,8 @@ function rosee_update()
         updateLogicalId($eqLogic, 'td_num', null, null, 'Message numérique'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'windchill', null, null, 'Température ressentie'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'heat_index', 'humidex', 0, 'Indice de Chaleur (Humidex)', 'DELETE'); // Modification du 7/12/2020
+        updateLogicalId($eqLogic, 'humidityabs_m3', null, 0, null, 'g/m³'); // Modification du 4/05/2025
+        updateLogicalId($eqLogic, 'mixing_ratio', null, 2, null, 'g/Kg', 'DELETE'); // Modification du 4/05/2025
     }
 
     //resave eqLogics for new cmd:
@@ -97,7 +99,7 @@ function rosee_update()
     //log::add('rosee', 'debug', '[INFO] Mise à jour Plugin');
 }
 
-function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = null, $unite = null)
+function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = null, $unite = null, $_calculValueOffset = null)
 {
     $command = $eqLogic->getCmd(null, $from);
     if (is_object($command)) {
@@ -105,8 +107,16 @@ function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = 
             $command->setLogicalId($to);
         }
         if ($_historizeRound != null) {
-            log::add('rosee', 'debug', '[INFO] Correction de l\'Arrondi (Nombre de décimale) pour : ' . $from . ' -> Par la valeur : ' . $_historizeRound);
+            log::add('rosee', 'debug', '[INFO] ' . __('Correction de l\'Arrondi (Nombre de décimale) pour', __FILE__) . ' : ' . $from . ' ->  ' . __('Par la valeur', __FILE__) . ' : ' . $_historizeRound);
             $command->setConfiguration('historizeRound', $_historizeRound);
+        }
+        if ($_calculValueOffset != null) {
+            log::add('rosee', 'debug', '[INFO] ' . __('Correction de la formule de calcul', __FILE__) . ' : ' . $from . ' ->  ' . __('Par la formule', __FILE__) . ' : ' . $_calculValueOffset);
+            if ($_calculValueOffset  == 'DELETE') {
+                $command->setConfiguration('calculValueOffset', null);
+            } else {
+                $command->setConfiguration('calculValueOffset', $_calculValueOffset);
+            }
         }
         if ($name != null) {
             //$command->setName($name);
@@ -114,8 +124,9 @@ function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = 
         if ($unite != null) {
             if ($unite == 'DELETE') {
                 $unite = null;
+            } else {
+                $command->setUnite($unite);
             }
-            $command->setUnite($unite);
         }
         $command->save();
     }
