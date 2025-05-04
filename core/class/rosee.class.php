@@ -264,7 +264,7 @@ class rosee extends eqLogic
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs') {
             $this->AddCommand((__('Humidité absolue', __FILE__)), 'humidityabs_m3', 'info', 'numeric', 'core::line', 'g/m³', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
             $this->AddCommand((__('Pression de vapeur réelle', __FILE__)), 'pressure_vapor', 'info', 'numeric', 'core::line', 'Pa', 'default', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
-            $this->AddCommand((__('Rapport de mélange', __FILE__)), 'mixing_ratio', 'info', 'numeric', 'core::line', 'g/Kg', 'default', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', '#value#/100', 2, null);
+            $this->AddCommand((__('Rapport de mélange', __FILE__)), 'mixing_ratio', 'info', 'numeric', 'core::line', 'g/Kg', 'default', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'temperature') {
