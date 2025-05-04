@@ -107,11 +107,11 @@ function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = 
             $command->setLogicalId($to);
         }
         if ($_historizeRound != null) {
-            log::add('rosee', 'debug', '[INFO] Correction de l\'Arrondi (Nombre de décimale) pour : ' . $from . ' -> Par la valeur : ' . $_historizeRound);
+            log::add('rosee', 'debug', '[INFO] ' . __('Correction de l\'Arrondi (Nombre de décimale) pour', __FILE__) . ' : ' . $from . ' ->  ' . __('Par la valeur', __FILE__) . ' : ' . $_historizeRound);
             $command->setConfiguration('historizeRound', $_historizeRound);
         }
         if ($_calculValueOffset != null) {
-            log::add('rosee', 'debug', '[INFO] Correction de la formule de calcul : ' . $from . ' -> Par la formule : ' . $_calculValueOffset);
+            log::add('rosee', 'debug', '[INFO] ' . __('Correction de la formule de calcul', __FILE__) . ' : ' . $from . ' ->  ' . __('Par la formule', __FILE__) . ' : ' . $_calculValueOffset);
             if ($_calculValueOffset  == 'DELETE') {
                 $command->setConfiguration('calculValueOffset', null);
             } else {
