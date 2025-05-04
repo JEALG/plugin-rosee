@@ -657,17 +657,8 @@ class rosee extends eqLogic
         log::add('rosee', 'debug', '| ───▶︎ ' . __('Poids spécifique [variable : p]', __FILE__)  . ' ::/fg: '   . $p . ' m³/Kg');
         $masse_air = 18.0154;
         $masse_eau = 28.965;
-        //B = (18,0154 / 28,965) * 1000 (Unité g/Kg)
         $B = ($masse_air / $masse_eau) * 1000;
-        /* B * (Pw / (Patmo - Pw)) 
-        Avec:
-        Patmo => Pression atmosphérique (Déjà présent dans le plugins) : $pressure
-        Pw => Pression de vapeur en Pa qui est calculé pour avoir l’humidité absolue. : $pressure_vapor 
-        */
         log::add('rosee', 'debug', '| ───▶︎ B = ' . __('masse molaire moyenne de l\'air', __FILE__)  . ' x ' . __('masse molaire moyenne de l\'eau', __FILE__) . ' =:/fg: '   . $B . ' g/Kg');
-        $pressure_pa = ($pressure * 100);
-        $mixing_ratio1 = (($pressure * 100) - $pressure_vapor);
-        $mixing_ratio2 = ($pressure_vapor / (($pressure * 100) - $pressure_vapor));
         $mixing_ratio = $B * ($pressure_vapor / (($pressure * 100) - $pressure_vapor));
         $humidityabs_m3 = 1000.0 * $humi_a * $p;
         $humidity_result = array(
