@@ -264,7 +264,7 @@ class rosee extends eqLogic
         if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs') {
             $this->AddCommand((__('Humidité absolue', __FILE__)), 'humidityabs_m3', 'info', 'numeric', 'core::line', 'g/m³', 'WEATHER_HUMIDITY', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
             $this->AddCommand((__('Pression de vapeur réelle', __FILE__)), 'pressure_vapor', 'info', 'numeric', 'core::line', 'Pa', 'default', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
-            $this->AddCommand((__('Rapport de mélange', __FILE__)), 'mixing_ratio', 'info', 'numeric', 'core::line', 'g/Kg', 'default', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+            $this->AddCommand((__('Rapport de mélange', __FILE__)), 'mixing_ratio', 'info', 'numeric', 'core::line', 'g/kg', 'default', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         }
 
         if ($calcul == 'rosee_givre' || $calcul == 'rosee' || $calcul == 'temperature') {
@@ -615,7 +615,7 @@ class rosee extends eqLogic
                     break;
                 case 'rosee_givre': // Point de rosee et de Givre
                     $list = 'alert_1,alert_2,frost_point,humidityabs_m3,humidityrel,pressure,rosee,temperature,td,td_num,pressure_vapor,mixing_ratio';
-                    $Value_calcul = array('alert_1' => $alert_1, 'alert_2' => $alert_2, 'frost_point' => $frost_point, 'humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'rosee' => $rosee, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num);
+                    $Value_calcul = array('alert_1' => $alert_1, 'alert_2' => $alert_2, 'frost_point' => $frost_point, 'humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'rosee' => $rosee, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num, 'pressure_vapor' => $pressure_vapor_pa, 'mixing_ratio' => $mixing_ratio);
                     break;
                 case 'rosee': // Point de rosee
                     $list = 'alert_1,pressure,rosee,temperature';
@@ -623,7 +623,7 @@ class rosee extends eqLogic
                     break;
                 case 'givre': // Point de Givre
                     $list = 'alert_2,frost_point,humidityabs_m3,humidityrel,pressure,temperature,td,td_num,pressure_vapor,mixing_ratio';
-                    $Value_calcul = array('alert_2' => $alert_2, 'frost_point' => $frost_point, 'humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num);
+                    $Value_calcul = array('alert_2' => $alert_2, 'frost_point' => $frost_point, 'humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num, 'pressure_vapor' => $pressure_vapor_pa, 'mixing_ratio' => $mixing_ratio);
                     break;
             }
             $fields = explode(',', $list);
