@@ -219,5 +219,11 @@
         "Équipement": "Equipamento",
         "Équipement non visible": "Equipamento não visível",
         "Équipement visible": "Equipamentos visíveis"
+    },
+    "plugins\/rosee\/plugin_info\/install.php": {
+        "Correction de l\\'Arrondi (Nombre de décimale) pour": "Correção do arredondamento (número de casas decimais) para",
+        "Correction de la formule de calcul": "Correção da fórmula de cálculo",
+        "Par la formule": "Com a fórmula",
+        "Par la valeur": "Por valor"
     }
 }
