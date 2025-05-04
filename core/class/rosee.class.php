@@ -664,7 +664,7 @@ class rosee extends eqLogic
         Patmo => Pression atmosphérique (Déjà présent dans le plugins) : $pressure
         Pw => Pression de vapeur en Pa qui est calculé pour avoir l’humidité absolue. : $pressure_vapor 
         */
-        log::add('rosee', 'debug', '| ───▶︎ B = ' . __('masse molaire moyenne de l\’air', __FILE__)  . ' x ' . __('masse molaire moyenne de l\’eau', __FILE__) . ' =:/fg: '   . $B . ' g/Kg');
+        log::add('rosee', 'debug', '| ───▶︎ B = ' . __('masse molaire moyenne de l\'air', __FILE__)  . ' x ' . __('masse molaire moyenne de l\'eau', __FILE__) . ' =:/fg: '   . $B . ' g/Kg');
         $mixing_ratio1 = ($pressure - $pressure_vapor);
         $mixing_ratio2 = ($pressure_vapor / $mixing_ratio1);
         $mixing_ratio = $B * $mixing_ratio2;
