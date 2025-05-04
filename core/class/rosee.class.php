@@ -614,7 +614,7 @@ class rosee extends eqLogic
                     }
                     break;
                 case 'rosee_givre': // Point de rosee et de Givre
-                    $list = 'alert_1,alert_2,frost_point,humidityabs_m3,humidityrel,pressure,rosee,temperature,td,td_num';
+                    $list = 'alert_1,alert_2,frost_point,humidityabs_m3,humidityrel,pressure,rosee,temperature,td,td_num,pressure_vapor,mixing_ratio';
                     $Value_calcul = array('alert_1' => $alert_1, 'alert_2' => $alert_2, 'frost_point' => $frost_point, 'humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'rosee' => $rosee, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num);
                     break;
                 case 'rosee': // Point de rosee
@@ -622,7 +622,7 @@ class rosee extends eqLogic
                     $Value_calcul = array('alert_1' => $alert_1, 'pressure' => $pressure, 'rosee' => $rosee, 'temperature' => $temperature);
                     break;
                 case 'givre': // Point de Givre
-                    $list = 'alert_2,frost_point,humidityabs_m3,humidityrel,pressure,temperature,td,td_num';
+                    $list = 'alert_2,frost_point,humidityabs_m3,humidityrel,pressure,temperature,td,td_num,pressure_vapor,mixing_ratio';
                     $Value_calcul = array('alert_2' => $alert_2, 'frost_point' => $frost_point, 'humidityabs_m3' => $humidityabs_m3, 'humidityrel' => $humidity, 'pressure' => $pressure, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num);
                     break;
             }
