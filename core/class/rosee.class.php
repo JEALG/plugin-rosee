@@ -514,7 +514,7 @@ class rosee extends eqLogic
         /*  ********************** Conversion (si Besoin) *************************** */
 
         /*  ********************** Calcul de l'humidité absolue *************************** */
-        if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs') {
+        if ($calcul == 'rosee_givre' || $calcul == 'givre' || $calcul == 'humidityabs' || $calcul == 'rosee') {
             log::add('rosee', 'debug', '┌── :fg-warning:' . __('Calcul de l\'humidité absolue', __FILE__) . ' ::/fg: '  . $this->getName() . ' ──');
             $humidity_result = rosee::getHumidity($temperature, $humidity, $pressure);
             $humidityabs_m3 = $humidity_result['humidityabs_m3'];
