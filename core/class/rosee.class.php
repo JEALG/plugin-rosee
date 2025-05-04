@@ -667,9 +667,8 @@ class rosee extends eqLogic
         log::add('rosee', 'debug', '| ───▶︎ B = ' . __('masse molaire moyenne de l\'air', __FILE__)  . ' x ' . __('masse molaire moyenne de l\'eau', __FILE__) . ' =:/fg: '   . $B . ' g/Kg');
         $pressure_pa = ($pressure * 100);
         $mixing_ratio1 = (($pressure * 100) - $pressure_vapor);
-        $mixing_ratio2 = ($pressure_vapor / $mixing_ratio1);
-        $mixing_ratio = $B * $mixing_ratio2;
-        //log::add('rosee', 'debug', '| ───▶︎ ' . __('Rapport de mélange', __FILE__)  . ' ::/fg: '   . $mixing_ratio . ' g/Kg');
+        $mixing_ratio2 = ($pressure_vapor / (($pressure * 100) - $pressure_vapor));
+        $mixing_ratio = $B * ($pressure_vapor / (($pressure * 100) - $pressure_vapor));
         $humidityabs_m3 = 1000.0 * $humi_a * $p;
         $humidity_result = array(
             'humidityabs_m3' => $humidityabs_m3,
