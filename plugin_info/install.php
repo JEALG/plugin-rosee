@@ -77,7 +77,7 @@ function rosee_update()
         updateLogicalId($eqLogic, 'windchill', null, null, 'Température ressentie'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'heat_index', 'humidex', 0, 'Indice de Chaleur (Humidex)', 'DELETE'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'humidityabs_m3', null, 0, null, 'g/m³'); // Modification du 4/05/2025
-        updateLogicalId($eqLogic, 'mixing_ratio', null, 0, null, 'DELETE'); // Modification du 4/05/2025
+        updateLogicalId($eqLogic, 'mixing_ratio', null, 0, 'DELETE', 'g/Kg'); // Modification du 4/05/2025
     }
 
     //resave eqLogics for new cmd:
@@ -108,7 +108,11 @@ function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = 
         }
         if ($_historizeRound != null) {
             log::add('rosee', 'debug', '[INFO] Correction de l\'Arrondi (Nombre de décimale) pour : ' . $from . ' -> Par la valeur : ' . $_historizeRound);
-            $command->setConfiguration('historizeRound', $_historizeRound);
+            if ($_historizeRound == 'DELETE') {
+                $command->setConfiguration('historizeRound', null);
+            } else {
+                $command->setConfiguration('historizeRound', $_historizeRound);
+            }
         }
         if ($name != null) {
             //$command->setName($name);
@@ -116,8 +120,9 @@ function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = 
         if ($unite != null) {
             if ($unite == 'DELETE') {
                 $unite = null;
+            } else {
+                $command->setUnite($unite);
             }
-            $command->setUnite($unite);
         }
         $command->save();
     }
