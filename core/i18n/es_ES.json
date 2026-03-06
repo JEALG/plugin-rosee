@@ -223,7 +223,11 @@
     "plugins\/rosee\/plugin_info\/install.php": {
         "Correction de l\\'Arrondi (Nombre de décimale) pour": "Corrección del redondeo (número de decimales) para",
         "Correction de la formule de calcul": "Corrección de la fórmula de cálculo",
+        "Mise en place des nouveautés": "Implementación de novedades",
+        "Mise à jour des équipement": "Actualización de equipos",
         "Par la formule": "Con la fórmula",
-        "Par la valeur": "Por valor"
+        "Par la valeur": "Por valor",
+        "Sauvegarde des équipements": "Copia de seguridad de los equipos",
+        "Étape": "Etapa"
     }
 }
