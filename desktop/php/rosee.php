@@ -39,7 +39,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
         }
         ?>
         <!-- Liste des équipements du plugin "Mes équipements : Mes Points de Rosée, de Givre" -->
-        <legend><i class="fas fa-umbrella"></i> <i class="icon jeedomapp-weather"></i> {{Mes Points de Rosée, de Givre}}</legend>
+        <legend><i class="fas fa-umbrella"></i> <i class="icon jeedomapp-weather"></i> {{Mes points de rosée et de Givre}}</legend>
         <div class="eqLogicThumbnailContainer">
             <?php
             $status_r = 0;
