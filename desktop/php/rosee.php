@@ -300,8 +300,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </div>
                             </div>
                             <div id="step1" class="form-group" style="display:none">
-                                <label class="col-sm-4 control-label">{{Seuil Pré-alerte Humidex}}
-                                    <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de la pré-alerte inconfort de l'indice de température, 30°C par défaut}}"></i></sup>
+                                <label class="col-sm-4 control-label">{{Seuil Préalerte Humidex}}
+                                    <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de la préalerte inconfort de l'indice de température, 30°C par défaut}}"></i></sup>
                                 </label>
                                 <div class="col-md-2">
                                     <input type="number" step="0.1"" class=" eqLogicAttr form-control" data-l1key="configuration" data-l2key="PRE_SEUIL" value="30" placeholder="{{30}}">
