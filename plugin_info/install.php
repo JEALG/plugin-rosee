@@ -65,8 +65,8 @@ function rosee_update()
     }
 
     $plugin = plugin::byId('rosee');
-
     $eqLogics = eqLogic::byType($plugin->getId());
+    log::add('rosee', 'debug', '│ :fg-warning:' . (__('Étape', __FILE__)) . ' 1/3 :/fg:───▶︎ ' . (__('Mise en place des nouveautés', __FILE__)));
     foreach ($eqLogics as $eqLogic) {
         updateLogicalId($eqLogic, 'humidityabs', null, '2');
         updateLogicalId($eqLogic, 'rosee', null, '2');
@@ -80,19 +80,20 @@ function rosee_update()
         updateLogicalId($eqLogic, 'mixing_ratio', null, 2, null, 'g/kg', 'DELETE'); // Modification du 4/05/2025
     }
 
+    log::add('rosee', 'debug', '│ :fg-warning:' . (__('Étape', __FILE__)) . ' 2/3 :/fg:───▶︎ ' . (__('Sauvegarde des équipements', __FILE__)));
     //resave eqLogics for new cmd:
     try {
         $eqs = eqLogic::byType('rosee');
         foreach ($eqs as $eq) {
-            $eq->save();
+            $eq->save(true);
         }
     } catch (Exception $e) {
         $e = print_r($e, 1);
         log::add('rosee', 'error', '[ALERT] rosee update ERROR : ' . $e);
     }
 
+    log::add('rosee', 'debug', '│ :fg-warning:' . (__('Étape', __FILE__)) . ' 3/3 :/fg:───▶︎ ' . (__('Mise à jour des équipement', __FILE__)));
     //message::add('Plugin Rosée - Givre - Tendance', 'Merci pour la mise à jour de ce plugin, consultez le changelog.');
-
     foreach (eqLogic::byType('rosee') as $rosee) {
         $rosee->getInformations();
     }
@@ -128,7 +129,7 @@ function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = 
                 $command->setUnite($unite);
             }
         }
-        $command->save();
+        $command->save(true);
     }
 }
 
