@@ -85,7 +85,7 @@ function rosee_update()
     try {
         $eqs = eqLogic::byType('rosee');
         foreach ($eqs as $eq) {
-            $eq->save();
+            $eq->save(true);
         }
     } catch (Exception $e) {
         $e = print_r($e, 1);
@@ -129,7 +129,7 @@ function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = 
                 $command->setUnite($unite);
             }
         }
-        $command->save();
+        $command->save(true);
     }
 }
 
