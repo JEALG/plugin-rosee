@@ -214,12 +214,18 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 <div class="col-sm-6">
                                     <select id="type_calcul" class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="type_calcul">
                                         <option value=''>{{Aucun}}</option>
-                                        <option value='humidityabs'>{{Humidité absolue}}</option>
-                                        <option value='givre'>{{Point de Givre}}</option>
-                                        <option value='rosee'>{{Point de Rosée}}</option>
-                                        <option value='rosee_givre'>{{Point de Rosée et Point de Givre}}</option>
-                                        <option value='temperature'>{{Température ressentie}}</option>
-                                        <option value='tendance'>{{Tendance Météo}}</option>
+                                        <optgroup label="{{Les points de rosée et de Givre}}">
+                                            <option value='humidityabs'>{{Humidité absolue}}</option>
+                                            <option value='givre'>{{Point de Givre}}</option>
+                                            <option value='rosee'>{{Point de Rosée}}</option>
+                                            <option value='rosee_givre'>{{Point de Rosée et Point de Givre}}</option>
+                                        </optgroup>
+                                        <optgroup label="{{Les tendances}}">
+                                            <option value='tendance'>{{Tendance Météo}}</option>
+                                        </optgroup>
+                                        <optgroup label="{{Température ressentie}}">
+                                            <option value='temperature'>{{Température ressentie}}</option>
+                                        </optgroup>
                                     </select>
                                 </div>
                             </div>
